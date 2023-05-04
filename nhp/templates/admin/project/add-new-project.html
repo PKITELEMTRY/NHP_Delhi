@@ -1,0 +1,314 @@
+﻿{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+         <title>18Pixels | Management Tool</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta content="A fully featured admin theme which can be used to build CRM, CMS, etc." name="description">
+        <meta content="Coderthemes" name="author">
+        <!-- App favicon -->
+        <link rel="shortcut icon" href="{% static 'assets/images/favicon.ico' %}">
+
+        <!-- App css -->
+        <link href="{% static 'assets/css/icons.min.css' %}" rel="stylesheet" type="text/css">
+        <link href="{% static 'assets/css/app.min.css' %}" rel="stylesheet" type="text/css" id="light-style">
+        <link href="{% static 'assets/css/app-dark.min.css' %}" rel="stylesheet" type="text/css" id="dark-style">
+        <link href="{% static 'assets/css/custom.css' %}" rel="stylesheet" type="text/css" >
+
+    </head>
+
+    <body class="loading" data-layout-config='{"leftSideBarTheme":"dark","layoutBoxed":false, "leftSidebarCondensed":false, "leftSidebarScrollable":false,"darkMode":false, "showRightSidebarOnStart": true}'>
+        <!-- Begin page -->
+        <div class="wrapper">
+            <!-- ========== Left Sidebar Start ========== -->
+             <div class="leftside-menu" id="sidebarMenus">
+            {% include 'base.html' %}
+
+              </div>
+            <!-- Left Sidebar End -->
+
+            <!-- ============================================================== -->
+            <!-- Start Page Content here -->
+            <!-- ============================================================== -->
+
+            <div class="content-page">
+                <div class="content">
+                    <!-- Topbar Start -->
+                    <div class="navbar-custom" id="load-navigation">
+                        {% include 'hearder.html' %}
+                    </div>
+                    <!-- end Topbar -->
+
+                    <!-- Start Content-->
+                    <div class="container-fluid">
+                        
+                        <!-- start page title -->
+                        <div class="row">
+                            <div class="col-8">
+                                <div class="page-title-box">
+                                    <h4 class="page-title">Add New Project  </h4>
+                                </div>
+                            </div>
+                             <div class="col-4 text-end pt-3">
+                                 <a href="{% url 'project_list' %}" class=" mb-3 mr-3"> Back to List</a>
+                                   
+                             </div>
+                        </div>     
+                        <!-- end page title --> 
+
+                        <div class="row">
+                            <div class="col-12">
+                                <div class="card">
+                                    <div class="card-body">
+
+                                        <div class="row">
+                                            <div class="col-xl-6">
+                                                <div class="mb-3">
+                                                    <label for="projectname" class="form-label">Name*&nbsp;&nbsp;<small id="projectNameExist" style="display: none;color: red;">Project name already exist!</small></label>
+                                                    <input type="text" id="projectname" class="form-control" onkeypress="return /[a-zA-Z0-9 ]/i.test(event.key)" placeholder="Enter project name" onkeyup="checkProject(this)">
+                                                </div>
+                                                <div class="mb-3">
+                                                    <label for="project-budget" class="form-label">Sector*</label>
+                                                      <select class="form-control select2" data-toggle="select2" id="projectsEctor"  >
+                                                            <option></option>
+                                                            {% for i in project_sector_MasterObj %}
+                                                                <option value="{{i.id}}">{{i.sector}}</option>
+                                                            {% endfor %}
+                                                    </select> 
+                                                </div>
+                                                <div class="mb-3">
+                                                    <label for="project-budget" class="form-label">Project Type*</label>
+                                                        <select class="select2 form-control select2-multiple" data-toggle="select2" multiple="multiple" data-placeholder="Select ..." id='projectType'>
+                                                            {% for i in project_type_MasterObj %}
+                                                                <option value="{{i.id}}">{{i.projectType}}</option>
+                                                            {% endfor %}
+                                                      </select>
+                                                </div>
+                                                 <div class="mb-3">
+                                                    <label for="project-budget" class="form-label">Language/Framework*</label>
+                                                      <select class="select2 form-control select2-multiple" data-toggle="select2" multiple="multiple" data-placeholder="Select ..." id='ProjectTechnoloyArray'>
+                                                            <option></option>
+                                                            {% for i in Project_Technology_MasterObj %}
+                                                                <option value="{{i.id}}">{{i.Technology}}</option>
+                                                            {% endfor %}
+
+                                                    </select> 
+                                                </div>
+                                                 <!-- Date View -->
+                                                <div class="mb-3 position-relative" id="datepicker1">
+                                                    <label class="form-label">Start Date*</label>
+                                                    <input type="text" class="form-control datepicker" data-provide="datepicker" data-date-container="#datepicker1" data-date-format="d-M-yyyy" data-date-autoclose="true" placeholder="d-M-yyyy" id='startDate'>
+                                                </div>
+                                                 <!-- Date View -->
+                                                <div class="mb-3 position-relative" id="datepicker2">
+                                                    <label class="form-label">Due Date</label>
+                                                    <input id="due_date" type="text" class="form-control datepicker" data-provide="datepicker" data-date-container="#datepicker2" data-date-format="d-M-yyyy" data-date-autoclose="true"    placeholder="d-M-yyyy">
+                                                </div>
+
+                                                <div class="mb-3">
+                                                    <label for="project-overview" class="form-label">Overview</label>
+                                                    <textarea class="form-control" id="project-overview" rows="5" placeholder="Enter some brief about project.."></textarea>
+                                                </div>
+
+                                               
+
+                                               
+
+                                               
+
+                                            </div> <!-- end col-->
+
+                                            <div class="col-xl-6">
+                                                  <div class="mb-3">
+                                                    <label for="project-overview" class="form-label">Project Manager</label>
+                                                    <select class="select2 form-control select2-multiple" data-toggle="select2" multiple="multiple" data-placeholder="Select ..." id='ProjectManagersArray'>
+                                                        <option>Select</option>
+                                                        {% for i in managerObj %}
+                                                            <option value="{{i.id}}">{{i.employee_name}}</option>
+                                                        {% endfor %}                   
+                                                    </select>
+
+                                                   
+        
+                                                </div>
+                                                <div class="mb-3">
+                                                    <label for="project-overview" class="form-label">Team Members</label>
+                                                    
+                                                    <select class="select2 form-control select2-multiple" data-toggle="select2" multiple="multiple" data-placeholder="Select ..." id='ProjectTeamArray'>
+                                                        <option>Select</option>
+                                                        {% for i in employeeObj %}
+                                                            <option value="{{i.id}}">{{i.employee_name}}</option>
+                                                        {% endfor %} 
+                                                    </select>
+
+                                                </div>
+                                                <div class="mb-3 mt-3 mt-xl-0">
+                                                    <label for="projectname" class="mb-0">Logo</label>
+                                                    <p class="text-muted font-14">Recommended thumbnail size 250*100 (px).</p>
+                                                     <label class="d-block mb-1">
+                                                        <input id="emp_photo" type="file" name="" class="d-none" accept=".png, .jpg, .jpeg" >
+                                                        <img id="imgphoto" style="max-width: 200px; cursor: pointer;" src="{% static 'assets/images/demo-logo.jpg' %}">
+
+                                                    </label>
+                                                </div>
+
+                                                <div class="mb-4 mt-3 mt-xl-0">
+                                                    <label for="projectname" class="mb-0">File Upload</label>
+                                                    <p class="text-muted font-14">Recommended files .docx, .pdf, .jpg, .png, .xlsx</p>
+
+                                                     <div class="row">
+                                                         <div class="col-xl-10">
+                                                          <div class="mb-3">
+                                                             <label   class="form-label d-block">Choose file</label>
+                                                            <input type="file" name=""  class="project_docs" id="projectFile">
+                                                          </div>
+                                                        </div>
+                                                         <div class="col-xl-1">
+                                                            <a href="javascript:;" id="add_files" class="add-ico mt-3"><i class="mdi mdi-plus-circle"></i></a>
+                                                         </div>
+                                                     </div>
+
+                                                     <div id="proj_files"></div>
+                                                </div>
+
+
+
+
+                                               
+                                            </div> <!-- end col-->
+
+                                            <div class="col-md-12">
+                                                 <div class="mb-2 position-relative" id="datepicker1">
+                                                   <div class="row">
+                                                    <div class="col-md-12"> <label class="form-label">Add URL's</label> </div>
+                                                      <div class="col-md-4">
+                                                        <input  type="text" class="form-control projectUrlName" id="urlName"  placeholder="Title (what for)">
+                                                       </div>
+
+                                                       <div class="col-md-8">
+                                                        
+                                                        <input style="width: 90%" type="text" class="form-control projectURL" id="urlData"  placeholder="Enter URL">
+                                                         <a href="javascript:;" id="add_urls" class="add-ico ico1 mt-3"><i class="mdi mdi-plus-circle"></i></a>
+
+                                                       </div>
+                                                   </div>
+                                                </div>
+                                                <div id="more-urls" class="mb-5"></div>
+  
+
+                                                <div class="mb-3 mt-1   text-end">
+                                                    <button class="btn btn-primary btn-lg" id="btnSubmit" onclick="submitProjectData()">Submit Details</button>
+                                                </div>
+
+                                            </div>
+                                        </div>
+                                        <!-- end row -->
+
+                                    </div> <!-- end card-body -->
+                                </div> <!-- end card-->
+                            </div> <!-- end col-->
+                        </div>
+                        <!-- end row-->
+                        
+                    </div> <!-- container -->
+
+                </div> <!-- content -->
+
+                <!-- Footer Start -->
+                <footer class="footer">
+                    <div class="container-fluid">
+                        <div class="row">
+                            <div class="col-md-6">
+                                <script>document.write(new Date().getFullYear())</script> © Hyper - Coderthemes.com
+                            </div>
+                            <div class="col-md-6">
+                                <div class="text-md-end footer-links d-none d-md-block">
+                                    <a href="javascript: void(0);">About</a>
+                                    <a href="javascript: void(0);">Support</a>
+                                    <a href="javascript: void(0);">Contact Us</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </footer>
+                <!-- end Footer -->
+
+            </div>
+
+            <!-- ============================================================== -->
+            <!-- End Page content -->
+            <!-- ============================================================== -->
+
+
+        </div>
+        <!-- END wrapper -->
+ 
+
+        <!-- bundle -->
+        <script src="{% static 'assets/js/vendor.min.js' %}"></script>
+        <script src="{% static 'assets/js/app.min.js' %}"></script>
+
+        <!-- plugin js -->
+        <script src="{% static 'assets/js/vendor/dropzone.min.js' %}"></script>
+        <!-- init js -->
+        <script src="{% static 'assets/js/ui/component.fileupload.js' %}"></script>
+        <script src="{% static 'assets/js/custom.js' %}"></script>
+        <script src="{% static 'assets/js/admin_JS/project_JS/add_project.js' %}"></script>
+        <script>
+            {% comment %} $(function(){
+                $('.datepicker').datepicker({
+                    format: 'd-M-yyyy',
+                    startDate: '+0d',
+                    autoclose: true
+                });
+            }); {% endcomment %}
+        </script>
+        <script>
+            var documentLimit = 1;
+            
+            $('#add_files').click(function(){
+                documentLimit = documentLimit +1;
+                if(documentLimit >5){
+                    documentLimit = documentLimit -1;
+                    alert('You can add maximium 5 Files');
+                    return false;
+                }else{
+                    $('#proj_files').append('<div class="row"> <div class="col-xl-10"> <div class="mb-3"> <label class="form-label d-block">Choose file</label> <input class="project_docs" id="projectFile_'+documentLimit+'" type="file" name=""> </div></div><div class="col-xl-2"> <a   href="javascript:;" class="minus-ico mt-4 ico1 remove_files position-relative"><i class="mdi mdi-minus-circle"></i></a>  </div></div>');
+                        
+                }
+            });
+
+            $(document).on('click','.remove_files', function(){ 
+                documentLimit = documentLimit -1;
+              $(this).parent().parent().remove();
+            });
+
+            var urlLimit = 1;
+            $('#add_urls').click(function(){
+                urlLimit = urlLimit +1;
+                if(urlLimit >5){
+                    urlLimit = urlLimit -1;
+                    alert('You can add maximium 5 URLs');
+                    return false;
+                }else{
+                    $('#more-urls').append('<div class="mb-2 position-relative row" >  <div class="col-md-4"> <input type="text" class="form-control projectUrlName"  id="urlName_'+urlLimit+'" placeholder="Title (what for)"> </div><div class="col-md-8"> <input style="width: 90%" type="text" class="form-control projectURL" id="urlData_'+urlLimit+'" placeholder="Enter URL"> <a style="right:10px;" href="javascript:;" class="minus-ico mt-3 ico1 remove_url"><i class="mdi mdi-minus-circle"></i></a> </div></div>');
+                }
+			});
+
+            $(document).on('click','.remove_url', function(){ 
+                urlLimit = urlLimit -1;
+				$(this).parent().parent().remove();
+			});
+
+
+            {% comment %} $('#add_urls').click(function(){
+				$('#more-urls').append('<div class="mb-2 position-relative row" >  <div class="col-md-4"> <input type="text" class="form-control" placeholder="Title (what for)"> </div><div class="col-md-8"> <input style="width: 90%" type="text" class="form-control" placeholder="Enter URL"> <a style="right:10px;" href="javascript:;" class="minus-ico mt-3 ico1 remove_url"><i class="mdi mdi-minus-circle"></i></a> </div></div>');
+			});
+			$(document).on('click','.remove_url', function(){ 
+			  
+				 $(this).parent().parent().remove();
+			}); {% endcomment %}
+        </script>
+    </body>
+</html>

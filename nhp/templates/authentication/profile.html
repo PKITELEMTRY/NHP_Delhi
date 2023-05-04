@@ -1,0 +1,530 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+ 
+<head>
+        <meta charset="utf-8" />
+         <title>National Hydrology Project</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta content="A fully featured admin theme which can be used to build CRM, CMS, etc." name="description" />
+        <meta content="Coderthemes" name="author" />
+        <!-- App favicon -->
+        <link rel="shortcut icon" href="{% static 'assets/images/favicon.ico' %}">
+
+        <!-- App css -->
+        <link href="{% static 'assets/css/icons.min.css' %}" rel="stylesheet" type="text/css" />
+        <link href="{% static 'assets/css/app.min.css' %}" rel="stylesheet" type="text/css" id="light-style" />
+        <link href="{% static 'assets/css/app-dark.min.css' %}" rel="stylesheet" type="text/css" id="dark-style" />
+        <link href="{% static 'assets/css/custom.css' %}" rel="stylesheet" type="text/css" id="light-style" />
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta2/css/all.min.css" integrity="sha512-YWzhKL2whUzgiheMoBFwW8CKV4qpHQAEuvilg9FAn5VJUDwKZZxkJNuGM4XkWuk94WCrrwslk8yWNGmY1EduTA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+        <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+    </head>
+
+    <body class="loading" data-layout-config='{"leftSideBarTheme":"dark","layoutBoxed":false, "leftSidebarCondensed":false, "leftSidebarScrollable":false,"darkMode":false, "showRightSidebarOnStart": true}'>
+        <!-- Begin page -->
+        <div class="wrapper">
+            <!-- ========== Left Sidebar Start ========== -->
+            <div class="leftside-menu" id="sidebarMenus">
+            {% include 'base.html' %}
+            </div>
+            <!-- Left Sidebar End -->
+
+            <!-- ============================================================== -->
+            <!-- Start Page Content here -->
+            <!-- ============================================================== -->
+
+            <div class="content-page">
+                <div class="content">
+                    <!-- Topbar Start -->
+                    <div class="navbar-custom" id="load-navigation">
+                        {% include 'hearder.html' %}
+                    </div>
+                    <!-- end Topbar -->
+
+                    <!-- Start Content-->
+                    <div class="container-fluid">
+                        
+                        <!-- start page title -->
+                        <div class="row">
+                            <div class="col-8">
+                                <div class="page-title-box">
+                                    <h4 class="page-title">Personal Details</h4>
+                                </div>
+                            </div>
+                            
+                        </div>        
+                        <!-- end page title --> 
+
+                        <div class="row">
+                        
+                            <div class="col-12">
+                                <div class="card">
+                                    <div class="card-body view_det">
+
+                                        <div class="row">
+                                             <div class="col-xl-12">
+                                                <h4 class="text-info mb-2">Personal Information</h4>
+                                                <hr class="mb-4">
+                                             </div>
+                                            <div class="col-xl-3 text-center ">
+                                                    <label class="d-block mb-1">
+                                                    {% if employeeObj.profile_image == '' or employeeObj.profile_image == None %}
+                                                        <input id="emp_photo" type="file" name="" class="d-none" accept="image/png, image/gif, image/jpeg">
+                                                        <img id="imgphoto" style="max-width: 200px; cursor: pointer;" src="https://images.vexels.com/media/users/3/129616/isolated/preview/fb517f8913bd99cd48ef00facb4a67c0-businessman-avatar-silhouette-by-vexels.png">
+                                                    {% else %}
+                                                        <input id="emp_photo" type="file" name="" class="d-none" accept="image/png, image/gif, image/jpeg">
+                                                        <img id="imgphoto" style="max-width: 200px; cursor: pointer;" src="/media/{{employeeObj.profile_image}}">
+                                                    {% endif %}
+                                                    </label>
+                                                    
+                                                <div class="">
+                                                    <a href="#" class="d-block mt-3 m-2 btn btn-sm btn-secondary" onclick="update_profile()"><i class="fas fa-image"></i>&nbsp;&nbsp;Update Profile Image</a>
+                                                    <a href="{% url 'edit_profile' %}" class="d-block mt-3 m-2 btn btn-sm btn-info"><i class="fas fa-edit"></i>&nbsp;&nbsp;Edit Profile</a>
+                                                </div>
+                                            </div>
+                                            <div class="col-xl-9">
+                                                <div class="row">
+                                                    <div class="col-xl-4">
+                                                        <div class="mb-2">
+                                                            <label for="name" class="form-label">Name</label>
+                                                            <p class="value">{{employeeObj.employee_name}}</p>
+                                                            
+                                                        </div>
+                                                        <div class="mb-2">
+                                                            <label for="name" class="form-label">Email</label>
+                                                            <p class="value">{{employeeObj.userFK.email}}</p>
+                                                            
+                                                        </div>
+                                                        <div class="mb-2">
+                                                            <label for="name" class="form-label">Contact No</label>
+                                                            <p class="value">{{employeeObj.contact}}</p>
+                                                            
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-xl-4">
+                                                        <div class="mb-2">
+                                                            <label for="name" class="form-label">Alternate Contact No.(Optional)</label>
+                                                            {% if employeeObj.alternate_contact == '' %}
+                                                            <p class="value">-</p>
+                                                            {% else %}
+                                                            <p class="value">{{employeeObj.alternate_contact}}</p>
+                                                            {% endif %}
+                                                            
+                                                        </div>
+                                                        <div class="mb-2">
+                                                            <label for="name" class="form-label">DOB</label>
+                                                            {% if employeeObj.DOB == None %}
+                                                            <p class="value">-</p>
+                                                            {% else %}
+                                                            <p class="value">{{employeeObj.DOB}}</p>
+                                                            {% endif %}
+                                                            
+                                                        </div>
+                                                        <div class="mb-2">
+                                                            <label for="name" class="form-label">Father's Name</label>
+                                                            {% if employeeObj.father_name == '' %}
+                                                            <p class="value">-</p>
+                                                            {% else %}
+                                                            <p class="value">{{employeeObj.father_name}}</p>
+                                                            {% endif %}
+                                                            
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-xl-3"> </div>
+                                                    <div class="col-xl-8">
+                                                        <div class="mb-2">
+                                                            <label for="name" class="form-label">Address</label>
+                                                            {% if employeeObj.address == '' %}
+                                                            <p class="value">-</p>
+                                                            {% else %}
+                                                            <p class="value">{{employeeObj.address}}, {{employeeObj.city}} - {{employeeObj.pincode}}, {{employeeObj.state}}</p>
+                                                            {% endif %}
+                                                            
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                             
+                                
+                                            </div>
+
+                                            <div class="row">
+                                             <div class="col-xl-12">
+                                                <h4 class="text-info mb-2 mt-4">Educational Information</h4>
+                                                 <hr class="mb-4">
+                                             </div>
+                                            </div>
+                                            {% if qualificationList|length > 0 %}
+                                            {% for i in qualificationList %}
+                                            <div class="row">
+                                                    <div class="col-xl-4">
+                                                          <div class="mb-3">
+                                                            <label for="project-overview" class="form-label">Qualification</label>
+                                                            {% if i.qualification == '' %}
+                                                           <p class="value">-</p>
+                                                            {% else %}
+                                                           <p class="value">{{i.qualification}}</p>
+                                                            {% endif %}
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-xl-6">
+                                                          <div class="mb-3">
+                                                            <label for="project-overview" class="form-label">From  </label>
+                                                           {% if i.from == '' %}
+                                                           <p class="value">-</p>
+                                                            {% else %}
+                                                           <p class="value">{{i.from}}</p>
+                                                            {% endif %}
+                                                        </div>
+                                                    </div>
+                                                     <div class="col-xl-2">
+                                                          <div class="mb-3">
+                                                            <label for="project-overview" class="form-label">Passing Year  </label>
+                                                            {% if i.passing_year == '' %}
+                                                           <p class="value">-</p>
+                                                            {% else %}
+                                                           <p class="value">{{i.passing_year}}</p>
+                                                            {% endif %}
+                                                        </div>
+                                                    </div>
+                                             </div>
+                                            {% endfor %}
+                                            {% else %}
+                                            <div class="row">
+                                                    <div class="col-xl-4">
+                                                          <div class="mb-3">
+                                                            <label for="project-overview" class="form-label">Qualification</label>
+                                                           <p class="value">-</p>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-xl-6">
+                                                          <div class="mb-3">
+                                                            <label for="project-overview" class="form-label">From  </label>
+                                                           
+                                                            <p class="value">-</p>
+                                                        </div>
+                                                    </div>
+                                                     <div class="col-xl-2">
+                                                          <div class="mb-3">
+                                                            <label for="project-overview" class="form-label">Passing Year  </label>
+                                                              <p class="value">-</p>
+                                                        </div>
+                                                    </div>
+                                             </div>
+                                            {% endif %}
+
+                                             
+
+
+                                                <div class="row">
+                                                 <div class="col-xl-12">
+                                                    <h4 class="text-info mb-2 mt-4">Professional Information</h4>
+                                                     <hr class="mb-4">
+                                                 </div>
+                                                </div>
+
+                                                  <div class="row">
+                                                     <div class="col-xl-3">
+                                                          <div class="mb-3">
+                                                            <label for="project-overview" class="form-label">Employee Type</label>
+                                                            {% if employeeObj.employeeTypeFK == None %}
+                                                            <p class="value">-</p>
+                                                            {% else %}
+                                                            <p class="value">{{employeeObj.employeeTypeFK.employee_type_name}}</p>
+                                                            {% endif %}
+                                                        </div>
+                                                    </div>
+                                                     <div class="col-xl-3">
+                                                          <div class="mb-3">
+                                                            <label for="project-overview" class="form-label">Designation</label>
+                                                            {% if employeeObj.designationFK == None %}
+                                                            <p class="value">-</p>
+                                                            {% else %}
+                                                             <p class="value">{{employeeObj.designationFK.designation_name}}</p>
+                                                            {% endif %}
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-xl-3">
+                                                          <div class="mb-3">
+                                                            <label for="project-overview" class="form-label">Experience (in years) </label>
+                                                            {% if employeeObj.experience_year == None %}
+                                                            <p class="value">-</p>
+                                                            {% else %}
+                                                            <p class="value">{{employeeObj.experience_year.experience}}</p>
+                                                            {% endif %}
+                                                        </div>
+                                                    </div>
+                                                     <div class="col-xl-3">
+                                                        <div class="mb-3 position-relative" id="datepicker1">
+                                                            <label class="form-label">Date of Joining</label>
+                                                            {% if employeeObj.joiningDate == None %}
+                                                            <p class="value">-</p>
+                                                            {% else %}
+                                                            <p class="value">{{employeeObj.joiningDate}}</p>
+                                                            {% endif %}
+                                                        </div>
+                                                    </div>
+                                                      
+                                               </div>
+                                                 <div class="row">
+                                                     <div class="col-xl-3">
+                                                        <label for="project-overview" class="form-label bold mb-2 ">Last Job Details</label>
+                                                     </div>
+                                                 </div>
+                                               <div class="row">
+                                                     <div class="col-xl-4">
+                                                          <div class="mb-3">
+                                                            <label for="project-overview" class="form-label">Designation/Profile</label>
+                                                            {% if last_designation == None %}
+                                                            <p class="value">-</p>
+                                                            {% else %}
+                                                            <p class="value">{{last_designation}}</p>
+                                                            {% endif %}
+                                                           
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-xl-4">
+                                                          <div class="mb-3">
+                                                            <label for="project-overview" class="form-label">Company  </label>
+                                                            {% if company == None %}
+                                                            <p class="value">-</p>
+                                                            {% else %}
+                                                            <p class="value">{{company}}</p>
+                                                            {% endif %}  
+                                                        </div>
+                                                    </div>
+                                                     <div class="col-xl-4">
+                                                        <div class="mb-3 position-relative" id="datepicker1">
+                                                            <label class="form-label">Duration (in years)</label>
+                                                            {% if duration == None %}
+                                                            <p class="value">-</p>
+                                                            {% else %}
+                                                            <p class="value">{{duration}} yrs</p>
+                                                            {% endif %} 
+                                                        </div>
+                                                    </div>
+                                                      
+                                               </div>
+
+                                              <div class="row">
+                                                
+                                                 <div class="col-xl-12">
+                                                    <h4 class="text-info mb-2 mt-4">Uploaded Documents</h4>
+                                                     <hr class="mb-4">
+                                                 </div>
+                                                </div>
+ 
+
+
+                                                 <div class="row ">
+                                                    <div class="   mb-4 col-lg-12 " >
+                                                        
+                                                        {% if employeeObj.upload_docs_type == None or employeeObj.upload_docs_type == 'Select Document' %}
+                                                        {% else %}
+                                                        <div class="card mt-1 mb-0 shadow-none border dz-processing dz-success dz-complete d-block">
+                                                        <div class="p-2">
+                                                            <div class="row align-items-center">
+                                                                <div class="col-auto">
+                                                                    <img data-dz-thumbnail="" src="/media/{{employeeObj.upload_docs}}" class="avatar-sm rounded bg-light" alt="">
+                                                                </div>
+                                                                <div class="col ps-0">
+                                                                    <a href="/media/{{employeeObj.upload_docs}}"  target="_blank" class="text-muted fw-bold" data-dz-name="">{{employeeObj.upload_docs_type}}</a>
+                                                                    {% comment %} <p class="mb-0" data-dz-size=""> docname.png </p> {% endcomment %}
+                                                                </div>
+                                                                {% comment %} <div class="col-auto">
+                                                                    <!-- Button -->
+                                                                    <a href="" class="btn btn-link btn-lg text-muted" data-dz-remove="">
+                                                                        <i class="dripicons-cross"></i>
+                                                                    </a>
+                                                                </div> {% endcomment %}
+                                                            </div>
+                                                        </div>
+                                                        </div>
+                                                        {% endif %}
+                                                        {% if employeeObj.upload_docs_type_2 == None %}
+                                                        {% else %}
+                                                        <div class="card mt-1 mb-0 shadow-none border dz-processing dz-success dz-complete d-block">
+                                                        <div class="p-2">
+                                                            <div class="row align-items-center">
+                                                                <div class="col-auto">
+                                                                    <img data-dz-thumbnail="" src="/media/{{employeeObj.upload_docs_2}}" class="avatar-sm rounded bg-light" alt="">
+                                                                </div>
+                                                                <div class="col ps-0">
+                                                                    <a href="/media/{{employeeObj.upload_docs_2}}"  target="_blank" class="text-muted fw-bold" data-dz-name="">{{employeeObj.upload_docs_type_2}}</a>
+                                                                    {% comment %} <p class="mb-0" data-dz-size=""> docname.png </p> {% endcomment %}
+                                                                </div>
+                                                                {% comment %} <div class="col-auto">
+                                                                    <!-- Button -->
+                                                                    <a href="" class="btn btn-link btn-lg text-muted" data-dz-remove="">
+                                                                        <i class="dripicons-cross"></i>
+                                                                    </a>
+                                                                </div> {% endcomment %}
+                                                            </div>
+                                                        </div>
+                                                        </div>
+                                                        {% endif %}
+                                                        {% if employeeObj.upload_docs_type_3 == None %}
+                                                        {% else %}
+                                                        <div class="card mt-1 mb-0 shadow-none border dz-processing dz-success dz-complete d-block">
+                                                        <div class="p-2">
+                                                            <div class="row align-items-center">
+                                                                <div class="col-auto">
+                                                                    <img data-dz-thumbnail="" src="/media/{{employeeObj.upload_docs_3}}" class="avatar-sm rounded bg-light" alt="">
+                                                                </div>
+                                                                <div class="col ps-0">
+                                                                    <a href="/media/{{employeeObj.upload_docs_3}}"  target="_blank" class="text-muted fw-bold" data-dz-name="">{{employeeObj.upload_docs_type_3}}</a>
+                                                                    {% comment %} <p class="mb-0" data-dz-size=""> docname.png </p> {% endcomment %}
+                                                                </div>
+                                                                {% comment %} <div class="col-auto">
+                                                                    <!-- Button -->
+                                                                    <a href="" class="btn btn-link btn-lg text-muted" data-dz-remove="">
+                                                                        <i class="dripicons-cross"></i>
+                                                                    </a>
+                                                                </div> {% endcomment %}
+                                                            </div>
+                                                        </div>
+                                                        </div>
+                                                        {% endif %}
+                                                        {% if employeeObj.upload_docs_type_4 == None %}
+                                                        {% else %}
+                                                        <div class="card mt-1 mb-0 shadow-none border dz-processing dz-success dz-complete d-block">
+                                                        <div class="p-2">
+                                                            <div class="row align-items-center">
+                                                                <div class="col-auto">
+                                                                    <img data-dz-thumbnail="" src="/media/{{employeeObj.upload_docs_4}}" class="avatar-sm rounded bg-light" alt="">
+                                                                </div>
+                                                                <div class="col ps-0">
+                                                                    <a href="/media/{{employeeObj.upload_docs_4}}"  target="_blank" class="text-muted fw-bold" data-dz-name="">{{employeeObj.upload_docs_type_4}}</a>
+                                                                    {% comment %} <p class="mb-0" data-dz-size=""> docname.png </p> {% endcomment %}
+                                                                </div>
+                                                                {% comment %} <div class="col-auto">
+                                                                    <!-- Button -->
+                                                                    <a href="" class="btn btn-link btn-lg text-muted" data-dz-remove="">
+                                                                        <i class="dripicons-cross"></i>
+                                                                    </a>
+                                                                </div> {% endcomment %}
+                                                            </div>
+                                                        </div>
+                                                        </div>
+                                                        {% endif %}
+                                                        {% if employeeObj.upload_docs_type_5 == None %}
+                                                        {% else %}
+                                                        <div class="card mt-1 mb-0 shadow-none border dz-processing dz-success dz-complete d-block">
+                                                        <div class="p-2">
+                                                            <div class="row align-items-center">
+                                                                <div class="col-auto">
+                                                                    <img data-dz-thumbnail="" src="/media/{{employeeObj.upload_docs_5}}" class="avatar-sm rounded bg-light" alt="">
+                                                                </div>
+                                                                <div class="col ps-0">
+                                                                    <a href="/media/{{employeeObj.upload_docs_5}}"  target="_blank" class="text-muted fw-bold" data-dz-name="">{{employeeObj.upload_docs_type_5}}</a>
+                                                                    {% comment %} <p class="mb-0" data-dz-size=""> docname.png </p> {% endcomment %}
+                                                                </div>
+                                                                {% comment %} <div class="col-auto">
+                                                                    <!-- Button -->
+                                                                    <a href="" class="btn btn-link btn-lg text-muted" data-dz-remove="">
+                                                                        <i class="dripicons-cross"></i>
+                                                                    </a>
+                                                                </div> {% endcomment %}
+                                                            </div>
+                                                        </div>
+                                                        </div>
+                                                        {% endif %}
+                                                </div>
+                                                   
+                                                    
+                                                </div>
+ 
+                                           
+                                        </div>
+                                        <!-- end row -->
+
+                                    </div> <!-- end card-body -->
+                                </div> <!-- end card-->
+                            </div> <!-- end col-->
+                        </div>
+                        <!-- end row-->
+                        
+                    </div> <!-- container -->
+
+                </div> <!-- content -->
+
+                <!-- Footer Start -->
+                <footer class="footer">
+                    <div class="container-fluid">
+                        <div class="row">
+                            <div class="col-md-6">
+                                <script>document.write(new Date().getFullYear())</script> © 18pixels
+                            </div>
+                            
+                        </div>
+                    </div>
+                </footer>
+                <!-- end Footer -->
+
+            </div>
+
+            <!-- ============================================================== -->
+            <!-- End Page content -->
+            <!-- ============================================================== -->
+
+
+        </div>
+        <!-- END wrapper -->
+
+
+
+
+
+        <!-- Button trigger modal -->
+
+
+      
+
+
+<!-- Modal -->
+<div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLongTitle"> <i class="fas fa-edit"></i> Request for any edit in your profile</h5>
+      </div>
+      <div class="modal-body">
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="form-group">
+                    <textarea class="form-control" id="exampleFormControlTextarea1" rows="3" placeholder="Enter request here ..."></textarea>
+                  </div>
+            </div>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary btn-sm" data-dismiss="modal">Close</button>
+        <button type="button" class="btn btn-primary btn-sm" onclick="request_edit()">Send Request</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+        <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+        <!-- bundle -->
+        <script src="{% static 'assets/js/vendor.min.js' %}"></script>
+        <script src="{% static 'assets/js/app.min.js' %}"></script>
+
+        <!-- plugin js -->
+        <script src="{% static 'assets/js/vendor/dropzone.min.js' %}"></script>
+        <!-- init js -->
+        <script src="{% static 'assets/js/ui/component.fileupload.js' %}"></script>
+         <script src="{% static 'assets/js/pages/demo.timepicker.js' %}"></script>
+        <script src="{% static 'assets/js/custom.js' %}"></script>
+        <script src="{% static 'assets/js/admin_JS/profile_JS/edit_profile.js' %}"></script>
+        <script type="text/javascript"></script>
+
+    </body>
+
+ 
+</html>

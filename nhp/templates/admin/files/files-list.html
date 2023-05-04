@@ -1,0 +1,450 @@
+{% load static %}<!DOCTYPE html>
+<html lang="en">
+ 
+<head>
+        <meta charset="utf-8" />
+         <title>18Pixels | Management Tool</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta content="" />
+        <meta content="Coderthemes" name="author" />
+        <!-- App favicon -->
+        <link rel="shortcut icon" href="{% static 'assets/images/favicon.ico' %}">
+
+        <!-- third party css -->
+        <link href="{% static 'assets/css/vendor/dataTables.bootstrap5.css' %}" rel="stylesheet" type="text/css" />
+        <link href="{% static 'assets/css/vendor/responsive.bootstrap5.css' %}" rel="stylesheet" type="text/css" />
+        <!-- third party css end -->
+
+        <!-- App css -->
+        <link href="{% static 'assets/css/icons.min.css' %}" rel="stylesheet" type="text/css" />
+        <link href="{% static 'assets/css/app.min.css' %}" rel="stylesheet" type="text/css" id="light-style" />
+        <link href="{% static 'assets/css/app-dark.min.css' %}" rel="stylesheet" type="text/css" id="dark-style" />
+        <link href="{% static 'assets/css/custom.css' %}" rel="stylesheet" type="text/css"  />
+
+    </head>
+
+    <body class="loading" data-layout-config='{"leftSideBarTheme":"dark","layoutBoxed":false, "leftSidebarCondensed":false, "leftSidebarScrollable":false,"darkMode":false, "showRightSidebarOnStart": true}'>
+        <!-- Begin page -->
+        <div class="wrapper">
+            <!-- ========== Left Sidebar Start ========== -->
+            <div class="leftside-menu" id="sidebarMenus">
+                {% include 'base.html' %}
+            </div>
+            <!-- Left Sidebar End -->
+            <!-- ============================================================== -->
+            <!-- Start Page Content here -->
+            <!-- ============================================================== -->
+            <div class="content-page">
+                <div class="content">
+                    <!-- Topbar Start -->
+                   <div class="navbar-custom" id="load-navigation"> {% include 'hearder.html' %}</div>
+                    <!-- end Topbar -->
+                    <!-- Start Content-->
+                    <div class="container-fluid">
+                        <!-- start page title -->
+                        <div class="row">
+                            <div class="col-8">
+                                <div class="page-title-box">
+                                    <h4 class="page-title">Files List</h4>
+                                </div>
+                             </div>
+                             <div class="col-4 text-end pt-3">
+                                {% if request.session.userType == 'masteR' or request.session.userType == 'teacheR' %}
+                                    <a href="/file-management/add-file"   class="btn btn-danger mb-2"><i class="mdi mdi-plus-circle me-2"></i> Add New File</a>
+                                {% endif %}
+                            </div>
+                        </div>  
+                        <div class="page-title-box  pt-2 mb-2" >
+                            <div class="row">
+                                <div class="col-md-6 text-end pro_name mb-2 pt-2">
+                                      Filter By
+                                </div>
+                                <div class="col-md-3">
+                                   <select class="form-control select2" data-toggle="select2"    data-placeholder="Select Project" >
+                                        <option></option>
+                                        {% for i in projectObj %}
+                                            <option value="{{i.id}}">{{i.project_name}}</option>
+                                        {% endfor %}
+                                  </select>
+                                </div>
+                                {% comment %} <div class="col-md-2">
+                                   <select class="form-control select2" data-toggle="select2"    data-placeholder="Select Month" >
+                                        <option></option>
+                                        <option value="1">Jan</option>
+                                        <option value="2">Feb</option>
+                                        <option value="3">Mar</option>
+                                        <option value="4">Apr</option>
+                                        <option value="5">May</option>
+                                        <option value="6">Jun</option>
+                                        <option value="7">Jul</option>
+                                        <option value="8">Aug</option>
+                                        <option value="9">Sep</option>
+                                        <option value="10">Oct</option>
+                                        <option value="11">Nov</option>
+                                        <option value="12">Dec</option>
+                                  </select>
+                                </div>
+                                 <div class="col-md-2">
+                                   <select class="form-control select2" data-toggle="select2"    data-placeholder="Select Year" >
+                                        <option></option>
+                                        <option value="2022">2022</option>
+                                        <option value="2021">2021</option>
+                                        <option value="2020">2020</option>
+                                  </select>
+                                </div> {% endcomment %}
+
+                                <div class="col-md-2 text-end ">
+                                   <a class="btn btn-success ms-3" data-bs-toggle="modal" data-bs-target="#add-new-task-modal">Search</a>
+                                   <a href=""  style="margin-left: 15px">Clear</a>
+                               </div>
+                                <!--  <div class="col-md-8 text-end    ">
+                                    
+                                 </div> -->
+                            </div>
+                             
+                        </div>   
+                        <!-- end page title --> 
+
+                        <div class="row">
+                            <div class="col-12">
+                                <div class="card">
+                                    <div class="card-body">
+                                        <div class="table-responsive">
+                                          <table id="basic-datatable" class="table dt-responsive nowrap w-100">
+                                            <thead>
+                                                <tr>
+                                                    <th width="50">S.No.</th>
+                                                    <th>Title</th>
+                                                    <th>Project</th>
+                                                    <th>File Type</th>
+                                                    <th>File</th>
+                                                    {% if request.session.userType == 'masteR' or request.session.userType == 'teacheR' %}
+                                                        <th width="100">Action</th>
+                                                    {% endif %}
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                {% for i in fileObj %}
+                                                    <tr>
+                                                        <td>{{forloop.counter}}</td>
+                                                        <td>{{i.file_title}}
+                                                            <i class='mdi mdi-information' data-bs-toggle="popover" data-bs-trigger="hover" data-bs-content="File Uploaded by : {{i.userFK.first_name}}"  data-bs-placement="top" title="" class="d-inline-block"></i>
+                                                        </td>
+                                                        <td class=" ">
+                                                            {% if i.projectFK == None %}
+                                                            -
+                                                            {% else %}
+                                                            {{i.projectFK}}
+                                                            {% endif %}
+                                                        </td>
+                                                        <td>{{i.file_type}}</td>
+                                                        <td><a href="/media/{{i.file}}" target="_blank">Download file</a></td>
+                                                        {% if request.session.userType == 'masteR' or request.session.userType == 'teacheR' %}
+                                                        <td>
+                                                            <a title="Share file" href="javascript:;" class="share_file action-icon text-info" data-bs-toggle="modal" data-bs-target="#share-modal">
+                                                                <i class="mdi mdi-reply-all-outline"></i>
+                                                            </a> 
+
+                                                            <a href="{% url 'delete_files' i.id %}" class="action-icon text-danger" onclick="return confirm('Confirm to delete < {{i.file_title}}  > File.It cannot be recovered back.')"> <i class="mdi mdi-delete-outline"></i></a>
+                                                            </td>
+                                                        {% endif %}
+                                                    </tr>
+                                                {% endfor %}
+                                                {% comment %} <tr>
+                                                    <td>1</td>
+                                                    <td class=" ">
+                                                         Ada chikan website test cases
+                                                    </td>
+                                                     <td>Ada Chikan</td>
+                                                     <td>Excel</td>
+                                                     <td><a href="">Download file</a></td>
+                                                     {% if request.session.userType == 'masteR' or request.session.userType == 'teacheR' %}
+                                                     <td> 
+                                                         <a href="javascript:void(0);" class="action-icon text-danger"> <i class="mdi mdi-delete-outline"></i></a>
+                                                        </td>
+                                                    {% endif %}
+                                                </tr> {% endcomment %}
+                                                {% comment %} 
+                                                <tr>
+                                                    <td>2</td>
+                                                      <td class=" ">
+                                                         Rozana website test cases
+                                                    </td>
+                                                     <td>Rozana</td>
+                                                     <td>Excel</td>
+                                                     <td><a href="">Download file</a></td>
+                                                    <td> 
+                                                        
+                                                        <a href="javascript:void(0);" class="action-icon text-danger"> <i class="mdi mdi-delete-outline"></i></a>
+                                                     </td>
+                                                    
+                                                </tr>
+
+                                                <tr>
+                                                    <td>3</td>
+                                                      <td class=" ">
+                                                        Ambulance portal documentation
+                                                    </td>
+                                                     <td>Ambulance</td>
+                                                     <td>Word</td>
+                                                     <td><a href="">Download file</a></td>
+                                                    <td> 
+                                                        
+                                                        <a href="javascript:void(0);" class="action-icon text-danger"> <i class="mdi mdi-delete-outline"></i></a>
+                                                     </td>
+                                                    
+                                                </tr> {% endcomment %}
+                                            </tbody>
+                                        </table>
+                                        </div>
+                                    </div> <!-- end card-body-->
+                                </div> <!-- end card-->
+                            </div> <!-- end col -->
+                        </div>
+                        <!-- end row -->
+                        
+                    </div> <!-- container -->
+
+                </div> <!-- content -->
+
+                <!-- Footer Start -->
+                <footer class="footer">
+                    <div class="container-fluid">
+                        <div class="row">
+                            <div class="col-md-6">
+                                <script>document.write(new Date().getFullYear())</script> © 18pixels 
+                            </div>
+                            
+                        </div>
+                    </div>
+                </footer>
+                <!-- end Footer -->
+
+            </div>
+
+            <!-- ============================================================== -->
+            <!-- End Page content -->
+            <!-- ============================================================== -->
+
+
+        </div>
+        <!-- END wrapper -->
+
+        <!-- add desig modal -->
+        <div class="modal fade task-modal-content show" id="add-new-desig" tabindex="-1" role="dialog" aria-labelledby="NewTaskModalLabel" aria-modal="true" >
+            <div class="modal-dialog modal-dialog-centered modal-md">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h4 class="modal-title" id="NewTaskModalLabel">Add Leave</h4>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <form class="p-2">
+                            <div class="row">
+                                <div class="col-md-12">
+                                    
+                                    <div class="mb-3  ">
+                                        <label for="task-title" class="form-label">Select year</label>
+                                        <select class="form-select">
+                                            <option>2022</option>
+                                             <option>2021</option>
+                                        </select>
+                                    </div>
+                                     <div class="mb-3 position-relative" id="datepicker2">
+                                        <label class="form-label">Date</label>
+                                        <input id="due_date" type="text" class="form-control" data-provide="datepicker" data-date-container="#datepicker2" data-date-format="d-M-yyyy" data-date-autoclose="true"    placeholder="d-M-yyyy">
+                                    </div>
+                                    <div class="mb-3">
+                                        <label for="task-title" class="form-label">Holiday</label>
+                                        <input type="text" class="form-control  "  placeholder="Enter holiday name">
+                                    </div>
+                                 </div>
+                               </div>
+                              <div class="text-end mt-4">
+                                <button  type="button" class="btn btn-light" data-bs-dismiss="modal" >Cancel</button>
+                                <button type="button" class="btn btn-primary" data-bs-dismiss="modal" >Create</button>
+                             </div>
+                        </form>
+                    </div>
+                </div><!-- /.modal-content -->
+            </div><!-- /.modal-dialog -->
+        </div>
+        <!-- /End-modal -->
+
+           <!--detail modal -->
+        <div class="modal fade task-modal-content show" id="view-det" tabindex="-1" role="dialog" aria-labelledby="NewTaskModalLabel" aria-modal="true" >
+            <div class="modal-dialog modal-dialog-centered modal-lg">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h4 class="modal-title" id="NewTaskModalLabel">Leave History</h4>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <form class="p-1 pt-0">
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <div class="mb-3 text-center">
+                                       <h4> <img src="assets\images\users\avatar-5.jpg" alt="image" class="avatar-md rounded-circle me-1">
+                                           Kapil Dev </h4>
+                                    </div>
+                                     <div class="mb-3 position-relative" id="datepicker2">
+                                        <table class="table table-bordered table-striped tbl-history">
+                                            <thead>
+                                               <tr>
+                                                   <th>S.No.</th>
+                                                   <th>Leave date</th>
+                                                    <th>No. of Leave</th>
+                                                   <th>Reason</th>
+                                                  
+                                               </tr> 
+                                           </thead>
+                                           <tbody>
+                                               <tr>
+                                                   <td>1</td>
+                                                   <td>Nov 01, 2021</td>
+                                                   <td>01</td>
+                                                   <td>Sick leave</td>
+                                               </tr>
+                                                <tr>
+                                                   <td>2</td>
+                                                   <td>Sept 11, 2021</td>
+                                                   <td>01</td>
+                                                   <td>Personal Work</td>
+                                               </tr>
+                                                <tr>
+                                                   <td>1</td>
+                                                   <td>Nov 01, 2021</td>
+                                                   <td>01</td>
+                                                   <td>Sick leave</td>
+                                               </tr>
+                                                <tr>
+                                                   <td>2</td>
+                                                   <td>Sept 11, 2021</td>
+                                                   <td>01</td>
+                                                   <td>Personal Work</td>
+                                               </tr>
+
+                                                
+
+                                           </tbody>
+                                        </table>
+                                    </div>
+                                   
+                                 </div>
+                               </div>
+                              <div class="text-end mt-4">
+                                <button  type="button" class="btn btn-light" data-bs-dismiss="modal" >Close</button>
+                               
+                             </div>
+                        </form>
+                    </div>
+                </div><!-- /.modal-content -->
+            </div><!-- /.modal-dialog -->
+        </div>
+        <!-- /End-modal -->
+
+         <!-- edit desig modal -->
+        <div class="modal fade task-modal-content show" id="edit-desig" tabindex="-1" role="dialog" aria-labelledby="NewTaskModalLabel" aria-modal="true" >
+            <div class="modal-dialog modal-dialog-centered modal-md">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h4 class="modal-title" id="NewTaskModalLabel">Edit Details</h4>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <form class="p-2">
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <div class="mb-3">
+                                        <label for="task-title" class="form-label">Select year</label>
+                                        <select class="form-select">
+                                              <option selected="">2022</option>
+                                             <option>2021</option>
+                                        </select>
+                                    </div>
+                                     <div class="mb-3 position-relative" id="datepicker3">
+                                        <label class="form-label">Date</label>
+                                        <input id="due_date" type="text" class="form-control" data-provide="datepicker" data-date-container="#datepicker3" data-date-format="d-M-yyyy" data-date-autoclose="true"    placeholder="d-M-yyyy" value="24-Nov-2021">
+                                    </div>
+                                    <div class="mb-3">
+                                        <label for="task-title" class="form-label">Holiday</label>
+                                        <input type="text" class="form-control"  placeholder="Enter holiday name" value="Diwali">
+                                    </div>
+                                </div>
+                              </div>
+                        
+                            <div class="text-end mt-4">
+                                <button  type="button" class="btn btn-light" data-bs-dismiss="modal" >Cancel</button>
+                                <button type="button" class="btn btn-primary" data-bs-dismiss="modal" >Update</button>
+                            </div>
+                        </form>
+                    </div>
+                </div><!-- /.modal-content -->
+            </div><!-- /.modal-dialog -->
+        </div>
+        <!-- /End-modal -->
+
+
+        <div id="share-modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="compose-header-modalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header modal-colored-header bg-primary">
+                        <h4 class="modal-title" id="compose-header-modalLabel">Share File</h4>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="p-1">
+                        <div class="modal-body px-3 pt-3 pb-0">
+                            <form>
+                                <div class="mb-4">
+                                    <label for="msgto" class="form-label">Send To</label>
+                                    
+                                    <div class="sel_emp">
+                                     <select class="select2  form-control select2-multiple" data-toggle="select2" id='share-emp' multiple="multiple" data-placeholder="Select ...">
+                                        {% for i in empObj %}
+                                            <option value="{{i.id}}">{{i.employee_name}}</option>
+                                        {% endfor %}
+                                    </select>
+                                  </div>
+                                </div>
+                                 
+                            </form>
+                        </div>
+                        <div class="px-3 pb-3 text-end">
+                            <button type="button" class="btn btn-primary" data-bs-dismiss="modal"><i class="mdi mdi-send me-1"></i> Share  </button>
+                            <button type="button" class="btn btn-light" data-bs-dismiss="modal">Cancel</button>
+                        </div>
+                    </div>
+                </div><!-- /.modal-content -->
+            </div><!-- /.modal-dialog -->
+        </div><!-- /.modal -->
+
+
+
+        <!-- bundle -->
+        <script src="{% static 'assets/js/vendor.min.js' %}"></script>
+        <script src="{% static 'assets/js/app.min.js' %}"></script>
+
+        <!-- third party js -->
+        <script src="{% static 'assets/js/vendor/jquery.dataTables.min.js' %}"></script>
+        <script src="{% static 'assets/js/vendor/dataTables.bootstrap5.js' %}"></script>
+        <script src="{% static 'assets/js/vendor/dataTables.responsive.min.js' %}"></script>
+        <script src="{% static 'assets/js/vendor/responsive.bootstrap5.min.js' %}"></script>
+        <script src="{% static 'assets/js/vendor/dataTables.checkboxes.min.js' %}"></script>
+        <!-- third party js ends -->
+
+        <!-- demo app -->
+        <script src="{% static 'assets/js/pages/demo.datatable-init.js' %}"></script>
+
+         <script src="{% static 'assets/js/custom.js' %}"></script>
+
+         <script>
+            $("#share-emp").select2({
+            });
+         </script>
+       
+
+        <!-- end demo js-->
+
+    </body>
+ 
+</html>

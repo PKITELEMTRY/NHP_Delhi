@@ -1,0 +1,666 @@
+﻿{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <title>18Pixels | Management Tool</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta content="A fully featured admin theme which can be used to build CRM, CMS, etc." name="description">
+    <meta content="Coderthemes" name="author">
+    <!-- App favicon -->
+    <link rel="shortcut icon" href="{% static 'assets/images/favicon.ico' %}">
+
+    <!-- Quill css -->
+    <link href="{% static 'assets/css/vendor/quill.bubble.css' %}" rel="stylesheet" type="text/css">
+    <link href="{% static 'assets/css/vendor/quill.core.css' %}" rel="stylesheet" type="text/css">
+    <link href="{% static 'assets/css/vendor/quill.snow.css' %}" rel="stylesheet" type="text/css">
+
+    <!-- App css -->
+    <link href="{% static 'assets/css/icons.min.css' %}" rel="stylesheet" type="text/css">
+    <link href="{% static 'assets/css/app.min.css' %}" rel="stylesheet" type="text/css" id="light-style">
+    <link href="{% static 'assets/css/app-dark.min.css' %}" rel="stylesheet" type="text/css" id="dark-style">
+    <link href="{% static 'assets/css/custom.css' %}" rel="stylesheet" type="text/css">
+</head>
+
+<body class="loading"
+    data-layout-config='{"leftSideBarTheme":"dark","layoutBoxed":false, "leftSidebarCondensed":false, "leftSidebarScrollable":false,"darkMode":false, "showRightSidebarOnStart": true}'>
+    <!-- Begin page -->
+    <div class="wrapper">
+        <!-- ========== Left Sidebar Start ========== -->
+        <div class="leftside-menu" id="sidebarMenus">
+            {% include 'base.html' %}
+        </div>
+        <!-- Left Sidebar End -->
+
+        <!-- ============================================================== -->
+        <!-- Start Page Content here -->
+        <!-- ============================================================== -->
+
+        <div class="content-page">
+            <div class="content">
+                <!-- Topbar Start -->
+                <div class="navbar-custom" id="load-navigation">
+                    {% include 'hearder.html' %}</div>
+                <!-- end Topbar -->
+
+                <!-- Start Content-->
+                <div class="container-fluid">
+                    <div class="row">
+                        <div class="col-md-12">
+
+                            <div class="col-lg-12 mt-3">
+                                <h3 class="title_n today"><span class="bg-success">Today's Events</span></h3>
+                            </div>
+
+
+                            {% if birthdayObj_today.count %}
+                            <div class="row mt-4">
+                            {% for i in birthdayObj_today %}
+                            {% if i.event_type == 'Birthday' %}
+                            {% if i.view_data == 'yes' %}
+                                <div class="col-xxl-3 col-lg-4">
+                                    <div class="card widget-flat bday" data-bs-toggle="popover" data-bs-trigger="hover" data-bs-content="{{i.highlightStr}}"  data-bs-placement="top" title="Highlights">
+                                        <span class="evt_name bg-primary">{{i.event_type}}</span>
+                                        <div class="card-body text-center">
+                                            <div class="media">
+                                                {% if i.employeeFK.profile_image == '' %}
+                                                <img src="https://images.vexels.com/media/users/3/129616/isolated/preview/fb517f8913bd99cd48ef00facb4a67c0-businessman-avatar-silhouette-by-vexels.png"
+                                                    class="" alt="friend">
+                                                {% else %}
+                                                <img src="/media/{{i.employeeFK.profile_image}}" class="" alt="friend">
+                                                {% endif %}
+                                            </div>
+                                            <div class="cont mt-2">
+                                                <h4 class="text-uppercase">{{i.first_name}}</h4>
+                                                <p class="mb-0">
+                                                    {% if i.view_data == 'yes' %}
+                                                    <a href="#" class="text-primary" data-bs-toggle="modal"
+                                                        data-bs-target="#wishes" recID="{{i.employeeFK.id}}" recName="{{i.employeeFK.employee_name}}" eventType="Birthday" recImage="{{i.employeeFK.profile_image}}" onclick="send_message_modal(this)">Send wishes <i class="mdi mdi-chevron-right"></i></a>
+                                                    {% else %}
+                                                    <a href="#" class="text-primary" data-bs-toggle="modal"
+                                                        data-bs-target="#wishes"></a>
+                                                    {% endif %}
+                                                </p>
+                                                <img src="{% static 'assets/images/bday-bg.webp' %}">
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            {% comment %} </div> {% endcomment %}
+                            {% endif %}
+                            {% elif i.event_type == 'Anniversary' %}
+                            {% comment %} <div class="row mt-4"> {% endcomment %}
+                               <div class="col-xxl-3 col-lg-4">
+                                    <div class="card widget-flat bday" data-bs-toggle="popover" data-bs-trigger="hover" data-bs-content="{{i.highlightStr}}"  data-bs-placement="top" title="Highlights">
+                                        <span class="evt_name bg-primary">{{i.event_type}}</span>
+                                        <div class="card-body text-center">
+                                            <div class="media">
+                                                {% if i.employeeFK.profile_image == '' %}
+                                                <img src="https://images.vexels.com/media/users/3/129616/isolated/preview/fb517f8913bd99cd48ef00facb4a67c0-businessman-avatar-silhouette-by-vexels.png"
+                                                    class="" alt="friend">
+                                                {% else %}
+                                                <img src="/media/{{i.employeeFK.profile_image}}" class="" alt="friend">
+                                                {% endif %}
+                                            </div>
+                                            <div class="cont mt-2">
+                                                <h4 class="text-uppercase">{{i.first_name}}</h4>
+                                                <p class="mb-0">
+                                                    {% if i.view_data == 'yes' %}
+                                                    <a href="#" class="text-primary" data-bs-toggle="modal"
+                                                        data-bs-target="#wishes" recID="{{i.employeeFK.id}}" recName="{{i.employeeFK.employee_name}}" eventType="Anniversary" recImage="{{i.employeeFK.profile_image}}" onclick="send_message_modal(this)">Send wishes <i class="mdi mdi-chevron-right"></i></a>
+                                                    {% else %}
+                                                    <a href="#" class="text-primary" data-bs-toggle="modal"
+                                                        data-bs-target="#wishes"></a>
+                                                    {% endif %}
+                                                </p>
+                                                <img src="{% static 'assets/images/bday-bg.webp' %}">
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            {% comment %} </div> {% endcomment %}
+                            {% elif i.event_type == 'CulturalEvent' %}
+                            <div class="col-xxl-6 col-lg-6">
+                                <div class="card widget-flat event-card small ">
+                                    <span class="date bg-{{i.cColor}}">{{i.event_date|date:"d"}}<br>
+                                        {{i.event_date|date:"M"}}</span>
+                                    <div class="media">
+                                        <img src="/media/{{i.cultural_event_creative}}" class="" alt="friend">
+                                    </div>
+                                    <div class="card-body  cont pt-1">
+                                        <div class="row">
+                                            <div class="col-md-12 p-1 pt-0">
+                                                <h4 class="text-uppercase">{{i.cultural_eventFK.event_name}} -
+                                                    {{i.cultural_event_title}}</h4>
+                                            </div>
+
+                                            <div class="col-md-7 p-1">
+                                                <p class="mb-1">Event Manager:</p>
+                                                <span class="value">{{i.empStr}}</span>
+                                            </div>
+                                            {% comment %} <div class="col-md-5 p-1">
+                                                <p class="mb-1">Budget:</p>
+                                                <span class="value">Rs.{{i.event_budget}}</span>
+                                            </div> {% endcomment %}
+
+                                            <div class="col-md-12 p-1">
+                                                <p class="mb-1">Highlights:</p>
+                                                {% for j in i.highlightStr %}
+                                                <span class="value">{{j}}</span>
+                                                {% endfor %}
+
+                                            </div>
+
+                                            {% comment %} <div class="col-md-9 p-1">
+                                                <p class="mb-1">Special Performances:</p>
+                                                <span class="value">N/A</span>
+
+                                            </div> {% endcomment %}
+
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            {% endif %}
+                            {% endfor %}
+
+                            {% else %}
+                            <div class="no-events">
+                                <h3 class="mt-4">No celebrations today </h3>
+                            </div>
+                            {% endif %}
+
+                            <div class="row mt-2 upcoming_events">
+                                <div class="col-lg-12 mb-2">
+                                    <h3 class="title_n upcoming"><span class="bg-primary">Upcoming Events</span></h3>
+                                </div>
+                                {% if birthdayObj_month.count %}
+                                {% for i in birthdayObj_month %}
+                                {% if i.event_type == 'Birthday' %}
+                                <div class="col-xxl-3 col-lg-3">
+                                    <div class="card widget-flat bday hbd" data-bs-toggle="popover" data-bs-trigger="hover" data-bs-content="{{i.highlightStr}}"  data-bs-placement="top" title="Highlights">
+                                        <span class="evt_name bg-primary">{{i.event_type}}</span>
+                                        {% comment %} <div class="card widget-flat bday" data-bs-toggle="popover" data-bs-trigger="hover" data-bs-content="{{i.highlightStr}}"  data-bs-placement="top" title="Highlights"> {% endcomment %}
+                                            <div class="card-body text-center">
+                                                <span class="date bg-success">{{i.event_date|date:"d"}}<br>
+                                                    {{i.event_date|date:"M"}}</span>
+                                                <div class="media">
+                                                    {% if i.employeeFK.profile_image == '' %}
+                                                    <img src="https://images.vexels.com/media/users/3/129616/isolated/preview/fb517f8913bd99cd48ef00facb4a67c0-businessman-avatar-silhouette-by-vexels.png"
+                                                        class="" alt="friend">
+                                                    {% else %}
+                                                    <img src="/media/{{i.employeeFK.profile_image}}" class="" alt="friend">
+                                                    {% endif %}
+                                                </div>
+                                                <div class="cont">
+                                                    <h4 class="text-uppercase">{{i.first_name}}</h4>
+                                                    <p class="mb-0">
+                                                        {% if i.view_data == 'yes' %}
+                                                        <a href="#" class="text-danger" data-bs-toggle="modal"
+                                                            data-bs-target="#sc_wishes" recID="{{i.employeeFK.id}}" eventType="Birthday" recName="{{i.employeeFK.employee_name}}" recImage="{{i.employeeFK.profile_image}}" onclick="schedule_message_modal(this)">Schedule wishes <i
+                                                                class="mdi mdi-chevron-right"></i></a>
+                                                        {% else %}
+                                                        <a href="#" class="text-danger" data-bs-toggle="modal"
+                                                            data-bs-target="#sc_wishes"></a>
+                                                        {% endif %}
+                                                    </p>
+                                                    <img src="{% static 'assets/images/bday-bg.webp' %}">
+                                                </div>
+                                            {% comment %} </div> {% endcomment %}
+                                        </div>
+                                    </div>
+                                </div>
+                                {% elif i.event_type == 'Anniversary' %}
+                                <div class="col-xxl-3 col-lg-3">
+                                    <div class="card widget-flat bday hbd" data-bs-toggle="popover" data-bs-trigger="hover" data-bs-content="{{i.highlightStr}}"  data-bs-placement="top" title="Highlights">
+                                        <span class="evt_name bg-primary">{{i.event_type}}</span>
+                                        {% comment %} <div class="card widget-flat bday" data-bs-toggle="popover" data-bs-trigger="hover" data-bs-content="{{i.highlightStr}}"  data-bs-placement="top" title="Highlights"> {% endcomment %}
+                                            <div class="card-body text-center">
+                                                <span class="date bg-success">{{i.event_date|date:"d"}}<br>
+                                                    {{i.event_date|date:"M"}}</span>
+                                                <div class="media">
+                                                    {% if i.employeeFK.profile_image == '' %}
+                                                    <img src="https://images.vexels.com/media/users/3/129616/isolated/preview/fb517f8913bd99cd48ef00facb4a67c0-businessman-avatar-silhouette-by-vexels.png"
+                                                        class="" alt="friend">
+                                                    {% else %}
+                                                    <img src="/media/{{i.employeeFK.profile_image}}" class="" alt="friend">
+                                                    {% endif %}
+                                                </div>
+                                                <div class="cont">
+                                                    <h4 class="text-uppercase">{{i.first_name}}</h4>
+                                                    <p class="mb-0">
+                                                        {% if i.view_data == 'yes' %}
+                                                        <a href="#" class="text-danger" data-bs-toggle="modal"
+                                                            data-bs-target="#sc_wishes" recID="{{i.employeeFK.id}}" eventType="Anniversary" recName="{{i.employeeFK.employee_name}}" recImage="{{i.employeeFK.profile_image}}" onclick="schedule_message_modal(this)">Schedule wishes <i
+                                                                class="mdi mdi-chevron-right"></i></a>
+                                                        {% else %}
+                                                        <a href="#" class="text-danger" data-bs-toggle="modal"
+                                                            data-bs-target="#sc_wishes"></a>
+                                                        {% endif %}
+                                                    </p>
+                                                    <img src="{% static 'assets/images/bday-bg.webp' %}">
+                                                </div>
+                                            {% comment %} </div> {% endcomment %}
+                                        </div>
+                                    </div>
+                                </div>
+                                {% endif %}
+                                {% endfor %}
+                                {% else %}
+                                <div class="col-lg-12">
+                                    <h3 style="opacity: .5;  margin-bottom: 50px">No cultural event in next 30 days</h3>
+                                </div>
+                                {% endif %}
+                            </div>
+                            <div class="row mt-2 upcoming_events">
+                                <div class="col-lg-12 mb-2">
+                                    <h3 class="title_n upcoming"><span class="bg-warning">Upcoming Cultural
+                                            Events</span></h3>
+                                </div>
+                                {% if birthdayObj_month.count %}
+                                {% for i in birthdayObj_month %}
+                                {% if i.event_type == 'CulturalEvent' %}
+                                <div class="col-xxl-6 col-lg-6">
+                                    <div class="card widget-flat event-card small ">
+                                        <span class="date bg-success">{{i.event_date|date:"d"}}<br>
+                                            {{i.event_date|date:"M"}}</span>
+                                        <div class="media">
+                                            <img src="/media/{{i.cultural_event_creative}}" class="" alt="friend">
+                                        </div>
+                                        <div class="card-body  cont pt-1">
+                                            <div class="row">
+                                                <div class="col-md-12 p-1 pt-0">
+                                                    <h4 class="text-uppercase">{{i.cultural_eventFK.event_name}} -
+                                                        {{i.cultural_event_title}}</h4>
+                                                </div>
+
+                                                <div class="col-md-7 p-1">
+                                                    <p class="mb-1">Event Manager:</p>
+                                                    <span
+                                                        class="value">{{i.empStr}}</span>
+                                                </div>
+                                                {% comment %} <div class="col-md-5 p-1">
+                                                    <p class="mb-1">Budget:</p>
+                                                    <span class="value">Rs.{{i.event_budget}}</span>
+                                                </div> {% endcomment %}
+
+                                                <div class="col-md-12 p-1">
+                                                    <p class="mb-1">Highlights:</p>
+                                                    {% for j in i.highlightStr %}
+                                                    <span class="value">{{j}}</span>
+                                                    {% endfor %}
+
+                                                </div>
+
+                                                {% comment %} <div class="col-md-9 p-1">
+                                                    <p class="mb-1">Special Performances:</p>
+                                                    <span class="value">N/A</span>
+
+                                                </div> {% endcomment %}
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                {% endif %}
+                                {% endfor %}
+                                {% else %}
+                                <div class="col-lg-12">
+                                    <h3 style="opacity: .5;  margin-bottom: 50px">No celebrations in next 30 days</h3>
+                                </div>
+                                {% endif %}
+                            </div>
+
+                            <div class="row">
+                                <div class="col-lg-12 mt-3">
+                                    <h3 class="title_n"><span class="bg-secondary">All Cultural Events</span></h3>
+                                </div>
+                                <div class="col-12 mt-2">
+                                    <div class="card">
+                                        <div class="card-body">
+
+                                            <div class="table-responsive">
+                                                <table class="table event-table dt-responsive nowrap w-100">
+                                                    <thead>
+                                                        <tr>
+                                                            <th width="40">S.No.</th>
+                                                            <th>Creative</th>
+                                                            <th>Event</th>
+                                                            <th>Title</th>
+                                                            <th>Event Manager</th>
+                                                            <th>Highlights</th>
+                                                            {% comment %} <th>Budget</th>
+                                                            <th>Special <br>Performances</th> {% endcomment %}
+                                                            <th width="100"> Date</th>
+                                                        </tr>
+                                                    </thead>
+                                                    {% if culturalObj.count %}
+                                                    <tbody>
+                                                        {% for i in culturalObj %}
+                                                        <tr>
+                                                            <td>{{forloop.counter}}</td>
+                                                            <td> <a target="_blank"
+                                                                    href="/media/{{i.cultural_event_creative}}"><img
+                                                                        src="/media/{{i.cultural_event_creative}}"
+                                                                        class="" alt="friend"></a> </td>
+                                                            <td>{{i.cultural_eventFK.event_name}}</td>
+                                                            <td>{{i.cultural_event_title}}</td>
+                                                            <td>{{i.empStr}}</td>
+                                                            <td>{% for j in i.highlightStr %}
+                                                                <span class="value">{{j}}</span>,
+                                                                {% endfor %}
+                                                            </td>
+                                                            {% comment %} <td>{{i.event_budget}}</td>
+                                                            <td>Neha - Ramp Walk</td> {% endcomment %}
+                                                            <td>
+                                                                <span class="badge bg-info">{{i.event_date|date:"M d"}}</span>
+                                                            </td>
+                                                        </tr>
+                                                        {% endfor %}
+                                                    </tbody>
+                                                    {% endif %}
+                                                </table>
+                                                {% if culturalObj|length < 1 %} <div class="text-center">
+                                                    <h4>No cultural event available!</h4>
+                                            </div>
+                                            {% endif %}
+                                        </div>
+                                    </div> <!-- end card-body-->
+                                </div> <!-- end card-->
+                            </div> <!-- end col -->
+
+
+
+                        </div>
+
+
+
+
+
+
+
+
+                    </div> <!-- end col -->
+
+
+                </div>
+                <!-- end row-->
+
+            </div> <!-- container -->
+
+        </div> <!-- content -->
+
+        <!-- Footer Start -->
+        <footer class="footer">
+            <div class="container-fluid">
+                <div class="row">
+                    <div class="col-md-6">
+                        <script>document.write(new Date().getFullYear())</script> © 18pixels
+                    </div>
+                </div>
+            </div>
+        </footer>
+        <!-- end Footer -->
+
+    </div>
+
+    <!-- ============================================================== -->
+    <!-- End Page content -->
+    <!-- ============================================================== -->
+
+
+    </div>
+    <!-- END wrapper -->
+
+    <!-- wishes modal -->
+    <div class="modal fade task-modal-content show" id="wishes" tabindex="-1" role="dialog" aria-labelledby="NewTaskModalLabel" aria-modal="true" >
+        <div class="modal-dialog modal-dialog-centered modal-md">
+            <div class="modal-content">
+                <!-- <div class="modal-header">
+                    <h4 class="modal-title"  >Send Wishes</h4>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div> -->
+                <div class="modal-body pt-0 p-0  ">
+                    <form class=" ">
+                        <div class="bday-modal-head">
+                        <div class="row">
+                            <div class="mb-3 col-md-5 "></div>
+                            <div class="mb-3 col-md-6   text-center" id='recData'>
+
+                                 <img src="{% static 'assets/images/users/avatar-7.jpg' %}" class="rounded-circle img-thumbnail avatar-lg" alt="friend">
+                                  <h3 id="rec_sched_Name">Rohit Kumar<strong><i class="fas fa-birthday-cake"></i></strong> &nbsp;&nbsp;</h3>
+                            </div>
+                           </div>
+                       </div>
+                      <div class="row p-3">
+                        <div class="mb-3 col-md-12">
+                           <input type="text"  class="form-control" placeholder="Enter Title" id='anniversaryTitle' name="" value="">
+                              
+                        </div>
+                         <div class="mb-3 col-md-12">
+                            <textarea class="form-control" placeholder="Enter Message" id='anniversarymessage' style="height: 100px"></textarea>
+                              
+                        </div>
+
+                       
+                          <div class="col-md-6  ">
+                            <label>Upload Event Creative</label>
+                            <label class="d-block mt-1">
+                                <input id="emp_photo" type="file" name="" class="d-none">
+                                <img id="imgphoto" style=" width: 200px; height: 110px; cursor: pointer;" src="{% static 'assets/images/placeholder.jpg' %}">
+
+                            </label>
+                            
+
+                          </div>
+
+                           <div class="text-end mt-5 col-md-6">
+                            <button  type="button" class="btn btn-light mr-3" data-bs-dismiss="modal" >Cancel</button>
+                            <button type="button" class="btn btn-primary" receiverID='' eventType="" id='sendBTN' onclick="send_message(this)">Send</button>
+                        
+                        </div>
+                      
+                          
+                      </div>
+
+                       
+                    </form>
+                </div>
+            </div><!-- /.modal-content -->
+        </div><!-- /.modal-dialog -->
+    </div>
+    <!-- /End-modal -->
+
+     <!-- schedule wishes modal -->
+     <div class="modal fade task-modal-content show" id="sc_wishes" tabindex="-1" role="dialog" aria-labelledby="NewTaskModalLabel" aria-modal="true" >
+        <div class="modal-dialog modal-dialog-centered modal-md">
+            <div class="modal-content">
+                <!-- <div class="modal-header">
+                    <h4 class="modal-title"  >Send Wishes</h4>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div> -->
+                <div class="modal-body pt-0 p-0  ">
+                    <form class=" ">
+                        <div class="bday-modal-head">
+                        <div class="row">
+                            <div class="mb-3 col-md-5 "></div>
+                            <div class="mb-3 col-md-6   text-center"  id='rec_sched_Data'>
+                                <img src="{% static 'assets/images/users/avatar-7.jpg' %}" class="rounded-circle img-thumbnail avatar-lg" alt="friend">
+                                <h3>Rohit Kumar</h3>
+                            </div>
+                           </div>
+                       </div>
+                      <div class="row p-3">
+                          {% comment %} <div class="col-md-12">
+                                <div class="mb-3">
+                                    <input type="text" class="form-control" value="" id="rec_sched_date">
+                                </div>
+                            </div> {% endcomment %}
+                        <div class="mb-3 col-md-12">
+                           <input type="text"  class="form-control" placeholder="Enter Title" name="" value="Congratulations" id="anniversary_sched_Title">  
+                        </div>
+                        <div class="mb-3 col-md-12">
+                            <textarea class="form-control" placeholder="Enter Message" id='anniversary_sched_message' style="height: 100px"></textarea>
+                              
+                        </div>
+
+                       
+                          <div class="col-md-6  ">
+                            <label>Upload Event Creative</label>
+                            <label class="d-block mt-1">
+                                <input id="creative_file" type="file" name="" class="d-none">
+                                <img id="creative_img" style=" width: 200px; height: 110px; cursor: pointer;" src="{% static 'assets/images/placeholder.jpg' %}">
+
+                            </label>
+                            
+
+                          </div>
+
+                           <div class="text-end mt-5 col-md-6">
+                            <button  type="button" class="btn btn-light mr-3" data-bs-dismiss="modal" >Cancel</button>
+                            <button type="button" class="btn btn-primary" event_Type=""  receiverID='' id='schedBTN' onclick="schedule_message(this)">Schedule</button>
+                        </div>
+                      
+                          
+                      </div>
+
+                       
+                    </form>
+                </div>
+            </div><!-- /.modal-content -->
+        </div><!-- /.modal-dialog -->
+    </div>
+    <!-- /End-modal -->
+
+    <!-- add task modal -->
+    <div class="modal fade task-modal-content show" id="add-new-task-modal" tabindex="-1" role="dialog"
+        aria-labelledby="NewTaskModalLabel" aria-modal="true">
+        <div class="modal-dialog modal-dialog-centered modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title" id="NewTaskModalLabel">Create New Task</h4>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <form class="p-2">
+                        <div class="row">
+                            <div class="mb-3 col-md-4">
+                                <label class="form-label">Project</label>
+                                <select class="form-control select2 text-large" data-toggle="select2"
+                                    data-placeholder="Select Project">
+                                    <option></option>
+                                    <option value="0">Ada Chikan</option>
+                                    <option value="1">Rozana</option>
+                                    <option value="2">RDX</option>
+                                    <option value="3">Agrijunction</option>
+                                </select>
+                            </div>
+                            <div class="mb-3 col-md-4">
+                                <label class="form-label">Module</label>
+                                <select class="form-control select2 text-large" data-toggle="select2"
+                                    data-placeholder="Select Module">
+                                    <option></option>
+                                    <option value="0">Customer management</option>
+                                    <option value="1">Sales management</option>
+
+                                </select>
+                            </div>
+                            <div class="mb-3 col-md-4">
+                                <label class="form-label">Sub Module</label>
+                                <select class="form-control select2 text-large" data-toggle="select2"
+                                    data-placeholder="Select Sub module">
+                                    <option></option>
+                                    <option value="0">Add new customer</option>
+                                    <option value="1">order list</option>
+
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="mb-3">
+                                    <label for="task-title" class="form-label">Title</label>
+                                    <input type="text" class="form-control  " id="task-title" placeholder="Enter title">
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="mb-3">
+                                    <label for="task-priority" class="form-label">Due Date/Time</label>
+                                    <input type="text" class="form-control  " id="datepicker" data-toggle="date-picker"
+                                        data-single-date-picker="true">
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="  mb-3 mt-3 pt-1 position-relative">
+                                    <select class="form-select  ">
+                                        <option>12:00 PM</option>
+                                        <option>01:00 PM</option>
+                                        <option>02:00 PM</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="col-md-2">
+                                <div class="mb-3">
+                                    <label for="task-priority2" class="form-label">Priority</label>
+                                    <select class="form-select  " id="task-priority2">
+                                        <option>Low</option>
+                                        <option>Medium</option>
+                                        <option>High</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="mb-3 col-md-4">
+                                <label class="form-label">Employee</label>
+                                <select class="form-control select2 text-large" data-toggle="select2"
+                                    data-placeholder="Select Employee">
+                                    <option></option>
+                                    <option value="0">Pooja Singh</option>
+                                    <option value="1">Pankaj</option>
+                                    <option value="2">Anuj</option>
+
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="mb-3">
+                            <label for="task-description" class="form-label">Description</label>
+                            <textarea class="form-control " rows="2"></textarea>
+                        </div>
+
+
+
+                        <div class="text-end">
+                            <button type="button" class="btn btn-light" data-bs-dismiss="modal">Cancel</button>
+                            <button type="button" class="btn btn-primary">Create</button>
+                        </div>
+                    </form>
+                </div>
+            </div><!-- /.modal-content -->
+        </div><!-- /.modal-dialog -->
+    </div>
+    <!-- /End-modal -->
+
+
+    <!-- bundle -->
+    <script src="{% static 'assets/js/vendor.min.js' %}"></script>
+    <script src="{% static 'assets/js/app.min.js' %}"></script>
+
+    <!-- quill js -->
+    <script src="{% static 'assets/js/vendor/quill.min.js' %}"></script>
+    <!-- Init js-->
+    <script src="{% static 'assets/js/pages/demo.tasks.js' %}"></script>
+    <!-- third party js -->
+    <script src="{% static 'assets/js/vendor/Chart.bundle.min.js' %}"></script>
+    <!-- third party js ends -->
+
+    <!-- demo app -->
+    <script src="{% static 'assets/js/pages/demo.dashboard-projects.js' %}"></script>
+    <!-- end demo js-->
+    <script src="{% static 'assets/js/custom.js' %}"></script>
+    <script src="{% static 'assets/js/admin_JS/events_JS/employee_wishes.js' %}"></script>
+    <script src="{% static 'assets/js/admin_JS/events_JS/employee_wishes_anniversary.js' %}"></script>
+
+</body>
+
+</html>

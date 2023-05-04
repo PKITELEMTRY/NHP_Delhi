@@ -1,0 +1,313 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+ 
+<head>
+        <meta charset="utf-8" />
+         <title>18Pixels | Management Tool</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta content="" />
+        <meta content="Coderthemes" name="author" />
+        <!-- App favicon -->
+        <link rel="shortcut icon" href="{% static 'assets/images/favicon.ico' %}">
+
+        <!-- third party css -->
+        <link href="{% static 'assets/css/vendor/dataTables.bootstrap5.css' %}" rel="stylesheet" type="text/css" />
+        <link href="{% static 'assets/css/vendor/responsive.bootstrap5.css' %}" rel="stylesheet" type="text/css" />
+        <!-- third party css end -->
+
+        <!-- App css -->
+        <link href="{% static 'assets/css/icons.min.css' %}" rel="stylesheet" type="text/css" />
+        <link href="{% static 'assets/css/app.min.css' %}" rel="stylesheet" type="text/css" id="light-style" />
+        <link href="{% static 'assets/css/app-dark.min.css' %}" rel="stylesheet" type="text/css" id="dark-style" />
+        <link href="{% static 'assets/css/custom.css' %}" rel="stylesheet" type="text/css"  />
+
+    </head>
+
+    <body class="loading" data-layout-config='{"leftSideBarTheme":"dark","layoutBoxed":false, "leftSidebarCondensed":false, "leftSidebarScrollable":false,"darkMode":false, "showRightSidebarOnStart": true}'>
+        <!-- Begin page -->
+        <div class="wrapper">
+            <!-- ========== Left Sidebar Start ========== -->
+            <div class="leftside-menu" id="sidebarMenus">
+            {% include 'base.html' %}
+
+              </div>
+            <!-- Left Sidebar End -->
+
+            <!-- ============================================================== -->
+            <!-- Start Page Content here -->
+            <!-- ============================================================== -->
+
+            <div class="content-page">
+                <div class="content">
+                    <!-- Topbar Start -->
+                   <div class="navbar-custom" id="load-navigation"> 
+                        {% include 'hearder.html' %}
+                   </div>
+                    <!-- end Topbar -->
+                    <!-- Start Content-->
+                    <div class="container-fluid">
+                        <!-- start page title -->
+                        <div class="row">
+                            <div class="col-8">
+                                <div class="page-title-box">
+                                    <h4 class="page-title">List of Holidays</h4>
+                                </div>
+                            </div>
+                            {% if request.session.userType == 'masteR' %}
+                             <div class="col-4 text-end pt-3">
+                                  <a href="#" data-bs-toggle="modal" data-bs-target="#add-new-desig" class="btn btn-danger mb-2"><i class="mdi mdi-plus-circle me-2"></i> Add New Holiday</a>
+                             </div>
+                            {% endif %}
+                        </div>  
+                         <div class="page-title-box  pt-2 mb-2" >
+                            <div class="row">
+                                <div class="col-md-6 text-end pro_name mb-2 pt-2">
+                                      Filter By
+                                </div>
+                                <div class="col-md-2">
+                                 
+                                 <select class="form-control select2" data-toggle="select2"    data-placeholder="Select Month" >
+                                    <option></option>
+                                    <option value="1">Jan</option>
+                                    <option value="2">Feb</option>
+                                    <option value="3">Mar</option>
+                                    <option value="4">Apr</option>
+                                    <option value="5">May</option>
+                                    <option value="6">Jun</option>
+                                    <option value="7">Jul</option>
+                                    <option value="8">Aug</option>
+                                    <option value="9">Sep</option>
+                                    <option value="10">Oct</option>
+                                    <option value="11">Nov</option>
+                                    <option value="12">Dec</option>
+                                </select>
+                                </div>
+                                <div class="col-md-2">
+                                 
+                                 <select class="form-control select2" data-toggle="select2"    data-placeholder="Select Year" id='current_holiday_year'>
+                                    <option value="2021" selected="">2021</option>
+                                    <option value="2022">2022</option>
+                                </select>
+                                </div>
+                                
+                                 
+                                
+                               
+                                <div class="col-md-2 text-end     ">
+                                  <a   class="btn btn-success  ms-3  " data-bs-toggle="modal" data-bs-target="#add-new-task-modal">Search</a>
+                                  <a href=""  style="margin-left: 15px">Clear</a>
+                               </div>
+                                <!--  <div class="col-md-8 text-end    ">
+                                    
+                                 </div> -->
+                            </div>
+                             
+                        </div>   
+                        <!-- end page title --> 
+
+                        <div class="row">
+                            <div class="col-12">
+                                <div class="card">
+                                    <div class="card-body">
+                                        <div class="table-responsive">
+                                          <table id="basic-datatable" class="table dt-responsive nowrap w-100">
+                                            <thead>
+                                                <tr>
+                                                    <th width="100">S.No.</th>
+                                                    
+                                                    <th>Holiday</th>
+                                                     <th>Date</th>
+                                                      <th>No. of Holiday</th>
+                                                     {% if request.session.userType == 'masteR' %}
+                                                        <th width="100">Action</th>
+                                                     {% endif %}
+                                                </tr>
+                                            </thead>
+
+
+                                            <tbody>
+                                            {% for i in holidayObj %}
+                                                <tr>
+                                                    <td>{{ forloop.counter }}</td>
+                                                     
+                                                    <td>{{i.holiday_name}}</td>
+                                                    <td>
+                                                        {{i.holiday_fromDate | date:"d M" }}
+                                                        {% if i.holiday_toDate != None %}
+                                                         - {{i.holiday_toDate | date:"d M" }}
+                                                        {% endif %}
+                                                    </td>
+                                                    <td>{{i.holiday_number}}</td>
+                                                    {% if request.session.userType == 'masteR' %}
+                                                    <td> 
+                                                        <a data-bs-toggle="modal" data-bs-target="#edit-desig"  class="action-icon text-warning" onclick="fetch_holiday(this)" hoidayID="{{i.id}}"> <i class="mdi mdi-square-edit-outline"></i></a>
+                                                        <a href="{% url 'deleteHoliday' i.id %}" class="action-icon text-danger" onclick="return confirm('Are you sure you want to delete this holiday?');"> <i class="mdi mdi-delete-outline"></i></a>
+                                                     </td>
+                                                    {% endif %}
+                                                </tr>
+                                            {% endfor %}
+                                            </tbody>
+                                        </table>
+                                        </div>
+                                    </div> <!-- end card-body-->
+                                </div> <!-- end card-->
+                            </div> <!-- end col -->
+                        </div>
+                        <!-- end row -->
+                        
+                    </div> <!-- container -->
+
+                </div> <!-- content -->
+
+                <!-- Footer Start -->
+                <footer class="footer">
+                    <div class="container-fluid">
+                        <div class="row">
+                            <div class="col-md-6">
+                                <script>document.write(new Date().getFullYear())</script> © 18pixels 
+                            </div>
+                            
+                        </div>
+                    </div>
+                </footer>
+                <!-- end Footer -->
+
+            </div>
+
+            <!-- ============================================================== -->
+            <!-- End Page content -->
+            <!-- ============================================================== -->
+
+
+        </div>
+        <!-- END wrapper -->
+
+        {% if request.session.userType == 'masteR' %}
+        <!-- add desig modal -->
+        <div class="modal fade task-modal-content show" id="add-new-desig" tabindex="-1" role="dialog" aria-labelledby="NewTaskModalLabel" aria-modal="true" >
+            <div class="modal-dialog modal-dialog-centered modal-md">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h4 class="modal-title" id="NewTaskModalLabel">Add Holiday</h4>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <form class="p-2">
+                            <div class="row">
+                                <div class="col-md-12">
+                                    
+                                    <div class="mb-3  ">
+                                        <label for="task-title" class="form-label">Select year</label>
+                                        <select class="form-select" id='selectCurrentYear'>
+                                            <option value="2021">2021</option>
+                                            <option value="2022">2022</option>
+                                            <option value="2023">2023</option>
+                                        </select>
+                                    </div>
+                                    <div class="mb-3 position-relative" id="datepicker2">
+                                        <label class="form-label">From Date</label>
+                                        <input id="from_Date" type="text" class="form-control" data-provide="datepicker" data-date-container="#datepicker2" data-date-format="d-M-yyyy" data-date-autoclose="true"    placeholder="d-M-yyyy">
+                                    </div>
+                                    <div class="mb-3 position-relative" id="datepicker2">
+                                        <label class="form-label">To Date</label>
+                                        <input id="to_Date" type="text" class="form-control" data-provide="datepicker" data-date-container="#datepicker2" data-date-format="d-M-yyyy" data-date-autoclose="true"    placeholder="d-M-yyyy">
+                                    </div>
+                                    <div class="mb-3">
+                                        <label for="task-title" class="form-label">Holiday</label>
+                                        <input type="text" id='holidayName' class="form-control  "  placeholder="Enter holiday name">
+                                    </div>
+                                 </div>
+                               </div>
+                              <div class="text-end mt-4">
+                                <button  type="button" class="btn btn-light" data-bs-dismiss="modal" >Cancel</button>
+                                <button type="button" class="btn btn-primary"  onclick="add_holiday()">Create</button>
+                             </div>
+                        </form>
+                    </div>
+                </div><!-- /.modal-content -->
+            </div><!-- /.modal-dialog -->
+        </div>
+        <!-- /End-modal -->
+
+         <!-- edit desig modal -->
+        <div class="modal fade task-modal-content show" id="edit-desig" tabindex="-1" role="dialog" aria-labelledby="NewTaskModalLabel" aria-modal="true" >
+            <div class="modal-dialog modal-dialog-centered modal-md">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h4 class="modal-title" id="NewTaskModalLabel">Edit Holiday</h4>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <form class="p-2">
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <div class="mb-3">
+                                        <label for="task-title" class="form-label">Select year</label>
+                                        <select class="form-select" id='edit_holiday_year'>
+                                            <option value="2021">2021</option>
+                                            <option value="2022">2022</option>
+                                            <option value="2023">2023</option>
+                                        </select>
+                                    </div>
+                                    <div class="mb-3 position-relative" id="datepicker3">
+                                        <label class="form-label">From Date</label>
+                                        <input id="edit_from_date" type="text" class="form-control" data-provide="datepicker" data-date-container="#datepicker3" data-date-format="d-M-yyyy" data-date-autoclose="true"    placeholder="d-M-yyyy" value="">
+                                    </div>
+                                    <div class="mb-3 position-relative" id="datepicker3">
+                                        <label class="form-label">To Date</label>
+                                        <input id="edit_to_date" type="text" class="form-control" data-provide="datepicker" data-date-container="#datepicker3" data-date-format="d-M-yyyy" data-date-autoclose="true"    placeholder="d-M-yyyy" value="">
+                                    </div>
+                                    <div class="mb-3">
+                                        <label for="task-title" class="form-label">Holiday</label>
+                                        <input type="text" class="form-control"  placeholder="Enter holiday name" value="" id='edit_holiday_name'>
+                                    </div>
+                                </div>
+                              </div>
+                        
+                            <div class="text-end mt-4">
+                                <button  type="button" class="btn btn-light" data-bs-dismiss="modal" >Cancel</button>
+                                <button type="button" class="btn btn-primary" onclick="edit_holiday(this)" id='edit_btn' holidayId=''>Update</button>
+                            </div>
+                        </form>
+                    </div>
+                </div><!-- /.modal-content -->
+            </div><!-- /.modal-dialog -->
+        </div>
+        <!-- /End-modal -->
+        {% endif %}
+
+
+        <!-- bundle -->
+        <script src="{% static 'assets/js/vendor.min.js' %}"></script>
+        <script src="{% static 'assets/js/app.min.js' %}"></script>
+
+        <!-- third party js -->
+        <script src="{% static 'assets/js/vendor/jquery.dataTables.min.js' %}"></script>
+        <script src="{% static 'assets/js/vendor/dataTables.bootstrap5.js' %}"></script>
+        <script src="{% static 'assets/js/vendor/dataTables.responsive.min.js' %}"></script>
+        <script src="{% static 'assets/js/vendor/responsive.bootstrap5.min.js' %}"></script>
+        <script src="{% static 'assets/js/vendor/dataTables.checkboxes.min.js' %}"></script>
+        <!-- third party js ends -->
+
+        <!-- demo app -->
+        <script src="{% static 'assets/js/pages/demo.datatable-init.js' %}"></script>
+
+        <script src="{% static 'assets/js/custom.js' %}"></script>
+        <script src="{% static 'assets/js/admin_JS/leaves_JS/holiday_list.js' %}"></script>
+
+        <script>
+            $('#current_holiday_year').val(new Date().getFullYear()); 
+            $("#current_holiday_year").select2({
+            });
+            $('#selectCurrentYear').val(new Date().getFullYear()); 
+            $("#selectCurrentYear").select2({
+            });
+        </script>
+       
+
+        <!-- end demo js-->
+
+    </body>
+ 
+</html>

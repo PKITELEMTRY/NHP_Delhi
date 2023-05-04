@@ -1,0 +1,990 @@
+REPORT ID : RPID_00146,,,,
+Selected Stores ID : ['ABACUSxxx59'],,,,
+De-Selected Stores ID : [],,,,
+,,,,
+Total Customers : 983,,,,
+,,,,
+S.No.,Customer Name,Customer Contact,Customer Email,Number of Visits,Entry Type
+1,Alook Tiwari,7007460654,,0,CSV-Onboard
+2,Vijay,9000000000,,0,CSV-Onboard
+3,saif,8303566343,,1,Manual
+4,Kamal,9839011143,,1,Manual
+5,Vicky,9140273008,,0,CSV-Onboard
+6,Aman Singh,6388453085,,0,CSV-Onboard
+7,PP Gupta,9450524020,,0,CSV-Onboard
+8,Vikas Singh,9044446166,,0,CSV-Onboard
+9,Tarandeep Singh,8874271238,,1,Manual
+10,KAMRAN,9044251217,,2,Manual
+11,Amit Panday,8802897697,,0,CSV-Onboard
+12,AKASH,9235595011,,0,CSV-Onboard
+13,Aradya Singh,6393634499,,0,CSV-Onboard
+14,Utkarsh,8601202026,,0,CSV-Onboard
+15,Prajjawal,9506512000,amankesharwani0@gmail.com,1,Manual
+16,TN Singh,9565820560,,0,CSV-Onboard
+17,Uday Agrahari,7275733726,,3,Manual
+18,Mahi,8052820532,,0,CSV-Onboard
+19,Pooja,9984061000,,0,CSV-Onboard
+20,Tauheed,9616721178,,1,Manual
+21,Shikha Singh,9453415509,,0,CSV-Onboard
+22,Shivani,9984623831,,1,Manual
+23,Ravendra,9587088296,,0,CSV-Onboard
+24,asotosh gupta,8400770113,,0,CSV-Onboard
+25,Vijay Pratap Singh,9450428886,,0,CSV-Onboard
+26,ANSHIKA,9170713510,,1,Manual
+27,Arun Verma,9997365880,,0,CSV-Onboard
+28,QAZI,9336611073,,0,CSV-Onboard
+29,Harsh,7271007015,,1,Manual
+30,Ashish,8726954429,,0,CSV-Onboard
+31,Ekta Singh,9696680670,,0,CSV-Onboard
+32,Rupanshi,8840941052,,0,CSV-Onboard
+33,puneet,9044147090,,2,Manual
+34,Kaptan Singh,9044442909,,1,Manual
+35,Sanjay Singh,9453228363,,0,CSV-Onboard
+36,Abhishek Singh,9161229000,,0,CSV-Onboard
+37,Abhishek Mishra,8423951009,,0,CSV-Onboard
+38,Antima,7310028303,,1,Manual
+39,Ravi Sir,9532666922,,0,CSV-Onboard
+40,Harshit  Singh,8528413739,,0,CSV-Onboard
+41,Monu,9260957611,,0,CSV-Onboard
+42,Pawan Yadav,9918416666,,1,Manual
+43,Satish,9919905227,,0,CSV-Onboard
+44,Manish,8115094780,,1,Manual
+45,Saif,8737869688,,0,CSV-Onboard
+46,Sudhanshu,9140888465,,1,Manual
+47,Ashutosh Patel,9628000270,,2,Manual
+48,Anshuman Dubay,9956109266,,0,CSV-Onboard
+49,Sanjay,7905297372,,1,Manual
+50,Kaustubh,7068813122,,1,Manual
+51,ashok,9628121234,,0,CSV-Onboard
+52,Deepak Nagar,9452430710,,0,CSV-Onboard
+53,Vijay,7737615180,,0,CSV-Onboard
+54,KAVITA AHUJA,9260957952,,0,CSV-Onboard
+55,Shibu,9956464067,,0,CSV-Onboard
+56,Saquib,7275343626,,1,Manual
+57,Suneel Ramani,9839001560,,0,CSV-Onboard
+58,Samsad,7457975785,,0,CSV-Onboard
+59,Aashish,7905381427,,0,CSV-Onboard
+60,santosh,7897260086,,0,CSV-Onboard
+61,Archana,9984606609,,0,CSV-Onboard
+62,Vipin,9169489099,,0,CSV-Onboard
+63,Vikarant,9051286078,,0,CSV-Onboard
+64,Satyadev Singh,9918614025,,1,Manual
+65,Deepak,9839875698,,1,Manual
+66,Anchal,9721519000,,1,Manual
+67,poonam mishra,9415164152,,0,CSV-Onboard
+68,Saurabh,9793503917,,0,CSV-Onboard
+69,Aashish Triphathi,9454458254,,0,CSV-Onboard
+70,Khalid,9161762313,,1,Manual
+71,Pradeep Yadav,6393363795,,1,Manual
+72,Abhinav,7800177712,,0,CSV-Onboard
+73,Manoj Yadav,9120206677,,0,CSV-Onboard
+74,MD Saud Khan,9793797247,,0,CSV-Onboard
+75,Vinay Ray,9598988191,,0,CSV-Onboard
+76,sudhir kumar srivastav,9415351000,,0,CSV-Onboard
+77,PRITY,9140036446,,0,CSV-Onboard
+78,Shalok Pratap Singh,9161738000,,0,CSV-Onboard
+79,Ankit Kannaujiya,7268055035,,1,Manual
+80,sekhsarudeen,7017950005,,0,CSV-Onboard
+81,Simran,9305611523,,1,Manual
+82,Vikaas,9453384253,,0,CSV-Onboard
+83,Gurnam,9450636507,,1,Manual
+84,Shanu,7052655871,,0,CSV-Onboard
+85,Balram jaiswal,9919882004,,0,CSV-Onboard
+86,Bala,7275385592,,0,CSV-Onboard
+87,SUBHAN KHAN,8948762797,,0,CSV-Onboard
+88,Mandeep,9719100966,,0,CSV-Onboard
+89,Chandresh Chaurasiya,9616095329,,1,Manual
+90,Virendra vyadav,9452131821,,0,CSV-Onboard
+91,Chhaya,8095362961,,0,CSV-Onboard
+92,Shubham,9936353533,,1,Manual
+93,Alook,8299728043,,0,CSV-Onboard
+94,Shara,9554541057,,1,Manual
+95,Adivansh,9795954263,,0,CSV-Onboard
+96,Abhay,8318171816,,1,Manual
+97,sachin,9554051818,,1,Manual
+98,Faizi Bhai,8960581887,,1,Manual
+99,Rajesh Shukla,9415105060,,0,CSV-Onboard
+100,Kulwant Singh,9198201313,,0,CSV-Onboard
+101,Krishna Yadav,7408252491,,2,Manual
+102,amar yadav,9956280906,,0,CSV-Onboard
+103,RAKESH,9838098774,,0,CSV-Onboard
+104,Shariq,9651760405,,0,CSV-Onboard
+105,Ashish Singh,8960405300,,1,Manual
+106,Dharmendra,9415150899,,0,CSV-Onboard
+107,Amit Tiwari,9454160000,,0,CSV-Onboard
+108,Danish khan,9889554350,,1,Manual
+109,Surendra,9670563564,,0,CSV-Onboard
+110,Jamshed Bhai,8081306448,,1,Manual
+111,RAJESH KUMAR,9936630656,,0,CSV-Onboard
+112,Devendra,9984787234,,0,CSV-Onboard
+113,Altamash,7526045315,,0,CSV-Onboard
+114,Varun Srivastav,7007641327,,0,CSV-Onboard
+115,Gaurav Mishra,9648444644,,0,CSV-Onboard
+116,Moti Chand,7388361009,,0,CSV-Onboard
+117,Ashish Tripathi,9695363358,,1,Manual
+118,Vipin Singh,9044884427,,0,CSV-Onboard
+119,Adil,9795959525,,0,CSV-Onboard
+120,Monu Mirza,7607005744,,3,Manual
+121,Ram Soni,6362535328,,1,Manual
+122,India Battry,9044126529,,0,CSV-Onboard
+123,Vipin Singh,9149575102,,0,CSV-Onboard
+124,Rakesh Tiwari,9702220937,,0,CSV-Onboard
+125,Amit Panday,7071175635,,1,Manual
+126,Dhananjay Singh,7607305950,,0,CSV-Onboard
+127,Jyoti Gupta,8960588040,,0,CSV-Onboard
+128,VINEET,9415164283,,0,CSV-Onboard
+129,Shashank Panday,9044417774,,1,Manual
+130,Roshan,8340457263,,0,CSV-Onboard
+131,Sushil Jaiswal,9935701751,,0,CSV-Onboard
+132,Viikas Singh,8299437001,,1,Manual
+133,Ashish,9012047227,,0,CSV-Onboard
+134,Nikita Jauhari,7408056167,,1,Manual
+135,Digvijay Singh,9170608990,,0,CSV-Onboard
+136,Aditi,9161839975,,1,Manual
+137,Ujjawal,8726267070,,0,CSV-Onboard
+138,Harshita,7017769314,,0,CSV-Onboard
+139,Chaman,9418025439,,0,CSV-Onboard
+140,S LAL,9451451743,,0,CSV-Onboard
+141,Girish,9793897648,,2,Manual
+142,rajkumar,9453431297,,0,CSV-Onboard
+143,Akash,6389716831,,1,Manual
+144,Saumitra,9172222999,,0,CSV-Onboard
+145,Shivam Singh,9369696453,,2,Manual
+146,PRIYA,9873469736,,0,CSV-Onboard
+147,MANOJ SIR,8004592147,,2,Manual
+148,Sayyed Adeeb Ahmad,9919045606,,1,Manual
+149,Aman Madnani,9044531321,,0,CSV-Onboard
+150,Hani Sir,7800917032,,0,CSV-Onboard
+151,Akhilesh Tiwari,8840597010,,0,CSV-Onboard
+152,Anand Kumar Pandey,9807218857,,1,Manual
+153,Priya Dubey,9140811257,,0,CSV-Onboard
+154,Ambrish,8858893232,,0,CSV-Onboard
+155,Om Gupta,9839483983,,0,CSV-Onboard
+156,Himanshu Singh,7905671284,,0,CSV-Onboard
+157,Abhay Singh,9889473189,,2,Manual
+158,Kaushlendra,9208202573,,1,Manual
+159,mo saleem,9918919532,,0,CSV-Onboard
+160,Sachin Singh,8756747850,,0,CSV-Onboard
+161,manish,7905566335,,1,Manual
+162,Shivam Singh,8187900003,,0,CSV-Onboard
+163,Reema Ahuja,9454221016,,2,Manual
+164,AMIT SINGH,9918198828,,2,Manual
+165,Aquib Aligarian,7983190541,,0,CSV-Onboard
+166,Shahid Sir,9795242448,,0,CSV-Onboard
+167,mohit,9918799219,,0,CSV-Onboard
+168,AKASH DEEP,8874391135,,0,CSV-Onboard
+169,sunil kumar,9838088985,,1,Manual
+170,Sailendra Singh,9670959000,,0,CSV-Onboard
+171,Siddharth,8318446240,,0,CSV-Onboard
+172,Awdh Bihari Maurya,9838137000,,2,Manual
+173,govind chawla,9415047550,,0,CSV-Onboard
+174,Twinkal Pathak,7275701900,,0,CSV-Onboard
+175,Vivek,9838314014,,1,Manual
+176,kashif sir,8896316318,,0,CSV-Onboard
+177,Ghanshayam,7007512567,,4,Manual
+178,Anil,7007928942,anil06dec@gmail.com,1,Manual
+179,Amir,8574318858,,0,CSV-Onboard
+180,Yash Verma,9198151617,,0,CSV-Onboard
+181,Anand Kumar,9453424207,,0,CSV-Onboard
+182,Rajat Srivastav,9415719080,,4,Manual
+183,Dr Anil,9838810051,,0,CSV-Onboard
+184,Sonu,9918002255,,3,Manual
+185,Dr Harsh Kumar,8765828417,,0,CSV-Onboard
+186,Khusbu,7007247377,,0,CSV-Onboard
+187,ankit,9389301813,,0,CSV-Onboard
+188,Sagar gaud,9044464934,,0,CSV-Onboard
+189,sharik,9044193032,,0,CSV-Onboard
+190,Anuj,9793131360,,0,CSV-Onboard
+191,Gaurav,9064750021,,0,CSV-Onboard
+192,Rohit,9696504465,,0,CSV-Onboard
+193,RS PARMAR,9026478046,,0,CSV-Onboard
+194,Dharmendra Pratap singh,9919413392,,3,Manual
+195,rahul shrivastav,8737957217,NA,0,CSV-Onboard
+196,Ashish,7786032424,,0,CSV-Onboard
+197,Arvind,8957343612,,1,Manual
+198,Ravi Verma,9415576173,,0,CSV-Onboard
+199,Dr RK Pathak,9453956534,,1,Manual
+200,Sameer,7985329252,,0,CSV-Onboard
+201,Rupam,7007802913,,1,Manual
+202,Anjani,9415715082,,0,CSV-Onboard
+203,Dr Sailendr Dewedi,9451033800,,0,CSV-Onboard
+204,NISTHA,7617702426,,0,CSV-Onboard
+205,mukesh sharma,7310098000,,0,CSV-Onboard
+206,MAHENDRA SHUKLA,9415247978,,2,Manual
+207,Saurabh,8840350039,,0,CSV-Onboard
+208,Durga Tiwari,9450156625,,0,CSV-Onboard
+209,surendra,9696731818,,1,Manual
+210,dinesh,9450590743,,0,CSV-Onboard
+211,Dr Anju Panday,9450770953,,0,CSV-Onboard
+212,rajnish gupta,8840171755,,0,CSV-Onboard
+213,HARPREET,7800370903,,0,CSV-Onboard
+214,Nilam,8439105016,,0,CSV-Onboard
+215,Apsara,9415715440,,1,Manual
+216,Dr Pankaj Srivastav,9838566595,,0,CSV-Onboard
+217,shaban ali,7275944530,,0,CSV-Onboard
+218,Rajnish Kumar Singh,9450996212,,0,CSV-Onboard
+219,Dr Harikesh Yadav,9918404206,,0,CSV-Onboard
+220,Anoop Kumar Singh,9044274297,,1,Manual
+221,Alok Diwedi,9721506000,,1,Manual
+222,asim khan,8795794737,,0,CSV-Onboard
+223,Ramesh Yadav,9044492197,,0,CSV-Onboard
+224,Amit,9044483633,,1,Manual
+225,Hitesh Yadav,7309146363,,0,CSV-Onboard
+226,Anshul Bhaiyya,9161291612,,0,CSV-Onboard
+227,shivgopal singh,9936752219,,0,CSV-Onboard
+228,Sarika,9899048747,,1,Manual
+229,MADHVI,9005513216,,0,CSV-Onboard
+230,Harsh Kumar,7007676669,,0,CSV-Onboard
+231,Satish Singh,9984634649,,0,CSV-Onboard
+232,Dr Saurabh Agrwal,8318688733,,0,CSV-Onboard
+233,Deepak,9920936214,,1,Manual
+234,Sailendea Singh,8299143926,,0,CSV-Onboard
+235,Saurabh Singh,7309821249,,1,Manual
+236,Rohit mishra,9918493120,,0,CSV-Onboard
+237,Rinkesh,9335555153,,0,CSV-Onboard
+238,Radha,9140449313,,0,CSV-Onboard
+239,Ayush Mishra,9151581525,,0,CSV-Onboard
+240,Zain,8318733774,,2,Manual
+241,MOHIT KAPOOR,9919660995,,0,CSV-Onboard
+242,,9453268961,,1,CSV
+243,dipen tiwari,9899472898,,0,CSV-Onboard
+244,RAM,9984585736,,1,Manual
+245,monika,7376655564,,0,CSV-Onboard
+246,Talib sir,9336272161,,0,CSV-Onboard
+247,Anil Tiwari,9454216163,,0,CSV-Onboard
+248,Kuvar Vaid,7706089869,,0,CSV-Onboard
+249,Rinki,8303535117,,0,CSV-Onboard
+250,Vaibhav,9648935466,,0,CSV-Onboard
+251,Ashutosh,9795246645,,0,CSV-Onboard
+252,Mansi Panday,9044313978,,0,CSV-Onboard
+253,Ved Chaturvedi,9838406444,,0,CSV-Onboard
+254,Deepak Singh,6388887221,,0,CSV-Onboard
+255,col r k gupta,7522064263,,0,CSV-Onboard
+256,Dr R B Verma,9415076518,,0,CSV-Onboard
+257,Bhupendra Singfh,8899799585,,1,Manual
+258,mohit,9140615990,,0,CSV-Onboard
+259,Abhishek Singh,9696091386,,2,Manual
+260,love,7499112022,,0,CSV-Onboard
+261,S Ahmad,9044866162,,0,CSV-Onboard
+262,RAJU,7007751175,,1,Manual
+263,Hritik Singh,7070743427,,1,Manual
+264,Mr Anshuman,9936229003,,0,CSV-Onboard
+265,Om Kasaudhan,7457952542,,0,CSV-Onboard
+266,Aman Singh,9455116151,,0,CSV-Onboard
+267,Nidhi jaiswal,7275494199,,0,CSV-Onboard
+268,Dr S K Verma,9410515192,,0,CSV-Onboard
+269,Ankur Singh,9455886696,,0,CSV-Onboard
+270,Vicky,9839037172,,1,Manual
+271,Gaurav Singh,9889267000,,0,CSV-Onboard
+272,Shahrukh Khan,8687868755,,2,Manual
+273,Abhishek Singh,8299587205,,0,CSV-Onboard
+274,RTAM,9452317600,,0,CSV-Onboard
+275,Lav kumar mishra,9838361700,,0,CSV-Onboard
+276,Hani,7800884000,,0,CSV-Onboard
+277,Amit,9956790167,,1,Manual
+278,Subham Verma,6393655672,,0,CSV-Onboard
+279,Anand,9792974343,,1,Manual
+280,Alkarani Srivastavav,9415047524,,0,CSV-Onboard
+281,Dipanjali,7379672075,,1,Manual
+282,Jagdeesh,9415717219,,0,CSV-Onboard
+283,MANISH,8960620457,,0,CSV-Onboard
+284,Rahul,6387910055,,0,CSV-Onboard
+285,Raju Ramani,7275190150,,0,CSV-Onboard
+286,Rajesh Maurya,9415821070,,0,CSV-Onboard
+287,Rashmi Srivastav,9451732668,,0,CSV-Onboard
+288,Shiv Kumar,8874905000,,1,Manual
+289,Akeel,7505384584,,0,CSV-Onboard
+290,ABHINAV SINGH,9451894436,,0,CSV-Onboard
+291,Dev Kumar Verma,8090302415,,0,CSV-Onboard
+292,ANIKET,9801813884,,0,CSV-Onboard
+293,MANISH KUMAR JAISWAL,9839013010,,0,CSV-Onboard
+294,Amit Panday,6394891245,,0,CSV-Onboard
+295,Dr Jai Prakash,9918233384,,0,CSV-Onboard
+296,Devang,8081375009,,0,CSV-Onboard
+297,Ashutosh Singh,9717810070,,0,CSV-Onboard
+298,Naina,8317006225,,0,CSV-Onboard
+299,Ayush Verma,6393435505,,0,CSV-Onboard
+300,Alook Panday,8546002605,,0,CSV-Onboard
+301,Ganesh,8172842711,,0,CSV-Onboard
+302,Shabaj Alam,9648222208,,0,CSV-Onboard
+303,Subhash,7007627961,,0,CSV-Onboard
+304,Vinood Kumar,9453033400,,0,CSV-Onboard
+305,Anand Yadav,9415593126,,0,CSV-Onboard
+306,niraj mishra,7084568656,,1,Manual
+307,Subham Singh,8400140014,,0,CSV-Onboard
+308,SK Singh,9454305677,,0,CSV-Onboard
+309,meena motwani,9648736930,,0,CSV-Onboard
+310,Vivek Sharma,8700203663,,1,Manual
+311,Ravan,9450767335,,0,CSV-Onboard
+312,PANKAJ,9140073607,,0,CSV-Onboard
+313,Anil Singh,9454867748,,1,Manual
+314,Bhupendra Bhaiyya,9452323102,,1,Manual
+315,Jitendra Gupta,8960964400,,0,CSV-Onboard
+316,vijay varma,8005025435,,0,CSV-Onboard
+317,Rahul Yadav,9936222444,,2,Manual
+318,DR Rathore,9403690745,,0,CSV-Onboard
+319,AMAN SINGH,9415852232,,0,CSV-Onboard
+320,Jitendra Kumar Patel,9795753210,,0,CSV-Onboard
+321,Shashank Yadav,8299034092,,0,CSV-Onboard
+322,Ashish,9453869313,,0,CSV-Onboard
+323,Durgesh Panday,9452688688,,3,Manual
+324,Anish,9459079007,,0,CSV-Onboard
+325,Manoj Mishra,7985923473,,0,CSV-Onboard
+326,Golu,9795007089,,2,Manual
+327,Manoj Gupta,8423970099,,0,CSV-Onboard
+328,anup mishra,9452758086,,0,CSV-Onboard
+329,Ashish Shukla,9792225012,,0,CSV-Onboard
+330,tushar,8303297953,,0,CSV-Onboard
+331,Shailendra Pandey,8726254444,,0,CSV-Onboard
+332,Neelesh Singh,8800142252,,1,Manual
+333,Raghvendra Verma,7985145945,,0,CSV-Onboard
+334,saurav,8800219696,,0,CSV-Onboard
+335,Vineet Poddar,9839834433,,1,Manual
+336,Surendra Kumar Singh,9415721178,,0,CSV-Onboard
+337,Prakash,9335036001,,0,CSV-Onboard
+338,SONI SINGH,9818805240,,0,CSV-Onboard
+339,Anand,8090385966,,0,CSV-Onboard
+340,SURESH MISHRA,7800008281,,0,CSV-Onboard
+341,Sri Ram Mishra,7408235701,,0,CSV-Onboard
+342,Sarita,9307612588,,0,CSV-Onboard
+343,mo shakib,8090727338,,1,Manual
+344,Umesh,9452063709,,0,CSV-Onboard
+345,Sumeet,8652294835,,0,CSV-Onboard
+346,Vickram Sing,9792711000,,1,Manual
+347,Anju Singh,8765319347,,3,Manual
+348,akshat,9919082382,,0,CSV-Onboard
+349,Vicky Bhai,8874403535,,0,CSV-Onboard
+350,Ashish Tiwari,9051735067,,1,Manual
+351,Divyanshu,7704877866,,3,Manual
+352,Abhineet,8004077563,,0,CSV-Onboard
+353,ravi,9453022988,,0,CSV-Onboard
+354,Ali,9917059753,,1,Manual
+355,Shiv Shankar Yadav,9415093131,,0,CSV-Onboard
+356,Shriyansh,7985439592,,0,CSV-Onboard
+357,VIKAS,7839466670,,0,CSV-Onboard
+358,,7068577405,,1,Manual
+359,Brijesh Panday,8737005656,,1,Manual
+360,Afzal Bhai,9935037486,,0,CSV-Onboard
+361,Riddhi,8957539725,,1,Manual
+362,mahendra bhiya,9161007100,,0,CSV-Onboard
+363,Manoj Mishra,9451835144,,0,CSV-Onboard
+364,Zishan bhai,8090616889,,0,CSV-Onboard
+365,Akansha,9901499800,,0,CSV-Onboard
+366,Pranjali Agrawal,7689889686,,1,Manual
+367,BHUPENDRA,8318590426,,3,Manual
+368,Satyam Pandey,9451460911,,0,CSV-Onboard
+369,Rachit,9129999297,,0,CSV-Onboard
+370,Atif,7068560239,,0,CSV-Onboard
+371,Atif Khan,8090886066,,0,CSV-Onboard
+372,Anurag Agrawal,9935405604,,1,Manual
+373,Ekrar Baig,9628109704,,1,Manual
+374,Santosh Tiwari,9554119654,,0,CSV-Onboard
+375,ANAND,7408585745,,4,Manual
+376,Rajkumari Ramani,9919001560,,0,CSV-Onboard
+377,Harsh,8318359683,,0,CSV-Onboard
+378,sujeet tiwari,8960300607,,1,Manual
+379,mukesh kumar,9415512508,,0,CSV-Onboard
+380,Vivek,7895735477,,0,CSV-Onboard
+381,Shabi,9044380591,,1,Manual
+382,Pravindra Singh,9919841994,,0,CSV-Onboard
+383,varsh,9389184537,,0,CSV-Onboard
+384,Divya,7019996110,,0,CSV-Onboard
+385,Mukesh Singh,9621214396,,0,CSV-Onboard
+386,Subham,9670955969,,0,CSV-Onboard
+387,Anita Singh,9984759884,,0,CSV-Onboard
+388,Subham Bhai,6387183990,,0,CSV-Onboard
+389,Alok Kumar,7905336027,,1,Manual
+390,S N Srivastav,7858960637,,1,Manual
+391,Santosh Gupta,8840827306,,2,Manual
+392,Digvijay Singh,9235707964,,0,CSV-Onboard
+393,roli singh,9580909290,,1,Manual
+394,Ravi,8182821183,,0,CSV-Onboard
+395,Rupesh Singh,9838864211,,0,CSV-Onboard
+396,Subhan Bhai,9936111757,,0,CSV-Onboard
+397,Puneet Kumar Srivastav,9554027134,,0,CSV-Onboard
+398,Ananya Sinha,7007510804,,0,CSV-Onboard
+399,zafar,9793900344,,0,CSV-Onboard
+400,Nishant Pandey,8090849364,,0,CSV-Onboard
+401,sharad singh,9452788621,,1,Manual
+402,Ankit Tiwari,8604575712,,1,Manual
+403,Akhilesh Singh,9628919393,,1,Manual
+404,komal mam,9935174092,,3,Manual
+405,Amit Singh,9889481179,,1,Manual
+406,Sanjeev Kumar Panday,9838554283,,0,CSV-Onboard
+407,Dhirendra panday,9936445323,,1,Manual
+408,Saurabh Sirvastav,9891828226,,1,Manual
+409,nitesh,8400203375,,0,CSV-Onboard
+410,Parmod Kumar,7007193038,,0,CSV-Onboard
+411,Monu Srivastav,7905007211,,1,Manual
+412,Atul Mishra,9506878994,,1,Manual
+413,Harsh,9450764373,,0,CSV-Onboard
+414,A Biswas,9111884098,,0,CSV-Onboard
+415,Shiv Bahadur,9838464695,,0,CSV-Onboard
+416,Shahaab,9889217547,,0,CSV-Onboard
+417,Zafar,9918909243,,0,CSV-Onboard
+418,Imroz,9891152034,,1,Manual
+419,Vinod Singh,9653021745,,1,Manual
+420,Ashish,9005758900,,0,CSV-Onboard
+421,vikash singh,8004326151,,0,CSV-Onboard
+422,Manish Singh,9838553721,,0,CSV-Onboard
+423,AAnshuman Singh,9918952000,,0,CSV-Onboard
+424,Shariq Khan,9651756666,,0,CSV-Onboard
+425,dr chaudhari,9415023475,,0,CSV-Onboard
+426,anup tiwari,9044665719,,1,Manual
+427,Ankur Pandey,9919800052,,1,Manual
+428,Iltifat Anwar,7007812065,,0,CSV-Onboard
+429,Sarkar,9919124400,,1,Manual
+430,Abhishek,9425808601,,0,CSV-Onboard
+431,Prajjwalla,9451206574,,2,Manual
+432,rsihan,9026078630,,0,CSV-Onboard
+433,Ravi,9452319999,,0,CSV-Onboard
+434,Acchey Miya,9452019011,,0,CSV-Onboard
+435,Nikhil Pathak,7408203028,,1,Manual
+436,Vipin Chauhdary,7275153662,,0,CSV-Onboard
+437,Ruchi Sharma,9198656306,,0,CSV-Onboard
+438,Shiv Prakash Pandey,9455135691,,0,CSV-Onboard
+439,Shraddha Maurya,7237975728,Mauryashraddha17@gmail.com,1,Manual
+440,Yash,9621416333,,1,Manual
+441,Ruza Khan,9559142005,,1,Manual
+442,jeet,9540638774,,0,CSV-Onboard
+443,Rza,7081235541,,0,CSV-Onboard
+444,Shradha Singh,9517080806,,0,CSV-Onboard
+445,Danish Bhai,9838434333,,0,CSV-Onboard
+446,Sangeet Kumar,8299431997,,1,Manual
+447,Sajjad,9795222030,,2,Manual
+448,Virendra Verma,9111775349,,0,CSV-Onboard
+449,Anjana Tiwari,8528990826,,0,CSV-Onboard
+450,Pooja,9452734880,,1,Manual
+451,ALOK MISHRA,9839535999,,1,Manual
+452,,9454409277,,2,CSV
+453,Ankur Joshi,8601545000,,3,Manual
+454,Preeti,9984492219,,0,CSV-Onboard
+455,Aditi,6393047376,,1,Manual
+456,Asghar Hussain,9919757361,,1,Manual
+457,Subed Khan,7275728670,,0,CSV-Onboard
+458,Saurabh pandey,9044681345,,1,Manual
+459,J.S Pandey,9451871804,,1,Manual
+460,Shawnko,7800362780,,1,Manual
+461,Mahendra Singh,6386591337,,0,CSV-Onboard
+462,Ram Sufal,9005431939,,1,Manual
+463,Ajeet,7007512114,,0,CSV-Onboard
+464,Shivam,7800135000,,0,CSV-Onboard
+465,Asad,8090323786,,2,Manual
+466,Rishu Srivastav,9838514361,,0,CSV-Onboard
+467,MR SHAKTI SINGH,9565387000,,0,CSV-Onboard
+468,Ashraf,8090401786,,1,Manual
+469,pRAKHAR,8299005310,,1,Manual
+470,Dr Deepak,9839368984,,0,CSV-Onboard
+471,avnish yadav,7800118000,,0,CSV-Onboard
+472,Govinda,7379982000,,0,CSV-Onboard
+473,Ayush,8005341000,,0,CSV-Onboard
+474,Abhishek Tiwari,7376344616,,2,Manual
+475,Muskan Pal,9140014530,,0,CSV-Onboard
+476,Ankit Singh,9956600120,,1,Manual
+477,AKRITI SIMGH,8960512548,,1,Manual
+478,Wasi Ahmad,7311122275,,0,CSV-Onboard
+479,Dharmendra Pratap Singh,6306062324,,0,CSV-Onboard
+480,Viukas Singh,7048532677,,1,Manual
+481,Rizawan khan,9665487261,,0,CSV-Onboard
+482,raj,9919452669,,0,CSV-Onboard
+483,Rajiv,9453962517,,0,CSV-Onboard
+484,Vishal Singh,9140661244,,0,CSV-Onboard
+485,Animesh,7754985354,,0,CSV-Onboard
+486,Pankaj,7880430153,,1,Manual
+487,Rima,9161417222,,0,CSV-Onboard
+488,Sehran Khan,8169709856,,0,CSV-Onboard
+489,RAVI,9452422304,,0,CSV-Onboard
+490,Sudheer,9721346000,,0,CSV-Onboard
+491,ashish sharma,9473943430,,0,CSV-Onboard
+492,Yash,8081044118,,0,CSV-Onboard
+493,Shazaib Ahmad,7007913241,,0,CSV-Onboard
+494,Rahul Patel,9454243000,,0,CSV-Onboard
+495,madan singh,7379700146,,0,CSV-Onboard
+496,MAANVANDRA SINGH,9457577945,,0,CSV-Onboard
+497,Dr Rahul Yadav,9653086020,,0,CSV-Onboard
+498,Vipin,9118860944,,0,CSV-Onboard
+499,TARUN MITTAL,9648289000,,0,CSV-Onboard
+500,Sakshi,9716711769,,1,Manual
+501,manshi,8765302221,,0,CSV-Onboard
+502,Devanshu,9455892998,,0,CSV-Onboard
+503,Pushkar,7235049000,,0,CSV-Onboard
+504,Ravindra Pathak,9838785708,,0,CSV-Onboard
+505,Ankit Soni,9628070162,,1,Manual
+506,Zaigum,9795393381,,0,CSV-Onboard
+507,Pintu Srivastav,9335412829,,0,CSV-Onboard
+508,Ayush Singh,9648161727,,0,CSV-Onboard
+509,DrJayanti,9454908194,,0,CSV-Onboard
+510,Niraj Kumar,9431492574,,0,CSV-Onboard
+511,Neeraj Shukla,9452144182,,0,CSV-Onboard
+512,Neeraj Singh,7060003092,,1,Manual
+513,Sanjay,7084848086,,0,CSV-Onboard
+514,Rahul Singh,9452169289,,0,CSV-Onboard
+515,Ajeet singh,6398109886,,1,Manual
+516,manish,9044106361,,0,CSV-Onboard
+517,Sk singh,8874150150,,0,CSV-Onboard
+518,ANAMIKA,9807327716,,0,CSV-Onboard
+519,s k murya,9415720187,,0,CSV-Onboard
+520,chandan,8858245555,,0,CSV-Onboard
+521,Shiwanki,8009977779,,0,CSV-Onboard
+522,santosh kumar gupta,9415378000,,0,CSV-Onboard
+523,Supriya,8707464463,,1,Manual
+524,Krishna,7905734124,,1,Manual
+525,Monu Yadav,7007603048,,1,Manual
+526,Krishna Rastogi,9519279385,,2,Manual
+527,Abhishek Pandey,9044532959,,1,Manual
+528,Harshita,8795424125,,0,CSV-Onboard
+529,Ankit,9598541262,,0,CSV-Onboard
+530,Arth Pandey,9559915410,,3,Manual
+531,AJAY,7905395381,,1,Manual
+532,Mehwer,9838331300,,0,CSV-Onboard
+533,sanjeev,7019409891,,1,Manual
+534,Akhil,7355554356,,0,CSV-Onboard
+535,Sandeep Kumar,9935377000,,0,CSV-Onboard
+536,Umesh Singh,9450042435,,1,Manual
+537,Sunil Gupta,8090802324,,4,Manual
+538,Pratibha Singh,9651896686,,1,Manual
+539,Atul kumar Shukla,8953535858,,0,CSV-Onboard
+540,Shozaf,9044887313,,0,CSV-Onboard
+541,Hasan,8090422064,,1,Manual
+542,ritsh,7007894356,,2,Manual
+543,Sandeep,9415048264,,0,CSV-Onboard
+544,Ravi Shukla,9889073927,,1,Manual
+545,Salman Bhai,7844921786,,0,CSV-Onboard
+546,Harshita Yadav,9166922574,,0,CSV-Onboard
+547,Preeti Singh,8765059196,,0,CSV-Onboard
+548,Siddhant Dubay,7497941338,,0,CSV-Onboard
+549,Rahil Singh,9838768068,,2,Manual
+550,Yash,7080395554,,1,Manual
+551,BABLU,9793005238,,1,Manual
+552,Milind Gautam,9936919131,,0,CSV-Onboard
+553,Shivam,9554747467,,7,Manual
+554,Shiv Prakash Mishra,8795823080,,0,CSV-Onboard
+555,Rajit Yadav,9454871616,,0,CSV-Onboard
+556,Asad Abbas,9415328673,,0,CSV-Onboard
+557,SHUBHAM RASTOGI,8604949860,,0,CSV-Onboard
+558,md Kashif,9026156531,,8,Manual
+559,Vivek Kumar Chauhan,9415998168,,0,CSV-Onboard
+560,Gaurav Mishra,9984440099,,0,CSV-Onboard
+561,Rinki Mam,7905289417,,0,CSV-Onboard
+562,Vijay Nand Tiwari,9415057926,,3,Manual
+563,Nijamauddeen,9044112371,,0,CSV-Onboard
+564,Utsaw Singh,8299397791,,0,CSV-Onboard
+565,Jay Ram Singh,9178866388,,0,CSV-Onboard
+566,Vivek Kumar,9648000888,,0,CSV-Onboard
+567,Vivek Singh,9795522693,,0,CSV-Onboard
+568,Mohammad Jahangeer,7860943326,,0,CSV-Onboard
+569,amit gautam,9956525963,,0,CSV-Onboard
+570,Akram Khan,9935995696,,0,CSV-Onboard
+571,Krishnam,6386420031,,2,Manual
+572,Dinesh,9999567680,,0,CSV-Onboard
+573,Rima,8960430465,,0,CSV-Onboard
+574,Alfahad Khan,7706886657,,0,CSV-Onboard
+575,DAUD,9026583532,,5,Manual
+576,Kamraan Khan,9670402306,,1,Manual
+577,PRAKASH PANDAY,7525077577,,1,Manual
+578,Aryan,6386058238,,0,CSV-Onboard
+579,Arvind,7905324691,,0,CSV-Onboard
+580,Surendra,7266878837,,0,CSV-Onboard
+581,ravi pathak,9452544544,,2,Manual
+582,Ali Hussain,9874279715,,0,CSV-Onboard
+583,R.K Tripathi,9838002731,,1,Manual
+584,Mitranjay,7398481564,,0,CSV-Onboard
+585,Rakesh,9140283941,,0,CSV-Onboard
+586,Shekhar Panday,8052768826,,0,CSV-Onboard
+587,Mala Yadav,9415918614,,0,CSV-Onboard
+588,Annu,7233994235,,0,CSV-Onboard
+589,Shubham Gupta,7518989999,,0,CSV-Onboard
+590,Saif Khan,9170009688,,2,Manual
+591,Rinku Rizvi,7052363786,,0,CSV-Onboard
+592,Chandra Shekhar Singh,9415188302,,0,CSV-Onboard
+593,Dr. Piyush,9532098696,,1,Manual
+594,shyam,9696603830,,0,CSV-Onboard
+595,Aman Verma,8318750073,,0,CSV-Onboard
+596,Pathani Bhera,9554963950,,0,CSV-Onboard
+597,Ayush,8318158884,,0,CSV-Onboard
+598,Mridul,7905518662,,0,CSV-Onboard
+599,Brijesh Sir,9415917029,,0,CSV-Onboard
+600,GIRJESH sINHG,8004400487,,0,CSV-Onboard
+601,Santosh Dubay,9919689000,,0,CSV-Onboard
+602,Vikas Mishra,7607060899,,1,Manual
+603,aman jaiswal,9889701001,,0,CSV-Onboard
+604,Dhuruv YAdav,8090680447,,0,CSV-Onboard
+605,Lalla Jaiswal,8601679596,,1,Manual
+606,Nitin Gupta,9619827722,,0,CSV-Onboard
+607,Sachin Srivastav,9984479944,,0,CSV-Onboard
+608,Azad,9648934648,,1,Manual
+609,Vipul Ahuja,8601656917,,0,CSV-Onboard
+610,Abhishek,8953474448,,5,Manual
+611,Ankit Verma,9161783588,,0,CSV-Onboard
+612,HABIB,9919729886,,2,Manual
+613,AK Dikshit,6390260538,,0,CSV-Onboard
+614,Pratik Chavan,9960310502,,0,CSV-Onboard
+615,Shashwat,8765399013,,0,CSV-Onboard
+616,Vinod,9839573396,,1,Manual
+617,Karan Singh,7355347243,,0,CSV-Onboard
+618,Rajnish,9721117333,,0,CSV-Onboard
+619,Nisha Khetan,9670615566,,0,CSV-Onboard
+620,Vaishali Singh,6387261899,,0,CSV-Onboard
+621,rajiv,9415048237,,0,CSV-Onboard
+622,Tshushant,9632449692,,0,CSV-Onboard
+623,Sanjay Verma,9415418115,,1,Manual
+624,Shreyansh,9450003510,,1,Manual
+625,Sumera,7800146506,,0,CSV-Onboard
+626,Irfan Ullah,9811898532,,0,CSV-Onboard
+627,Arjun Rana,9450911953,,1,Manual
+628,Abhishek Singh,7208025822,,0,CSV-Onboard
+629,Ratneshwar Tiwari,9889937170,,0,CSV-Onboard
+630,Jamal,9621220000,,1,Manual
+631,Anand Kumar,7007296769,,0,CSV-Onboard
+632,Pintu,9839806438,,0,CSV-Onboard
+633,akhilesh,8960646060,,0,CSV-Onboard
+634,Akansha,7042045928,,0,CSV-Onboard
+635,Dinesh Sharma,7275970710,,0,CSV-Onboard
+636,Amjad Khan,9793032366,,1,Manual
+637,Umakant Bharti,9415918557,,2,Manual
+638,Birjesh Panday,8429403531,,1,Manual
+639,awdhesh,9415220284,,0,CSV-Onboard
+640,Pragya,9116735354,,0,CSV-Onboard
+641,Anand Sharma,8839987827,,0,CSV-Onboard
+642,Prince gupta,9044765755,,3,Manual
+643,Harshwardhan Singh,9161999942,,0,CSV-Onboard
+644,Shonu,9415076548,,0,CSV-Onboard
+645,Monu Bhai,9793079814,,1,Manual
+646,Shahrukh,7905036277,,1,Manual
+647,Dr UK bisen,9451044688,,0,CSV-Onboard
+648,Uma,9452939388,,0,CSV-Onboard
+649,Anand Tiwari,8447551292,,1,Manual
+650,Saumya Tiwari,8920428579,,2,Manual
+651,Anmol Jiswal,8960499325,,1,Manual
+652,Suresh Kumar,9415091211,,0,CSV-Onboard
+653,Anikesh,7905584757,,0,CSV-Onboard
+654,Sonam Chaurasiya,9935153456,,0,CSV-Onboard
+655,mo sajid,8226901000,,0,CSV-Onboard
+656,Saurabh Singh,7518221540,,0,CSV-Onboard
+657,Mithilesh,9554023298,,2,Manual
+658,shabaz,9453224012,,0,CSV-Onboard
+659,Rahul Pathak,9871050448,,0,CSV-Onboard
+660,Aman Srivastav,9871998732,,2,Manual
+661,Vipin Singh,9627777976,,0,CSV-Onboard
+662,Rohit Yadav,8400447606,,0,CSV-Onboard
+663,ROHIT GUPTA,9911504488,,7,Manual
+664,Nakul Dubay,8726035240,,0,CSV-Onboard
+665,Kamini Mishra,7710012412,,0,CSV-Onboard
+666,HIMANSHU RAI,7055682369,,0,CSV-Onboard
+667,Pankaj Mishra,9415144330,,0,CSV-Onboard
+668,Chandan Singh,7052740004,,1,Manual
+669,chitransh,8090231479,,0,CSV-Onboard
+670,Prabodh,8005437154,,0,CSV-Onboard
+671,Harshita,8604435531,,0,CSV-Onboard
+672,Dr Asharam Tyagi,9721899663,,0,CSV-Onboard
+673,Vipin,8318979737,,0,CSV-Onboard
+674,Ashish Yadav,7007313031,,0,CSV-Onboard
+675,vishal tripathi,9648688800,,1,Manual
+676,Vivek Kumar,6388558040,viveknhakumar5566@gmail.com,1,Manual
+677,Vickram Singh,8806437848,,1,Manual
+678,Niraj Sharma,9936969875,,0,CSV-Onboard
+679,Vikas Panday,8808845914,,0,CSV-Onboard
+680,Yuvraj,8130650503,,0,CSV-Onboard
+681,Luccky Yadav,9758881898,,0,CSV-Onboard
+682,Nikitasha,6306574044,,0,CSV-Onboard
+683,Ravindra Tiwari,7376187136,,0,CSV-Onboard
+684,Sumit Singh,7524835856,,0,CSV-Onboard
+685,Dhananjay Pathak,9123487087,,0,CSV-Onboard
+686,Anoop Pratap singh,9919246444,,0,CSV-Onboard
+687,Arun Singh,9532007007,,0,CSV-Onboard
+688,Atul Singh,6377453674,,0,CSV-Onboard
+689,Jitendra Verma,9415052811,,0,CSV-Onboard
+690,vaibhav,9670331100,,0,CSV-Onboard
+691,Aashish Singh,8081742102,,0,CSV-Onboard
+692,Priyank,9517156666,,0,CSV-Onboard
+693,Aman raj dubey,8808620020,,0,CSV-Onboard
+694,Prashant Chubhey,7044059227,,1,Manual
+695,Harshita,8279821577,,1,Manual
+696,Tanvi bansal,9415116236,,1,Manual
+697,Pratyush Agrawal,9161891618,,0,CSV-Onboard
+698,Risabh,9628938323,,1,Manual
+699,abiwaquas,7054285833,,0,CSV-Onboard
+700,Shivam Singh,9454775980,,0,CSV-Onboard
+701,Ashutosh,8299288117,,1,Manual
+702,sahil kalra,7985993101,,1,Manual
+703,Suresh Kumar,9451782624,,0,CSV-Onboard
+704,Amit Singh,6394885767,,1,Manual
+705,Saif Khan,9170000160,,0,CSV-Onboard
+706,Piyush Rai,9794948872,,0,CSV-Onboard
+707,Vaibhav,7800065730,,0,CSV-Onboard
+708,Subham,8887621005,,0,CSV-Onboard
+709,vishal yadav,7379160000,,2,Manual
+710,Ashutosh Singh,7238961111,,0,CSV-Onboard
+711,neha singh,9161767676,,0,CSV-Onboard
+712,Mahesh Kumar,9648903890,,0,CSV-Onboard
+713,Dr. Deepak Verma,8239444258,,1,Manual
+714,Dinesh,9670894000,,0,CSV-Onboard
+715,Sunny Kumar,7380782065,,0,CSV-Onboard
+716,Abhishek Singh,9721055062,,0,CSV-Onboard
+717,anubhav pathak,9554686161,NA,0,CSV-Onboard
+718,Azmi,9005651368,,2,Manual
+719,Sarvesh,9555645967,,0,CSV-Onboard
+720,Prateek,9559234492,,0,CSV-Onboard
+721,Avinash srivastava,9453516309,,0,CSV-Onboard
+722,Arti,9450283734,,0,CSV-Onboard
+723,S Ghos,9649901618,,0,CSV-Onboard
+724,abhye singh,9839500040,,0,CSV-Onboard
+725,MAHENDRA YADAV,9559352586,,0,CSV-Onboard
+726,Alok Sharma,9415156002,,0,CSV-Onboard
+727,Mansi,8004213775,,0,CSV-Onboard
+728,MANNU SINGH,9415155544,,0,CSV-Onboard
+729,Preeti,8887625339,,0,CSV-Onboard
+730,Sartaj,7379000029,,1,Manual
+731,DR Rathore,9403690705,,0,CSV-Onboard
+732,Sailesh,9795333598,,0,CSV-Onboard
+733,Taufeeq,7054139864,,1,Manual
+734,Saurabh Singh,7840002282,,1,Manual
+735,Manvendra Singh,7800141443,,0,CSV-Onboard
+736,Akansha,9116289277,,0,CSV-Onboard
+737,Meraj Ahmad,9956299876,,0,CSV-Onboard
+738,siddhi,7310495666,priyakhatwani.khatwani140@gmail.com,0,CSV-Onboard
+739,Faizan,9554706000,,0,CSV-Onboard
+740,Beena,9554180777,,0,CSV-Onboard
+741,Depak,9580849742,,0,CSV-Onboard
+742,Mr Vinay Kumar,8887574998,,0,CSV-Onboard
+743,Pankaj Yadav,9984659013,,0,CSV-Onboard
+744,Alook Mishra,9554498000,,0,CSV-Onboard
+745,Rahul Jaiswal,9956407742,,1,Manual
+746,Pradeep Yadav,8176006703,,0,CSV-Onboard
+747,Jumaid Hayder,9305232767,,1,Manual
+748,Vijyant Singh,7800351003,,0,CSV-Onboard
+749,Faiz,9044583264,,2,Manual
+750,ABHISHEK sINGH,9415249002,,0,CSV-Onboard
+751,ruhi paul,9839619317,,0,CSV-Onboard
+752,Saurabh,9151132000,,0,CSV-Onboard
+753,Anjali Verma,6306795150,,1,Manual
+754,Rohit Sharma,9532816100,,0,CSV-Onboard
+755,Bhanu,9005080480,,2,Manual
+756,Nazar,9794504567,,0,CSV-Onboard
+757,Mahinder Vora,8765209500,,0,CSV-Onboard
+758,Narendra Mishra,9919347924,,0,CSV-Onboard
+759,manish jaiswal,9919074000,,0,CSV-Onboard
+760,Mukesh Kumar,8604896518,,1,Manual
+761,Shashank Sharma,9936694311,,0,CSV-Onboard
+762,Durgesh Kumar,8726921060,,0,CSV-Onboard
+763,Bhoomika,8770313597,,0,CSV-Onboard
+764,Nilesh Gupta,9305060434,,0,CSV-Onboard
+765,Shekhar,7499703197,,0,CSV-Onboard
+766,sayad zain,8009444125,,0,CSV-Onboard
+767,Kamil,8299581499,,0,CSV-Onboard
+768,,9919869000,,1,CSV
+769,Suraj,6307189815,,0,CSV-Onboard
+770,Janardhan,9334515963,,0,CSV-Onboard
+771,vijay,9793159624,,0,CSV-Onboard
+772,Avantika,8319330044,,1,Manual
+773,Atul Mishra,9793094737,Atulmishra1992@gmail.com,1,Manual
+774,murtoza,9415113680,,3,Manual
+775,sharad tiwari,8005072681,,0,CSV-Onboard
+776,Zameer Ahmad Khan,9956044472,,1,Manual
+777,Suchita Panday,9415716138,,0,CSV-Onboard
+778,Satendra,8004977757,,0,CSV-Onboard
+779,HEM SONI,9415047914,,0,CSV-Onboard
+780,,8318651831,Singhsangita121294@gmai.com,1,Manual
+781,brijesh yadav,9452270079,,0,CSV-Onboard
+782,paramjeet singh,9792779999,,0,CSV-Onboard
+783,Ashish Singh,8960633009,,1,Manual
+784,aNAS,8948267945,,1,Manual
+785,Aditya Kumar Singh,7800007773,sarthaksingh7773@gmail.com,1,Manual
+786,Rashid,7705979855,,0,CSV-Onboard
+787,brijesh,9305051512,,0,CSV-Onboard
+788,Mayank,7052905775,,1,Manual
+789,Mani Kalra,9918437626,,0,CSV-Onboard
+790,jayant singh,9839380292,NA,0,CSV-Onboard
+791,Rishu,9026531431,,2,Manual
+792,Abhishek,8604258836,,0,CSV-Onboard
+793,Azlam,9598981771,,0,CSV-Onboard
+794,Depak Singh,8787215587,,1,Manual
+795,monti,9839536082,,0,CSV-Onboard
+796,Nitin Kumar Singh,7007676377,,1,Manual
+797,Dinkar Panday,9451688500,,0,CSV-Onboard
+798,Shilpi Agarwal,9415143764,,0,CSV-Onboard
+799,Kamlesh Verma,8090506225,,0,CSV-Onboard
+800,AK SINGH,9792477190,,0,CSV-Onboard
+801,SUMIT AGRAWAL,9415076614,,0,CSV-Onboard
+802,Saurabh,7275372775,,0,CSV-Onboard
+803,Habeeb Khan,7985352121,,0,CSV-Onboard
+804,Alok,8787257626,,0,CSV-Onboard
+805,amit singh,9415183046,,0,CSV-Onboard
+806,gyanendra shukla,9839416643,,1,Manual
+807,Shikha Triphathi,9161881883,,0,CSV-Onboard
+808,Himanshu,9044488922,,0,CSV-Onboard
+809,pankaj,9595663000,,1,Manual
+810,kuldeep,9161117700,,1,Manual
+811,Shashank,8957005095,,0,CSV-Onboard
+812,Dev Prakas,8423000097,,0,CSV-Onboard
+813,Rohit Yadav,9548169842,,0,CSV-Onboard
+814,Kamlesh,9918790577,,0,CSV-Onboard
+815,divy,7347735199,,1,Manual
+816,Yash Aryan Yadav,6390261303,,0,CSV-Onboard
+817,Anand Tiwari,9695476664,,0,CSV-Onboard
+818,HAIDER,9867315055,,0,CSV-Onboard
+819,Lal Ji Verma,9935172898,,0,CSV-Onboard
+820,Ashwani Soni,7530868294,ashwanisoni229@gmail.com,1,Manual
+821,Shrish Panday,7388567149,,0,CSV-Onboard
+822,Sayyad Imran,8299465468,,0,CSV-Onboard
+823,Sekhar Singh,7618001400,,0,CSV-Onboard
+824,Sanjay Verma,9506080094,,0,CSV-Onboard
+825,Amit Singh,8932881626,,1,Manual
+826,Amrik Singh,9919260705,,1,Manual
+827,Ratnakar Mishra,9450480000,,0,CSV-Onboard
+828,yogesh,9795052055,,0,CSV-Onboard
+829,Adarsh Pathak,9651064488,,1,Manual
+830,Anuraag Singh,9415918373,,1,Manual
+831,Prakash Pahujani,8874407074,,0,CSV-Onboard
+832,Mohit Singh,9838580191,,0,CSV-Onboard
+833,Sailendra,7880664916,,0,CSV-Onboard
+834,Rajnish,9140861459,,1,Manual
+835,Apurv,9554059079,,0,CSV-Onboard
+836,SONI PANDAY,9628753297,,1,Manual
+837,Shivam Singh,9369932553,,0,CSV-Onboard
+838,Dilip Kumar,9455142805,,1,Manual
+839,SK Singh,9838224520,,1,Manual
+840,Rudra Prakash,8004320043,,0,CSV-Onboard
+841,Kalpna,8506841571,,0,CSV-Onboard
+842,Suresh Bhaiyya,9415917179,,0,CSV-Onboard
+843,Arbi,8299089460,,0,CSV-Onboard
+844,guddu sir,9984259878,,0,CSV-Onboard
+845,Kshama,9044450117,,1,Manual
+846,Sameer Khan,9452491200,,1,Manual
+847,Shahnawaz,8090249924,,0,CSV-Onboard
+848,Nikhil Singh,9919380381,,0,CSV-Onboard
+849,Om,9415291417,,1,Manual
+850,Sanjay,9415716680,,2,Manual
+851,Aman Maurya,9696100122,,1,Manual
+852,Divyanshu Singh,8840879767,,0,CSV-Onboard
+853,Salauddeen,9044303082,,0,CSV-Onboard
+854,Anupam Gupta,7985675161,,0,CSV-Onboard
+855,Ayushi,8400313282,,0,CSV-Onboard
+856,Vikrant Singh,9918041111,,0,CSV-Onboard
+857,Deepak Panday,9151613700,,0,CSV-Onboard
+858,mridul,7388945354,,0,CSV-Onboard
+859,Nripendra Singh,9838523888,,0,CSV-Onboard
+860,JP Singh,9839051068,,0,CSV-Onboard
+861,Sunanda,8825288734,,0,CSV-Onboard
+862,NAVEEN,7379796258,,1,Manual
+863,Hari Prakash,9451247500,,1,Manual
+864,ahsan,9120232550,,0,CSV-Onboard
+865,Sajid khan,9795175658,,0,CSV-Onboard
+866,Anshuman Yadav,8726029844,,0,CSV-Onboard
+867,Azad,9455388009,,0,CSV-Onboard
+868,Vineet Yadav,9451203517,,0,CSV-Onboard
+869,anuragh singh,9839416988,,0,CSV-Onboard
+870,sarfraj hamad,9044506199,,0,CSV-Onboard
+871,Krishn Chandra Singh,8052199128,,1,Manual
+872,Dr sadhna srivatava,9473791591,,0,CSV-Onboard
+873,Pankaj Kumar Goyal,9415047627,,3,Manual
+874,Shashank sir,7007365323,,0,CSV-Onboard
+875,ADITI,8756226858,,1,Manual
+876,Akshay,8887909301,,0,CSV-Onboard
+877,vishal,9044880001,,0,CSV-Onboard
+878,atul kumar,9454046603,,1,Manual
+879,Adarsh singh,9919969085,,0,CSV-Onboard
+880,ROHIT SINGH,9919866661,,0,CSV-Onboard
+881,Alok Verma,9452525268,,1,Manual
+882,sultana bano,9336623005,,0,CSV-Onboard
+883,Prakash Singh,9565298159,,0,CSV-Onboard
+884,Dr Savita,9936677999,,0,CSV-Onboard
+885,Ahad,9044439019,,0,CSV-Onboard
+886,prshant singh,9450100220,,0,CSV-Onboard
+887,Avadhandra,7007607070,,0,CSV-Onboard
+888,SANJAY SINGH,9410758699,,0,CSV-Onboard
+889,K P singh,9453855044,,1,Manual
+890,Atul Verma,9919048284,,0,CSV-Onboard
+891,Dipika Singh,9452176438,,0,CSV-Onboard
+892,Subham Singh,9919999636,,1,Manual
+893,Sailendra Pratap Singh,9450286153,,0,CSV-Onboard
+894,Dr Satish,9450161436,,0,CSV-Onboard
+895,ABHISHEK SONI,8400280010,,0,CSV-Onboard
+896,Shubham,8317090953,,1,Manual
+897,Rani,9798415736,,0,CSV-Onboard
+898,Nikhil Singh,7348616372,,0,CSV-Onboard
+899,Sahab Rizvi,7977864157,,0,CSV-Onboard
+900,Rahul Singh,9918822000,,0,CSV-Onboard
+901,Harsh,8840759870,,0,CSV-Onboard
+902,Kapil,9451731376,,0,CSV-Onboard
+903,Vibhog Singh,7017005884,,2,Manual
+904,Divyansh singh,7309648078,,0,CSV-Onboard
+905,Bhupendra,7007613517,,0,CSV-Onboard
+906,Aniket Soni,8299126990,,2,Manual
+907,Abhinav Singh,9369748282,,0,CSV-Onboard
+908,Aishwary Rastogi,9985223568,,0,CSV-Onboard
+909,Shree Prakash,8887608835,,1,Manual
+910,Anoop Verma,9415090911,,1,Manual
+911,Sandeep Singh,8299561867,,0,CSV-Onboard
+912,Pawan Mishra,9452651115,,0,CSV-Onboard
+913,Nikhil Jaiswal,8565859954,,0,CSV-Onboard
+914,Deepu Kannojiya,9918866700,,2,Manual
+915,rohit,9161614555,,0,CSV-Onboard
+916,Ajay Tiwari,8299464833,,1,Manual
+917,Rinku Singh,9044282492,,0,CSV-Onboard
+918,Amit,8400700007,,0,CSV-Onboard
+919,KAAJU,8808996666,,0,CSV-Onboard
+920,Vikas Mishra,9451462006,,0,CSV-Onboard
+921,Rajee agrawal,9453117385,,0,CSV-Onboard
+922,Dharmendra Pratap Singh,9696982031,,0,CSV-Onboard
+923,Mandeep Singh,7807929155,,0,CSV-Onboard
+924,Rajesh Kumar,7007632311,rajesh.paul41@gmail.com,1,Manual
+925,Adnan,9140411509,,0,CSV-Onboard
+926,deepak,9670580580,,0,CSV-Onboard
+927,Uttam Kumar,7007707323,,0,CSV-Onboard
+928,ankush,9554957198,,0,CSV-Onboard
+929,Preeti Singh,9125078879,,0,CSV-Onboard
+930,Jitendra Pratap Singh,9919851984,,0,CSV-Onboard
+931,himanshu,9415076578,,0,CSV-Onboard
+932,Ubaid,8090380300,,0,CSV-Onboard
+933,Ritu,7007466923,,0,CSV-Onboard
+934,arvind tiwari,8004538406,,0,CSV-Onboard
+935,Ratnesh Singh,8115154853,,0,CSV-Onboard
+936,ASSHAR,8299781186,,0,CSV-Onboard
+937,Lila Dhar,7317383000,,0,CSV-Onboard
+938,Ali Hussain,9987427971,Alihusain05278@gmail.com,1,Manual
+939,Anand,9648431679,,1,Manual
+940,Rajesh Kumar,9935428030,,0,CSV-Onboard
+941,dhirendr singh,9984646777,,0,CSV-Onboard
+942,PRADEEP sINGH,9451988150,,0,CSV-Onboard
+943,Rahul Yadav,9807778430,,0,CSV-Onboard
+944,Subham yadav,8188821065,,0,CSV-Onboard
+945,Amil,9415155502,,0,CSV-Onboard
+946,Dr Anil,7565066828,,1,Manual
+947,Vikas,9554968312,,0,CSV-Onboard
+948,Ankit Jaiswal,9935695063,,2,Manual
+949,Gagan,6306569135,,0,CSV-Onboard
+950,PK PANDAY,9415767003,,0,CSV-Onboard
+951,S R.R Rizvi,7800350007,,1,Manual
+952,Alankrita,7007884024,,0,CSV-Onboard
+953,Kamruddeen Bhai ( Bablu ),9839321000,,2,Manual
+954,Dr VK Panday,9838816806,,0,CSV-Onboard
+955,ANURAG,9696899909,,1,Manual
+956,Shiva,7007837070,,0,CSV-Onboard
+957,Vaibhav rawat,8604727124,,0,CSV-Onboard
+958,Neha,8874302221,,1,Manual
+959,UMANG,9452914763,,0,CSV-Onboard
+960,Ajay Singh,8299277344,,1,Manual
+961,Santosh,9554979346,,0,CSV-Onboard
+962,Vikrant Singh,9628019000,,0,CSV-Onboard
+963,Shiva,9044808088,,0,CSV-Onboard
+964,Sarthak,9454362394,,2,Manual
+965,prateek ray,9389193031,,0,CSV-Onboard
+966,Awdhesh,9919101004,NA,0,CSV-Onboard
+967,Niraj Kumar,6005364256,,0,CSV-Onboard
+968,Ankit,8953911800,,0,CSV-Onboard
+969,Kushagra,8874839632,,1,Manual
+970,Bharti Motwani,9335008282,,0,CSV-Onboard
+971,PRAVEEN,9918347777,,0,CSV-Onboard
+972,Pervesh Verma,9616956559,,0,CSV-Onboard
+973,Dr Bharat Khurana,8542947575,,0,CSV-Onboard
+974,Rajesh Yadav,8318384601,,1,Manual
+975,sneha,8090568441,,0,CSV-Onboard
+976,Mantasha Fatima,9628009790,,0,CSV-Onboard
+977,Sanjay,9919084425,,0,CSV-Onboard
+978,Aashish Panday,9451321111,,0,CSV-Onboard
+979,Rajat Ojha,7704972520,,1,Manual
+980,Nitesh,9198407009,,0,CSV-Onboard
+981,Pravin Pandey,7007842305,,1,Manual
+982,Asad,9335705523,,0,CSV-Onboard
+983,Brijesh Yadav,8726503970,,0,CSV-Onboard

@@ -1,0 +1,322 @@
+{% load static %}<!DOCTYPE html>
+<html lang="en">
+ 
+<head>
+        <meta charset="utf-8" />
+         <title>18Pixels | Management Tool</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta content="" />
+        <meta content="Coderthemes" name="author" />
+        <!-- App favicon -->
+        <link rel="shortcut icon" href="{% static 'assets/images/favicon.ico' %}">
+
+        <!-- third party css -->
+        <link href="{% static 'assets/css/vendor/dataTables.bootstrap5.css' %}" rel="stylesheet" type="text/css" />
+        <link href="{% static 'assets/css/vendor/responsive.bootstrap5.css' %}" rel="stylesheet" type="text/css" />
+        <!-- third party css end -->
+
+        <!-- App css -->
+        <link href="{% static 'assets/css/icons.min.css' %}" rel="stylesheet" type="text/css" />
+        <link href="{% static 'assets/css/app.min.css' %}" rel="stylesheet" type="text/css" id="light-style" />
+        <link href="{% static 'assets/css/app-dark.min.css' %}" rel="stylesheet" type="text/css" id="dark-style" />
+        <link href="{% static 'assets/css/custom.css' %}" rel="stylesheet" type="text/css"  />
+
+    </head>
+
+    <body class="loading" data-layout-config='{"leftSideBarTheme":"dark","layoutBoxed":false, "leftSidebarCondensed":false, "leftSidebarScrollable":false,"darkMode":false, "showRightSidebarOnStart": true}'>
+        <!-- Begin page -->
+        <div class="wrapper">
+            <!-- ========== Left Sidebar Start ========== -->
+            <div class="leftside-menu" id="sidebarMenus">
+                {% include 'base.html' %}
+
+            </div>
+            <!-- Left Sidebar End -->
+            <!-- ============================================================== -->
+            <!-- Start Page Content here -->
+            <!-- ============================================================== -->
+            <div class="content-page">
+                <div class="content">
+                    <!-- Topbar Start -->
+                   <div class="navbar-custom" id="load-navigation"> {% include 'hearder.html' %}</div>
+                    <!-- end Topbar -->
+                    <!-- Start Content-->
+                    <div class="container-fluid">
+                        <!-- start page title -->
+                        <div class="row">
+                            <div class="col-3">
+                                <div class="page-title-box">
+                                    <h4 class="page-title">Received Applications</h4>
+                                </div>
+                             </div>
+                             <div class="col-md-2 text-end pro_name mb-2 pt-4">
+                                      Filter By
+                                </div>
+                                 <div class="col-md-3 pt-3">
+                                   <select class="form-control select2" data-toggle="select2"    data-placeholder="Select Job Title" >
+                                        <option></option>
+                                        
+                                        <option value="HI">Front End Developer</option>
+                                        <option value="Hdsf">Laravel Developer</option>
+                                        <option value="Hdsf">DevOps</option>
+                                       
+                                  </select>
+                                </div>
+                                <div class="col-md-2 pt-3">
+                                   <select class="form-control select2" data-toggle="select2"    data-placeholder="Select Duration" >
+                                        <option></option>
+                                        <option value="AK"  >All</option>
+                                        <option value="HI">Last 7 days</option>
+                                        <option value="Hdsf">Last Month</option>
+                                        <option value="Hdsf">Last 3 Months</option>
+                                        <option value="Hdsf">Last 6 Months</option>
+                                  </select>
+                                </div>
+                                 <div class="col-md-2 text-end   pt-3   ">
+                                   <a class="btn btn-success  ms-3  " data-bs-toggle="modal" data-bs-target="#add-new-task-modal">Search</a>
+                                   <a href=""  style="margin-left: 15px">Clear</a>
+                               </div>
+
+                               <div class="col-md-12 text-left  pt-2 pr-3 mb-2">
+                                    <span class="btn btn-sm btn-dark"><strong>Total : </strong>{{applicantObj|length}}</span>&nbsp;&nbsp;  <span class="btn btn-sm btn-success"><strong>Hired : </strong>{{hired_applicantObj}}</span>&nbsp;&nbsp; <span class="btn btn-sm btn-danger   ml-2"><strong>Rejected : </strong>{{rejected_applicantObj}}</span>&nbsp;&nbsp;<span class="btn btn-sm btn-info text-white"><strong>Shortlisted : </strong>{{shortlisted_applicantObj}}</span>
+                                    &nbsp;&nbsp;<span class="btn btn-sm btn-secondary text-white"><strong>Absent : </strong>{{absent_applicantObj}}</span>
+                                    &nbsp;&nbsp;<span class="btn btn-sm btn-primary text-white"><strong>Interview Scheduled : </strong>{{interviewSched_applicantObj}}</span>
+                                </div>
+                        </div>  
+                      
+                        <div class="row">
+                            <div class="col-12">
+                                <div class="card">
+                                    <div class="card-body">
+                                        <div class="table-responsive">
+                                          <table id="basic-datatable" class="table dt-responsive   w-100 jobs-table">
+                                            <thead>
+                                                <tr>
+                                                    <th width="40">S.No.</th>
+                                                    <th width="80">Job Title</th>
+                                                    <th width="50">Candidate name</th>
+                                                    <th>Mobile</th>
+                                                    <th>Email</th>
+                                                    <th width="50">Experience</th>
+                                                    <th width="50">Resume</th>
+                                                    <th>Date</th>
+                                                    <th>Status</th>
+                                                    <th  >Action</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                {% for i in applicantObj %}
+                                                <tr>
+                                                    <td>{{ forloop.counter }}</td>
+                                                    <td>{{i.job_FK.position.designation_name}}<br> 
+                                                        {% if i.status == 'Hired' %}
+                                                            <span class="badge bg-success">{{i.status}}</span></td>
+                                                        {% elif i.status == 'Rejected' %}
+                                                            <span class="badge bg-danger">{{i.status}}</span></td>
+                                                        {% elif i.status == 'Absent' %}
+                                                            <span class="badge bg-secondary">{{i.status}}</span></td>
+                                                        {% elif i.status == 'Shortlisted' %}
+                                                            <span class="badge bg-info">{{i.status}}</span></td>
+                                                        {% elif i.status == 'Scheduled' %}
+                                                        <div id="tooltip-container">
+                                                                <a href="javascript:void(0);" data-bs-toggle="popover" data-bs-trigger="hover" data-bs-content="{{i.interviewer_name}} | {{i.interviewDate|date:"M d, Y"}}"  data-bs-placement="top" title="" class="d-inline-block">
+                                                                    <span class="badge bg-primary">{{i.status}}</span></td>
+                                                                </a>
+                                                        </div>
+                                                        {% endif %}
+                                                    <td  width="70">
+                                                        {{i.candidate_name}}
+                                                    </td>
+                                                    <td>{{i.contact}}</td>
+                                                    <td>{{i.email}}</td>
+                                                    <td>
+                                                        {% if i.experienceFK.experience == 'Fresher' %}
+                                                            {{i.experienceFK.experience}}
+                                                        {% else %}
+                                                            {{i.experienceFK.experience}} years
+                                                        {% endif %}
+                                                    </td>
+                                                    <td><a href="/media/{{i.resume_doc}}" target="_blank">Resume</a></td>
+                                                    <td>{{i.applicationData|date:"M d, Y"}}</td>
+                                                    <td> 
+                                                      <select onchange="update_application_status(this)" appID={{i.id}}>
+                                                          {% if i.status == 'Hired' %}
+                                                            <option class="d-none">Select</option>
+                                                            <option value="Hired" selected>Hired</option>
+                                                            <option value="Absent">Absent</option>
+                                                            <option value="Rejected">Rejected</option>
+                                                            <option value="Shortlisted">Shortlisted</option>
+                                                          {% elif i.status == 'Rejected' %}
+                                                            <option class="d-none">Select</option>
+                                                            <option value="Hired">Hired</option>
+                                                            <option value="Absent">Absent</option>
+                                                            <option value="Rejected" selected>Rejected</option>
+                                                            <option value="Shortlisted">Shortlisted</option>
+                                                          {% elif i.status == 'Absent' %}
+                                                            <option class="d-none">Select</option>
+                                                            <option value="Hired">Hired</option>
+                                                            <option value="Absent" selected>Absent</option>
+                                                            <option value="Rejected">Rejected</option>
+                                                            <option value="Shortlisted">Shortlisted</option>
+                                                          {% elif i.status == 'Shortlisted' %}
+                                                            <option class="d-none">Select</option>
+                                                            <option value="Hired">Hired</option>
+                                                            <option value="Absent">Absent</option>
+                                                            <option value="Rejected">Rejected</option>
+                                                            <option value="Shortlisted" selected>Shortlisted</option>
+                                                          {% else %}
+                                                            <option class="d-none">Select</option>
+                                                            <option>Hired</option>
+                                                            <option>Absent</option>
+                                                            <option>Rejected</option>
+                                                            <option>Shortlisted</option>
+                                                          {% endif %}
+                                                        </select>
+                                                     </td>
+                                                     <td> 
+                                                         {% if i.status == 'Rejected' or i.status == 'Hired' %}
+                                                            <a title="Schedule Interview" href="#" data-bs-toggle="modal" data-bs-target="#schedule" style="pointer-events:none;" class="action-icon text-secondary"> <i class="mdi mdi-account-clock-outline"></i></a>
+                                                         {% else %}
+                                                            <a title="Schedule Interview" href="#" data-bs-toggle="modal" data-bs-target="#schedule"  appID={{i.id}} onclick="get_application_info(this)" class="action-icon text-success"> <i class="mdi mdi-account-clock-outline"></i></a>
+                                                         {% endif %}
+                                                         <a title="Reply" href="#" data-bs-toggle="modal" data-bs-target="#reply" onclick="get_app_info(this)" appID={{i.id}} class="action-icon text-info"> <i class="mdi mdi-reply-all-outline"></i></a>
+                                                        
+                                                         <a href="{% url 'delete_application' i.id %}" class="action-icon text-danger" onclick="return confirm('Are you sure you want to delete this {{i.job_FK.position.designation_name}} Job Application?');"> <i class="mdi mdi-delete-outline"></i></a>
+                                                        </td>
+                                                    </tr>
+                                                    {% endfor %}
+                                            </tbody>
+                                        </table>
+                                        </div>
+                                    </div> <!-- end card-body-->
+                                </div> <!-- end card-->
+                            </div> <!-- end col -->
+                        </div>
+                        <!-- end row -->
+                        
+                    </div> <!-- container -->
+
+                </div> <!-- content -->
+
+                <!-- Footer Start -->
+                <footer class="footer">
+                    <div class="container-fluid">
+                        <div class="row">
+                            <div class="col-md-6">
+                                <script>document.write(new Date().getFullYear())</script> © 18pixels 
+                            </div>
+                            
+                        </div>
+                    </div>
+                </footer>
+                <!-- end Footer -->
+
+            </div>
+
+            <!-- ============================================================== -->
+            <!-- End Page content -->
+            <!-- ============================================================== -->
+
+
+        </div>
+        <!-- END wrapper -->
+
+      
+
+           <!--detail modal -->
+        <div class="modal fade task-modal-content show" id="reply" tabindex="-1" role="dialog" aria-labelledby="NewTaskModalLabel" aria-modal="true" >
+            <div class="modal-dialog modal-dialog-centered ">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h4 class="modal-title" id="CandidateINFOR"><span class="text-danger">DevOps</span> - Abhishek Singh</h4>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                              
+                             
+                            <form method="post"   action="https://eighteenpixels.com/task/enquiry/reply">
+                                <input type="hidden" name="id" id="id" value="39">
+                               
+                               <div class=" col m12 s12">
+                                <label for="email" style="position: relative;" class="active">Email</label>
+                                <input class="form-control" readonly="" id="canEmAIl"  name="email" type="text"  value="rohit@gmail.com">
+                                
+                              </div>
+                              <div class="col s12 pt-3 ">
+                                <label for="message ml-0 pl-0 mb-2" style="position: relative; left: 0" class="">Message</label>
+                                 <textarea style="height: 100px" id="message" name="message" class="form-control"   placeholder="type here.."  ></textarea>
+                               </div>
+                               
+                                 <div class="text-end mt-4">
+                                    <button  type="button" class="btn btn-light" data-bs-dismiss="modal" >Cancel</button>
+                                    <button type="button" class="btn btn-primary" data-bs-dismiss="modal" id="sendMsgBTN" onclick="send_message(this)" appID="" >Send</button>
+                                  </div>
+                            </form>
+                         
+                    </div>
+                </div><!-- /.modal-content -->
+            </div><!-- /.modal-dialog -->
+        </div>
+        <!-- /End-modal -->
+
+
+             <!--detail modal -->
+        <div class="modal fade task-modal-content show" id="schedule" tabindex="-1" role="dialog" aria-labelledby="NewTaskModalLabel" aria-modal="true" >
+            <div class="modal-dialog modal-dialog-centered ">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h4 class="modal-title" id="append_candidate_info"><span class="text-danger">Python Developer</span> - Rohit Kumar</h4>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                            <form method="post"  action="https://eighteenpixels.com/task/enquiry/reply">
+                               <input type="hidden" name="id" id="id" value="39">
+                               <div class="col m12 s12">
+                                 <label for="email" style="position: relative;" class="active">Email</label>
+                                 <input class="form-control" readonly=""  name="email" type="text" id="candEmail" value="">
+                               </div>
+                               <div class="col s12 pt-3">
+                                  <label for="message ml-0 pl-0 mb-2" style="position: relative; left: 0" class="">Date</label>
+                                  <input type="text" class="form-control  " id="datepicker" data-toggle="date-picker" data-single-date-picker="true">
+                               </div>
+                                <div class="col m12 s12 pt-3">
+                                 <label for="text"  >Interviwer name</label>
+                                 <input class="form-control"   name="email" type="text" id="interviewerName" placeholder="Enter Employee name">
+                               </div>
+                                <div class="text-end mt-4">
+                                     <button  type="button" class="btn btn-light" data-bs-dismiss="modal" >Cancel</button>
+                                     <button type="button" class="btn btn-primary" id="interviewSchedBTN" onclick="schedule_interview(this)" appID="" data-bs-dismiss="modal" >Schedule</button>
+                                </div>
+                            </form>
+                         
+                    </div>
+                </div><!-- /.modal-content -->
+            </div><!-- /.modal-dialog -->
+        </div>
+        <!-- /End-modal -->
+
+      
+
+
+        <!-- bundle -->
+        <script src="{% static 'assets/js/vendor.min.js' %}"></script>
+        <script src="{% static 'assets/js/app.min.js' %}"></script>
+
+        <!-- third party js -->
+        <script src="{% static 'assets/js/vendor/jquery.dataTables.min.js' %}"></script>
+        <script src="{% static 'assets/js/vendor/dataTables.bootstrap5.js' %}"></script>
+        <script src="{% static 'assets/js/vendor/dataTables.responsive.min.js' %}"></script>
+        <script src="{% static 'assets/js/vendor/responsive.bootstrap5.min.js' %}"></script>
+        <script src="{% static 'assets/js/vendor/dataTables.checkboxes.min.js' %}"></script>
+        <!-- third party js ends -->
+
+        <!-- demo app -->
+        <script src="{% static 'assets/js/pages/demo.datatable-init.js' %}"></script>
+
+         <script src="{% static 'assets/js/custom.js' %}"></script>
+         <script src="{% static 'assets/js/admin_JS/hr_JS/edit_application_info.js' %}"></script>
+        <!-- end demo js-->
+
+    </body>
+ 
+</html>

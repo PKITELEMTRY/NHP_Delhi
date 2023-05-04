@@ -1,0 +1,379 @@
+{% load static %}
+<a href="/dashboard" class="logo text-center logo-light"> 
+    <span class="logo-lg p-2"> 
+        <p style="font-size:20px;font-weight:900;"><img src="{% static 'assets/images/favicon.ico' %}" alt="" height="55"> BinaryBridge</p>
+    </span> 
+    <span class="logo-sm"> 
+        <img src="{% static 'assets/images/favicon.ico' %}" alt="" height="45"> 
+    </span> 
+</a>
+<div class="h-100" id="leftside-menu-container" data-simplebar>
+    <ul class="side-nav">
+        <li class="side-nav-title side-nav-item">Navigation</li>
+        <li class="side-nav-item"> 
+            <a  href="/dashboard" class="side-nav-link"> <i class="uil-home-alt"></i> 
+                <span> Dashboards </span> 
+            </a> 
+        </li>
+        {% if request.user.is_superuser %}
+        {% comment %} <li class="side-nav-item"> <a data-bs-toggle="collapse" href="#sidebarProject" aria-expanded="false"
+            aria-controls="sidebarEmail" class="side-nav-link"> <i class="uil-clipboard-alt"></i> <span> Device Configuration
+                 </span> <span class="menu-arrow"></span> </a>
+            <div class="collapse" id="sidebarProject">
+                <ul class="side-nav-second-level">
+                    <li>
+                        <a href="#">NHP Project List</a>
+                    </li>
+                    <li>
+                        <a href="/project-management/add-project">Add New NHP Project</a>
+                    </li>
+                </ul>
+            </div>
+        </li> {% endcomment %}
+        {% comment %} <li class="side-nav-item"> 
+            <a  href="/" class="side-nav-link"> <i class="uil-clipboard-alt"></i> 
+                <span> Devices Configuration </span> 
+            </a> 
+        </li> {% endcomment %}
+        {% comment %} <li class="side-nav-item"> 
+            <a  href="" class="side-nav-link"> <i class="uil-clipboard-alt"></i> 
+                <span>Related Projects </span> 
+            </a> 
+        </li>  {% endcomment %}
+        <li class="side-nav-item"> <a data-bs-toggle="collapse" href="#sidebarEcommerce" aria-expanded="false"
+            aria-controls="sidebarEcommerce" class="side-nav-link"> <i class="uil-user"></i> <span> User
+                Management </span> <span class="menu-arrow"></span> </a>
+                <div class="collapse" id="sidebarEcommerce">
+                    <ul class="side-nav-second-level">
+                        <li>
+                            <a href="#">User List</a>
+                    </li>
+                    <li>
+                        <a href="#">Add New User</a>
+                    </li>
+                    {% comment %} <li>
+                        <a href="#">Login/Logout Logs</a>
+                    </li>
+                    <li>
+                        <a href="#">Online Users</a>
+                    </li> {% endcomment %}
+                </ul>
+            </div>
+        </li>
+        {% comment %} <li class="side-nav-item"> <a data-bs-toggle="collapse" href="#reports" aria-expanded="false"
+            aria-controls="reports" class="side-nav-link"> <i class="uil-copy-alt"></i> <span> Reports </span> <span
+                class="menu-arrow"></span> </a>
+            <div class="collapse" id="reports">
+                <ul class="side-nav-second-level">
+                    <li>
+                        <a href="#">User Report</a>
+                    </li>
+                    <li>
+                        <a href="#">NHP Project Report</a>
+                    </li>
+                    <li>
+                        <a href="#">Data Report</a>
+                    </li>
+                </ul>
+            </div>
+        </li> {% endcomment %}
+        {% endif %} 
+        {% comment %} 
+        {% if request.user.is_superuser %}
+        <li class="side-nav-item"> <a data-bs-toggle="collapse" href="#sidebarProject" aria-expanded="false"
+            aria-controls="sidebarEmail" class="side-nav-link"> <i class="uil-clipboard-alt"></i> <span> NHP
+                Management </span> <span class="menu-arrow"></span> </a>
+            <div class="collapse" id="sidebarProject">
+                <ul class="side-nav-second-level">
+                    <li>
+                        <a href="#">NHP Project List</a>
+                    </li>
+                    <li>
+                        <a href="/project-management/add-project">Add New NHP Project</a>
+                    </li>
+                </ul>
+            </div>
+        </li>
+        <li class="side-nav-item"> <a data-bs-toggle="collapse" href="#sidebarEcommerce" aria-expanded="false"
+            aria-controls="sidebarEcommerce" class="side-nav-link"> <i class="uil-user"></i> <span> User
+                Management </span> <span class="menu-arrow"></span> </a>
+                <div class="collapse" id="sidebarEcommerce">
+                    <ul class="side-nav-second-level">
+                        <li>
+                            <a href="#">User List</a>
+                    </li>
+                    <li>
+                        <a href="#">Add New User</a>
+                    </li>
+                    <li>
+                        <a href="#">Login/Logout Logs</a>
+                    </li>
+                    <li>
+                        <a href="#">Online Users</a>
+                    </li>
+                </ul>
+            </div>
+        </li>
+        <li class="side-nav-item"> <a data-bs-toggle="collapse" href="#reports" aria-expanded="false"
+            aria-controls="reports" class="side-nav-link"> <i class="uil-copy-alt"></i> <span> Reports </span> <span
+                class="menu-arrow"></span> </a>
+            <div class="collapse" id="reports">
+                <ul class="side-nav-second-level">
+                    <li>
+                        <a href="#">User Report</a>
+                    </li>
+                    <li>
+                        <a href="#">NHP Project Report</a>
+                    </li>
+                    <li>
+                        <a href="#">Data Report</a>
+                    </li>
+                </ul>
+            </div>
+        </li>
+        {% endif %} 
+        {% endcomment %}
+        
+        <!-- {% if request.session.userType == 'masteR' %}
+        <li class="side-nav-item"> <a data-bs-toggle="collapse" href="#sidebarEcommerce" aria-expanded="false"
+                aria-controls="sidebarEcommerce" class="side-nav-link"> <i class="uil-store"></i> <span> Employee
+                    Management </span> <span class="menu-arrow"></span> </a>
+            <div class="collapse" id="sidebarEcommerce">
+                <ul class="side-nav-second-level">
+                    <li>
+                        <a href="/employee-management/employee-list">Employee List</a>
+                    </li>
+                    <li>
+                        <a href="/employee-management/add-employee">Add New Employee</a>
+                    </li>
+                    <li>
+                        <a href="/log-management/logs">Login/Logout Logs</a>
+                    </li>
+                    <li>
+                        <a href="/log-management/online-users">Online Users</a>
+                    </li>
+                </ul>
+            </div>
+        </li>
+        {% endif %}
+        <li class="side-nav-item"> <a data-bs-toggle="collapse" href="#sidebarProject" aria-expanded="false"
+                aria-controls="sidebarEmail" class="side-nav-link"> <i class="uil-envelope"></i> <span> Project
+                    Management </span> <span class="menu-arrow"></span> </a>
+            <div class="collapse" id="sidebarProject">
+                <ul class="side-nav-second-level">
+                    <li>
+                        <a href="/project-management/project-list">Project List</a>
+                    </li>
+                    {% if request.session.userType == 'masteR' %}
+                    <li>
+                        <a href="/project-management/add-project">Add New Project</a>
+                    </li>
+                    {% endif %}
+                    {% if request.session.userType == 'masteR' or request.session.userType == 'teacheR' %}
+                    <li>
+                        <a href="/project-management/add-module">Add project Modules</a>
+                    </li>
+                    <li>
+                        <a href="/project-management/module-list"> Project Modules List</a>
+                    </li>
+                    <li>
+                        <a href="/project-management/add-submodule"> Add Sub-modules</a>
+                    </li>
+                    <li>
+                        <a href="/project-management/submodule-list"> Project Sub Modules List</a>
+                    </li>
+                    {% endif %}
+                </ul>
+            </div>
+        </li>
+
+        <li class="side-nav-item">
+            <a href="/task-management/task-list" class="side-nav-link"> <i class="uil-folder-plus"></i> <span> Task Management </span> </a>
+        </li>
+
+        <li class="side-nav-item"> <a data-bs-toggle="collapse" href="#sidebarEmail" aria-expanded="false"
+                aria-controls="sidebarEmail" class="side-nav-link"> <i class="uil-envelope"></i> <span> Event Management
+                </span> <span class="menu-arrow"></span> </a>
+            <div class="collapse" id="sidebarEmail">
+                <ul class="side-nav-second-level">
+                    <li>
+                        <a href="/event-management/event-list">Events List</a>
+                    </li>
+                    {% if request.session.userType == 'masteR' %}
+                    <li>
+                        <a href="/event-management/event-archieves-list">Archives</a>
+                    </li>
+                    {% endif %}
+                    <li>
+                        <a href="/event-management/wishes-list">Wishes List</a>
+                    </li>
+                </ul>
+            </div>
+        </li>
+        
+        <li class="side-nav-item"> <a data-bs-toggle="collapse" href="#sidebarProjects" aria-expanded="false"
+                aria-controls="sidebarProjects" class="side-nav-link"> <i class="uil-briefcase"></i> <span> Leave Management </span> <span class="menu-arrow"></span> </a>
+            <div class="collapse" id="sidebarProjects">
+                <ul class="side-nav-second-level">
+                {% if request.session.userType == 'masteR' %}
+                    <li>
+                        <a href="#">Leave Record</a>
+                    </li>
+                    <li>
+                        <a href="#">Leave Requests</a>
+                    </li>
+                    <li>
+                        <a href="#">Add Leaves </a>
+                    </li>
+                    <li>
+                        <a href="#">Leave Allotment</a>
+                    </li>
+                    <li>
+                        <a href="#">Allot Leaves </a>
+                    </li>
+                    <li>
+                        <a href="#">List of Holidays </a>
+                    </li>
+                {% else %}
+                    <li>
+                        <a href="#">Request Leaves </a>
+                    </li>
+                    <li>
+                        <a href="#">List of Holidays </a>
+                    </li>
+                {% endif %}
+                </ul>
+            </div>
+        </li>
+        {% if request.session.userType == 'masteR' %}
+        <li class="side-nav-item"> <a data-bs-toggle="collapse" href="#sidebarTasks" aria-expanded="false"
+                aria-controls="sidebarTasks" class="side-nav-link"> <i class="uil-clipboard-alt"></i> <span> HR Management </span> <span class="menu-arrow"></span> </a>
+            <div class="collapse" id="sidebarTasks">
+                <ul class="side-nav-second-level">
+                    <li>
+                        <a href="/hr-management/received-application_-list">Received Applications</a>
+                    </li>
+                    <li>
+                        <a href="/hr-management/add-applications">Add Applications</a>
+                    </li>
+                    <li>
+                        <a href="/hr-management/job-list">Job List</a>
+                    </li>
+                    <li>
+                        <a href="/hr-management/add-new-job">Post New Job</a>
+                    </li>
+                    <li>
+                        <a href="/hr-management/sent-message-archives">Sent Message Archives</a>
+                    </li>
+                    <li>
+                        <a href="/hr-management/interview-archives">Interview Archives</a>
+                    </li>
+                </ul>
+            </div>
+        </li>
+        {% endif %}
+
+        {% if request.session.userType == 'masteR' or request.session.userType == 'teacheR' or request.session.userType == 'studdenT' %}
+        <li class="side-nav-item"> <a data-bs-toggle="collapse" href="#sidebarfiles" aria-expanded="false"
+            aria-controls="sidebarfiles" class="side-nav-link"> <i class="mdi mdi-file"></i> <span> File
+                Management </span> <span class="menu-arrow"></span> </a>
+                <div class="collapse" id="sidebarfiles">
+                    <ul class="side-nav-second-level">
+                        <li>
+                            <a href="/file-management/file-list">Files List</a>
+                        </li>
+                        {% if request.session.userType == 'masteR' or request.session.userType == 'teacheR' %}
+                        <li>
+                            <a href="/file-management/add-file">Add New File</a>
+                        </li>
+                        {% endif %}
+                    </ul>
+                </div>
+            </li>
+        {% endif %}
+            {% comment %} <li class="side-nav-item">
+            <a href="#" class="side-nav-link"> <i class="uil-folder-plus"></i> <span> Report Management </span> </a>
+        </li> {% endcomment %}
+        {% if request.session.userType == 'masteR' %}
+        <li class="side-nav-item"> <a data-bs-toggle="collapse" href="#sidebarPages" aria-expanded="false"
+                aria-controls="sidebarPages" class="side-nav-link"> <i class="uil-copy-alt"></i> <span> Master Pages
+                </span> <span class="menu-arrow"></span> </a>
+            <div class="collapse" id="sidebarPages">
+                <ul class="side-nav-second-level">
+                    <li>
+                        <a href="/master-management/designation-master">Designation Master</a>
+                    </li>
+                    <li>
+                        <a href="/master-management/qualification-master">Qualification Master</a>
+                    </li>
+                    {% comment %} -------------------------------- {% endcomment %}
+                    <li>
+                        <a href="/master-management/project-sector-master">Project Sector Master</a>
+                    </li>
+                    <li>
+                        <a href="/master-management/project-type-master">Project Type Master</a>
+                    </li>
+                    <li>
+                        <a href="/master-management/project-tech-master">Technology Master</a>
+                    </li>
+                    {% comment %} -------------------------------- {% endcomment %}
+                    <li>
+                        <a href="/master-management/event-highlight-master">Event Highlight Master</a>
+                    </li>
+                    <li>
+                        <a href="/master-management/cultural-event-master">Cultural Event Master</a>
+                    </li>
+                    {% comment %} -------------------------------- {% endcomment %}
+                    <li>
+                        <a href="/master-management/passingYear-master">Passing Year Master</a>
+                    </li>
+                    <li>
+                        <a href="/master-management/documentType-master">Document Type Master</a>
+                    </li> 
+                    <li>
+                        <a href="/master-management/location-master">Job Location Master</a>
+                    </li> 
+                </ul>
+            </div>
+        </li>
+        {% endif %}
+        <li class="side-nav-item">
+            <a href="/notification-management/notification" class="side-nav-link"> <i class="uil-globe"></i> <span
+                    class="badge bg-primary text-light float-end" id="notification-count">0</span> <span> Notifications </span> </a>
+                    {% comment %} <a href="/notification-management/notification" class="side-nav-link"> <i class="uil-globe"></i><span> Notifications </span> </a> {% endcomment %}
+        </li>
+        {% if request.session.userType == 'masteR' %}
+        <li class="side-nav-item"> <a data-bs-toggle="collapse" href="#reports" aria-expanded="false"
+                aria-controls="reports" class="side-nav-link"> <i class="uil-copy-alt"></i> <span> Reports </span> <span
+                    class="menu-arrow"></span> </a>
+            <div class="collapse" id="reports">
+                <ul class="side-nav-second-level">
+                    <li>
+                        <a href="/report-management/employee-report">Employees List</a>
+                    </li>
+                    <li>
+                        <a href="/report-management/holiday-report">Holiday List</a>
+                    </li>
+                    <li>
+                        <a href="/report-management/project-report">Project List</a>
+                    </li>
+                    <li>
+                        <a href="/report-management/leave-report">Leave Report</a>
+                    </li>
+                    <li>
+                        <a href="/report-management/event-report">Event List</a>
+                    </li>
+                    <li>
+                        <a href="/report-management/job-application-report">Job Application List</a>
+                    </li>
+                </ul>
+            </div>
+        </li>
+        {% endif %} -->
+    </ul>
+    <div class="clearfix"></div>
+</div>
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+
+

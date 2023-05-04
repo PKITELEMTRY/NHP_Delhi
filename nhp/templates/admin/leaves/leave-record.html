@@ -1,0 +1,258 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+ 
+<head>
+        <meta charset="utf-8" />
+         <title>18Pixels | Management Tool</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta content="" />
+        <meta content="Coderthemes" name="author" />
+        <!-- App favicon -->
+        <link rel="shortcut icon" href="{% static 'assets/images/favicon.ico' %}">
+
+        <!-- third party css -->
+        <link href="{% static 'assets/css/vendor/dataTables.bootstrap5.css' %}" rel="stylesheet" type="text/css" />
+        <link href="{% static 'assets/css/vendor/responsive.bootstrap5.css' %}" rel="stylesheet" type="text/css" />
+        <!-- third party css end -->
+
+        <!-- App css -->
+        <link href="{% static 'assets/css/icons.min.css' %}" rel="stylesheet" type="text/css" />
+        <link href="{% static 'assets/css/app.min.css' %}" rel="stylesheet" type="text/css" id="light-style" />
+        <link href="{% static 'assets/css/app-dark.min.css' %}" rel="stylesheet" type="text/css" id="dark-style" />
+        <link href="{% static 'assets/css/custom.css' %}" rel="stylesheet" type="text/css"  />
+
+    </head>
+
+    <body class="loading" data-layout-config='{"leftSideBarTheme":"dark","layoutBoxed":false, "leftSidebarCondensed":false, "leftSidebarScrollable":false,"darkMode":false, "showRightSidebarOnStart": true}'>
+        <!-- Begin page -->
+        <div class="wrapper">
+            <!-- ========== Left Sidebar Start ========== -->
+            <div class="leftside-menu" id="sidebarMenus">
+{% include 'base.html' %}
+            </div>
+            <!-- Left Sidebar End -->
+            <!-- ============================================================== -->
+            <!-- Start Page Content here -->
+            <!-- ============================================================== -->
+            <div class="content-page">
+                <div class="content">
+                    <!-- Topbar Start -->
+                   <div class="navbar-custom" id="load-navigation"> 
+                        {% include 'hearder.html' %}
+                   </div>
+                    <!-- end Topbar -->
+                    <!-- Start Content-->
+                    <div class="container-fluid">
+                        <!-- start page title -->
+                        <div class="row">
+                            <div class="col-8">
+                                <div class="page-title-box">
+                                    <h4 class="page-title">Leave Record</h4>
+                                </div>
+                             </div>
+                             <div class="col-4 text-end pt-3">
+                                 <a href="{% url 'add_leave' %}"   class="btn btn-danger mb-2"><i class="mdi mdi-plus-circle me-2"></i> Add Leave</a>
+                            </div>
+                        </div>  
+                        <div class="page-title-box  pt-2 mb-2" >
+                            <div class="row">
+                                <div class="col-md-3 text-end pro_name mb-2 pt-2">
+                                      Filter By
+                                </div>
+                                <div class="col-md-3">
+                                   <select class="form-control select2" data-toggle="select2"    data-placeholder="Select Employee" >
+                                        <option></option>
+                                        <option value="All">All</option>
+                                        {% for i in empObj %}
+                                            <option value="{{i.id}}">{{i.employee_name}}</option>
+                                        {% endfor %}
+                                  </select>
+                                </div>
+                                <div class="col-md-2">
+                                   <select class="form-control select2" data-toggle="select2"    data-placeholder="Select Month" >
+                                    <option></option>
+                                    <option value="1">Jan</option>
+                                    <option value="2">Feb</option>
+                                    <option value="3">Mar</option>
+                                    <option value="4">Apr</option>
+                                    <option value="5">May</option>
+                                    <option value="6">Jun</option>
+                                    <option value="7">Jul</option>
+                                    <option value="8">Aug</option>
+                                    <option value="9">Sep</option>
+                                    <option value="10">Oct</option>
+                                    <option value="11">Nov</option>
+                                    <option value="12">Dec</option>
+                                  </select>
+                                </div>
+                                <div class="col-md-2">
+                                   <select class="form-control select2" data-toggle="select2"    data-placeholder="Select Year" >
+                                    <option value="2021" selected="">2021</option>
+                                    <option value="2022">2022</option>
+                                    </select>
+                                </div>
+
+                                <div class="col-md-2 text-end     ">
+                                   <a  class="btn btn-success  ms-3  " data-bs-toggle="modal" data-bs-target="#add-new-task-modal">Search</a>
+                                   <a href=""  style="margin-left: 15px">Clear</a>
+                               </div>
+                                <!--  <div class="col-md-8 text-end    ">
+                                    
+                                 </div> -->
+                            </div>
+                             
+                        </div>   
+                        <!-- end page title --> 
+
+                        <div class="row">
+                            <div class="col-12">
+                                <div class="card">
+                                    <div class="card-body">
+                                        <div class="table-responsive">
+                                          <table id="basic-datatable" class="table dt-responsive nowrap w-100">
+                                            <thead>
+                                                <tr>
+                                                    <th width="100">S.No.</th>
+                                                    <th>Employee</th>
+                                                    <th>Leave Alloted</th>
+                                                    <th>Taken</th>
+                                                    <th>Remaining</th>
+                                                    <th width="100">Action</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                            {% for i in userObj %}
+                                                <tr>
+                                                    <td>{{ forloop.counter }}</td>
+                                                    <td class="e_name">
+                                                        {% if i.profilePic == '' or i.profilePic == None %}
+                                                            <img src="https://images.vexels.com/media/users/3/129616/isolated/preview/fb517f8913bd99cd48ef00facb4a67c0-businessman-avatar-silhouette-by-vexels.png" alt="image" class="avatar-xs rounded-circle me-1">
+                                                        {% else %}
+                                                            <img src="/media/{{i.profilePic}}" alt="image" class="avatar-xs rounded-circle me-1">
+                                                        {% endif %}
+                                                        {{i.employee_name}}
+                                                    </td>
+                                                     <td>{{i.allot_leave}}</td>
+                                                     <td>{{i.taken_leave}}</td>
+                                                     <td>{{i.remaining_leave}}</td>
+                                                     <td> 
+                                                         <a title="History" data-bs-toggle="modal" data-bs-target="#view-det"  class="action-icon text-info" empID="{{i.empID}}" onclick="leave_history(this)" > <i class="mdi mdi-history"></i></a>
+                                                        
+                                                        {% comment %} <a href="javascript:void(0);" class="action-icon text-danger"> <i class="mdi mdi-delete-outline"></i></a> {% endcomment %}
+                                                     </td>
+                                                </tr>
+                                            {% endfor %}
+                                            </tbody>
+                                        </table>
+                                        </div>
+                                    </div> <!-- end card-body-->
+                                </div> <!-- end card-->
+                            </div> <!-- end col -->
+                        </div>
+                        <!-- end row -->
+                        
+                    </div> <!-- container -->
+
+                </div> <!-- content -->
+
+                <!-- Footer Start -->
+                <footer class="footer">
+                    <div class="container-fluid">
+                        <div class="row">
+                            <div class="col-md-6">
+                                <script>document.write(new Date().getFullYear())</script> © 18pixels 
+                            </div>
+                            
+                        </div>
+                    </div>
+                </footer>
+                <!-- end Footer -->
+
+            </div>
+
+            <!-- ============================================================== -->
+            <!-- End Page content -->
+            <!-- ============================================================== -->
+
+
+        </div>
+        <!-- END wrapper -->
+
+           <!--detail modal -->
+        <div class="modal fade task-modal-content show" id="view-det" tabindex="-1" role="dialog" aria-labelledby="NewTaskModalLabel" aria-modal="true" >
+            <div class="modal-dialog modal-dialog-centered modal-lg">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h4 class="modal-title" id="NewTaskModalLabel">Leave History</h4>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <form class="p-1 pt-0">
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <div class="mb-3 text-center"  id='employeeDetails'>
+                                       <h4> <img src="{% static 'assets\images\users\avatar-5.jpg' %}" alt="image" class="avatar-md rounded-circle me-1">
+                                           Kapil Dev </h4>
+                                    </div>
+                                    <div class="mb-3 position-relative" id="leaveRecordTable" style="display:none;">
+                                        <table class="table table-bordered table-striped tbl-history">
+                                            <thead>
+                                               <tr>
+                                                    <th>S.No.</th>
+                                                    <th>Leave date</th>
+                                                    <th>No. of Leave</th>
+                                                    <th>Reason</th>
+                                               </tr> 
+                                           </thead>
+                                           <tbody id='leavehistory'>
+                                               {% comment %} <tr>
+                                                   <td>1</td>
+                                                   <td>Nov 01, 2021</td>
+                                                   <td>01</td>
+                                                   <td>Sick leave</td>
+                                               </tr> {% endcomment %}
+                                           </tbody>
+                                        </table>
+                                    </div>
+                                    <div class="text-center" id='noRecordDiv' style="display:none;">
+                                    <hr>
+                                        <h4>No record found!</h4>
+                                    </div>
+                                   
+                                 </div>
+                               </div>
+                              <div class="text-end mt-4">
+                                <button  type="button" class="btn btn-light" data-bs-dismiss="modal" >Close</button>
+                               
+                             </div>
+                        </form>
+                    </div>
+                </div><!-- /.modal-content -->
+            </div><!-- /.modal-dialog -->
+        </div>
+        <!-- /End-modal -->
+
+
+        <!-- bundle -->
+        <script src="{% static 'assets/js/vendor.min.js' %}"></script>
+        <script src="{% static 'assets/js/app.min.js' %}"></script>
+
+        <!-- third party js -->
+        <script src="{% static 'assets/js/vendor/jquery.dataTables.min.js' %}"></script>
+        <script src="{% static 'assets/js/vendor/dataTables.bootstrap5.js' %}"></script>
+        <script src="{% static 'assets/js/vendor/dataTables.responsive.min.js' %}"></script>
+        <script src="{% static 'assets/js/vendor/responsive.bootstrap5.min.js' %}"></script>
+        <script src="{% static 'assets/js/vendor/dataTables.checkboxes.min.js' %}"></script>
+        <!-- third party js ends -->
+
+        <!-- demo app -->
+        <script src="{% static 'assets/js/pages/demo.datatable-init.js' %}"></script>
+
+        <script src="{% static 'assets/js/custom.js' %}"></script>
+        <script src="{% static 'assets/js/admin_JS/leaves_JS/leave_history.js' %}"></script>
+        <!-- end demo js-->
+
+    </body>
+ 
+</html>

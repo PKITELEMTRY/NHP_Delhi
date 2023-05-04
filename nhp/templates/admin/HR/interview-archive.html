@@ -1,0 +1,272 @@
+{% load static %}<!DOCTYPE html>
+<html lang="en">
+ 
+<head>
+        <meta charset="utf-8" />
+         <title>18Pixels | Management Tool</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta content="" />
+        <meta content="Coderthemes" name="author" />
+        <!-- App favicon -->
+        <link rel="shortcut icon" href="{% static 'assets/images/favicon.ico' %}">
+
+        <!-- third party css -->
+        <link href="{% static 'assets/css/vendor/dataTables.bootstrap5.css' %}" rel="stylesheet" type="text/css" />
+        <link href="{% static 'assets/css/vendor/responsive.bootstrap5.css' %}" rel="stylesheet" type="text/css" />
+        <!-- third party css end -->
+
+        <!-- App css -->
+        <link href="{% static 'assets/css/icons.min.css' %}" rel="stylesheet" type="text/css" />
+        <link href="{% static 'assets/css/app.min.css' %}" rel="stylesheet" type="text/css" id="light-style" />
+        <link href="{% static 'assets/css/app-dark.min.css' %}" rel="stylesheet" type="text/css" id="dark-style" />
+        <link href="{% static 'assets/css/custom.css' %}" rel="stylesheet" type="text/css"  />
+
+    </head>
+
+    <body class="loading" data-layout-config='{"leftSideBarTheme":"dark","layoutBoxed":false, "leftSidebarCondensed":false, "leftSidebarScrollable":false,"darkMode":false, "showRightSidebarOnStart": true}'>
+        <!-- Begin page -->
+        <div class="wrapper">
+            <!-- ========== Left Sidebar Start ========== -->
+            <div class="leftside-menu" id="sidebarMenus">
+                {% include 'base.html' %}
+
+            </div>
+            <!-- Left Sidebar End -->
+            <!-- ============================================================== -->
+            <!-- Start Page Content here -->
+            <!-- ============================================================== -->
+            <div class="content-page">
+                <div class="content">
+                    <!-- Topbar Start -->
+                   <div class="navbar-custom" id="load-navigation"> {% include 'hearder.html' %}</div>
+                    <!-- end Topbar -->
+                    <!-- Start Content-->
+                    <div class="container-fluid">
+                        <!-- start page title -->
+                        <div class="row">
+                            <div class="col-8">
+                                <div class="page-title-box">
+                                    <h4 class="page-title">Interview Archive</h4>
+                                </div>
+                             </div>
+                        </div>  
+                        
+                        <!-- end page title --> 
+
+                        <div class="row">
+                            <div class="col-12">
+                                <div class="card">
+                                    <div class="card-body">
+                                        <div class="table-responsive">
+                                          <table id="basic-datatable" class="table dt-responsive nowrap w-100 jobs-table">
+                                            <thead>
+                                                <tr>
+                                                    <th width="50">S.No.</th>
+                                                    <th>Job Title</th>
+                                                    <th>Candidate Name</th>
+                                                    <th>Interviewer Name</th>
+                                                    <th>Date</th>
+                                                    <th>Status</th>
+                                                    {% comment %} <th width="50">Action</th> {% endcomment %}
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                {% for i in applicantObj %}
+                                                    <tr>
+                                                        <td>{{ forloop.counter }}</td>
+                                                        <td>
+                                                            {{i.job_FK.position.designation_name}}
+                                                        </td>
+                                                        <td>{{i.candidate_name}}</td>
+                                                        <td>{% if i.interviewer_name == None %}-{% else %}{{i.interviewer_name}}{% endif %}</td>
+                                                        <td>{% if i.interviewDate == None %}-{% else %}{{i.interviewDate|date:"M d, Y"}}{% endif %}</td>
+                                                        <td> 
+                                                            {% if i.status == 'Hired' %}
+                                                                <span class="badge bg-success">{{i.status}}</span></td>
+                                                            {% else %}
+                                                                <span class="badge bg-danger">{{i.status}}</span></td>
+                                                            {% endif %}
+                                                        {% comment %} <td> 
+                                                            <a href="javascript:void(0);" class="action-icon text-danger" intID={{i.id}}> <i class="mdi mdi-delete-outline"></i></a>
+                                                        </td> {% endcomment %}
+                                                    </tr>
+                                                {% endfor %}
+                                            </tbody>
+                                        </table>
+                                        </div>
+                                    </div> <!-- end card-body-->
+                                </div> <!-- end card-->
+                            </div> <!-- end col -->
+                        </div>
+                        <!-- end row -->
+                        
+                    </div> <!-- container -->
+
+                </div> <!-- content -->
+
+                <!-- Footer Start -->
+                <footer class="footer">
+                    <div class="container-fluid">
+                        <div class="row">
+                            <div class="col-md-6">
+                                <script>document.write(new Date().getFullYear())</script> © 18pixels 
+                            </div>
+                            
+                        </div>
+                    </div>
+                </footer>
+                <!-- end Footer -->
+
+            </div>
+
+            <!-- ============================================================== -->
+            <!-- End Page content -->
+            <!-- ============================================================== -->
+
+
+        </div>
+        <!-- END wrapper -->
+ 
+           <!--detail modal -->
+        <div class="modal fade task-modal-content show" id="view-det" tabindex="-1" role="dialog" aria-labelledby="NewTaskModalLabel" aria-modal="true" >
+            <div class="modal-dialog modal-dialog-centered modal-lg">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h4 class="modal-title" id="NewTaskModalLabel">Laravel Developer</h4>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <form class="p-1 pt-0">
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <div class="mb-3  ">
+                                       <h5> 
+                                         Job Description </h5>
+                                    </div>
+                                     
+                                      <div class="job-decp" >
+                                       <p> Are you a highly experienced, ambitious Laravel developer looking for a challenging role where you can learn lots more? Join our agile team of professionals and give a boost to your career goals. </p>
+
+                                         <h5>Roles and Responsibilities</h5> 
+                                         <ul>
+                                             <li>Develop, record and maintain cutting edge web-based PHP applications on portal plus premium service platforms.</li>
+                                            <li> Build innovative, state-of-the-art applications and collaborate with the User Experience (UX) Team .</li>
+
+                                            <li>Ensure HTML, CSS, and shared JavaScript is valid and consistent across applications.</li>
+
+                                            <li> Prepare and maintain all applications utilizing standard development tools. </li>
+
+                                            <li> Utilize backend data services and contribute to increasing existing data services API. </li>
+
+                                           <li>Lead the entire web application development life cycle right from concept stage to delivery and post launch support. </li>
+
+                                            <li> Convey effectively with all task progress, evaluations, suggestions, schedules along with technical and process issues. </li>
+
+                                            <li>Document the development process, architecture, and standard components. </li>
+
+                                            <li> Coordinate with co-developers and keeps project manager well informed of the status of development effort and serves as liaison between development staff and project manager. </li>
+
+                                            <li> Keep abreast of new trends and best practices in web development. </li>
+
+                                         </ul>
+                                      
+                                     
+
+                                         <h5>Requirements </h5>
+                                         <ul>
+                                          <li> Previous working experience as a PHP / Laravel developer with more than 2 years. </li>
+
+                                            <li> BS/MS degree in Computer Science, Btech, MIS or similar relevant field.</li>
+
+                                            <li> In depth knowledge of object-oriented PHP and Laravel 5 PHP Framework.</li>
+
+                                            <li> Hands on experience of SQL schema design, SOLID principles, REST API design.</li>
+
+                                            <li> Software testing (PHPUnit, PHPSpec, Behat).</li>
+
+                                            <li> MySQL profiling and query optimization.</li>
+
+                                            <li> Creative and efficient problem solver.</li>
+                                        </ul>
+
+
+                                     </div>
+                                   
+                                 </div>
+                               </div>
+                              <div class="text-end mt-4">
+                                <button  type="button" class="btn btn-light" data-bs-dismiss="modal" >Close</button>
+                               
+                             </div>
+                        </form>
+                    </div>
+                </div><!-- /.modal-content -->
+            </div><!-- /.modal-dialog -->
+        </div>
+        <!-- /End-modal -->
+
+         <!-- edit desig modal -->
+        <div class="modal fade task-modal-content show" id="edit-desig" tabindex="-1" role="dialog" aria-labelledby="NewTaskModalLabel" aria-modal="true" >
+            <div class="modal-dialog modal-dialog-centered modal-md">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h4 class="modal-title" id="NewTaskModalLabel">Edit Details</h4>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <form class="p-2">
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <div class="mb-3">
+                                        <label for="task-title" class="form-label">Select year</label>
+                                        <select class="form-select">
+                                              <option selected="">2022</option>
+                                             <option>2021</option>
+                                        </select>
+                                    </div>
+                                     <div class="mb-3 position-relative" id="datepicker3">
+                                        <label class="form-label">Date</label>
+                                        <input id="due_date" type="text" class="form-control" data-provide="datepicker" data-date-container="#datepicker3" data-date-format="d-M-yyyy" data-date-autoclose="true"    placeholder="d-M-yyyy" value="24-Nov-2021">
+                                    </div>
+                                    <div class="mb-3">
+                                        <label for="task-title" class="form-label">Holiday</label>
+                                        <input type="text" class="form-control"  placeholder="Enter holiday name" value="Diwali">
+                                    </div>
+                                </div>
+                              </div>
+                        
+                            <div class="text-end mt-4">
+                                <button  type="button" class="btn btn-light" data-bs-dismiss="modal" >Cancel</button>
+                                <button type="button" class="btn btn-primary" data-bs-dismiss="modal" >Update</button>
+                            </div>
+                        </form>
+                    </div>
+                </div><!-- /.modal-content -->
+            </div><!-- /.modal-dialog -->
+        </div>
+        <!-- /End-modal -->
+
+
+        <!-- bundle -->
+        <script src="{% static 'assets/js/vendor.min.js' %}"></script>
+        <script src="{% static 'assets/js/app.min.js' %}"></script>
+
+        <!-- third party js -->
+        <script src="{% static 'assets/js/vendor/jquery.dataTables.min.js' %}"></script>
+        <script src="{% static 'assets/js/vendor/dataTables.bootstrap5.js' %}"></script>
+        <script src="{% static 'assets/js/vendor/dataTables.responsive.min.js' %}"></script>
+        <script src="{% static 'assets/js/vendor/responsive.bootstrap5.min.js' %}"></script>
+        <script src="{% static 'assets/js/vendor/dataTables.checkboxes.min.js' %}"></script>
+        <!-- third party js ends -->
+
+        <!-- demo app -->
+        <script src="{% static 'assets/js/pages/demo.datatable-init.js' %}"></script>
+
+         <script src="{% static 'assets/js/custom.js' %}"></script>
+       
+
+        <!-- end demo js-->
+
+    </body>
+ 
+</html>

@@ -1,0 +1,662 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+    
+ 
+<head>
+        <meta charset="utf-8" />
+          <title>18Pixels | Management Tool</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta content="A fully featured admin theme which can be used to build CRM, CMS, etc." name="description" />
+        <meta content="Coderthemes" name="author" />
+        <!-- App favicon -->
+        <link rel="shortcut icon" href="{% static 'assets/images/favicon.ico' %}">
+
+        <!-- App css -->
+        <link href="{% static 'assets/css/icons.min.css' %}" rel="stylesheet" type="text/css" />
+        <link href="{% static 'assets/css/app.min.css' %}" rel="stylesheet" type="text/css" id="light-style" />
+        <link href="{% static 'assets/css/app-dark.min.css' %}" rel="stylesheet" type="text/css" id="dark-style" />
+        <link href="{% static 'assets/css/custom.css' %}" rel="stylesheet" type="text/css" />
+
+    </head>
+
+    <body class="loading" data-layout-config='{"leftSideBarTheme":"dark","layoutBoxed":false, "leftSidebarCondensed":false, "leftSidebarScrollable":false,"darkMode":false, "showRightSidebarOnStart": true}'>
+        <!-- Begin page -->
+        <div class="wrapper">
+            <!-- ========== Left Sidebar Start ========== -->
+            <div class="leftside-menu" id="sidebarMenus">
+            {% include 'base.html' %}
+
+              </div>
+            <!-- Left Sidebar End -->
+
+            <!-- ============================================================== -->
+            <!-- Start Page Content here -->
+            <!-- ============================================================== -->
+
+            <div class="content-page">
+                <div class="content">
+                    <!-- Topbar Start -->
+                    <div class="navbar-custom" id="load-navigation">
+                        {% include 'hearder.html' %}
+                    </div>
+                    <!-- end Topbar -->
+
+                    <!-- Start Content-->
+                    <div class="container-fluid">
+                        
+                          <!-- start page title -->
+                        <div class="row">
+                            <div class="col-6">
+                                <div class="page-title-box">
+                                    <h4 class="page-title">Project Details  </h4>
+                                </div>
+                            </div>
+                             <div class="col-6 text-end pt-3">
+                             {% if request.session.userType == 'masteR' or request.session.userType == 'teacheR' %}
+                                  <a href="{% url 'create_module' %}" class="btn btn-primary   mb-3 mr-3"><i class="mdi mdi-plus"></i> Add Modules</a>
+                                   <a href="{% url 'add_project' %}" class="btn btn-danger mr-3   mb-3"><i class="mdi mdi-plus"></i> Create Project</a>
+                             {% endif %}
+                                 <a href="{% url 'project_list' %}" class=" btn text-primary   mb-3 mr-3"> Back to List</a>
+                                   
+                             </div>
+                        </div>     
+                        <!-- end page title --> 
+
+                        <div class="row">
+                            <div class="col-xxl-8 col-lg-6">
+                                <!-- project card -->
+                                <div class="card d-block  ">
+                                    <div class="card-body">
+                                        <div class="dropdown float-end">
+                                            <a href="#" class="dropdown-toggle arrow-none card-drop" data-bs-toggle="dropdown" aria-expanded="false">
+                                                <i class="dripicons-dots-3"></i>
+                                            </a>
+                                                {% if request.session.userType == 'masteR' or request.session.userType == 'teacheR' %}
+                                            <div class="dropdown-menu dropdown-menu-end">
+                                                <!-- item-->
+                                                <a href="{% url 'update_project' Project_obj.id %}" class="dropdown-item"><i class="mdi mdi-pencil me-1"></i>Edit</a>
+                                                <!-- item-->
+                                                {% comment %} <a href="javascript:void(0);" class="dropdown-item"><i class="mdi mdi-delete me-1"></i>Delete</a> {% endcomment %}
+                                                <!-- item-->
+                                                
+                                            </div>
+                                                {% endif %}
+                                        </div>
+                                        <!-- project title-->
+                                        <h3 class="mt-0">
+                                        {% if Project_obj.project_logo == '' or Project_obj.project_logo == None %}
+                                        <img id="imgphoto" style="max-width: 70px; cursor: pointer;"
+                                            src="https://www.launchgrowjoy.com/wp-content/uploads/logo-placeholder-300x210.jpg">
+                                        {% else %}
+                                        <img id="imgphoto" style="max-width: 70px; cursor: pointer;"
+                                            src="/media/{{Project_obj.project_logo}}">
+                                        {% endif %}
+                                            {{Project_obj.project_name}}
+                                        </h3>
+                                        {% if Project_obj.project_status == 'Just Created' %}
+                                            <div class="badge bg-warning text-light mb-3">{{Project_obj.project_status}}</div>
+                                        {% elif Project_obj.project_status == 'Ongoing' %}
+                                            <div class="badge bg-primary text-light mb-3">{{Project_obj.project_status}}</div>
+                                        {% elif Project_obj.project_status == 'Completed' %}
+                                            <div class="badge bg-success text-light mb-3">{{Project_obj.project_status}}</div>
+                                        {% elif Project_obj.project_status == 'Delayed' %}
+                                            <div class="badge bg-danger text-light mb-3">{{Project_obj.project_status}}</div>
+                                        {% else %}
+                                            <div class="badge bg-success text-light mb-3">{{Project_obj.project_status}}</div>
+                                        {% endif %}
+
+                                           <div class="row">
+                                            <div class="col-md-6">
+                                                <div class="mb-2">
+                                                    <h5>Start Date</h5>
+                                                    <p>{{Project_obj.project_start_date}}  </p>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-6">
+                                                <div class="mb-2">
+                                                    <h5>End Date</h5>
+                                                    {% if Project_obj.project_due_date == None %}
+                                                    <p>- </p>
+                                                    {% else %}
+                                                    <p>{{Project_obj.project_due_date}}  </p>
+                                                    {% endif %}
+                                                </div>
+                                            </div>
+                                            
+                                        </div>
+
+                                        <div  >
+                                            <h5>Project Manager:</h5>
+                                            {% for i in managerList %}
+                                            <a href="javascript:void(0);" data-bs-toggle="popover" data-bs-trigger="hover" data-bs-content="{{i.managerName}}"  data-bs-placement="top" title=""  class="d-inline-block">
+                                                {% if i.managerImg == '' or i.managerImg == None %}
+                                                    <img src="https://images.vexels.com/media/users/3/129616/isolated/preview/fb517f8913bd99cd48ef00facb4a67c0-businessman-avatar-silhouette-by-vexels.png" class="rounded-circle img-thumbnail avatar-sm" alt="{{i.managerName}}">
+                                                {% else %}
+                                                    <img src="/media/{{i.managerImg}}" class="rounded-circle img-thumbnail avatar-sm" alt="{{i.managerName}}">
+                                                {% endif %}
+                                            </a>
+                                            {% endfor %}
+                                        </div>
+
+
+                                        <div id="tooltip-container  ">
+                                            <h5>Team Members:</h5>
+                                            {% for k in teamList %}
+                                            <a href="javascript:void(0);" data-bs-toggle="popover" data-bs-trigger="hover" data-bs-content="{{k.empName}}"  data-bs-placement="top" title="" class="d-inline-block">
+                                            {% if k.empImg == '' or k.empImg == None %}
+                                            <img src="https://images.vexels.com/media/users/3/129616/isolated/preview/fb517f8913bd99cd48ef00facb4a67c0-businessman-avatar-silhouette-by-vexels.png" class="rounded-circle img-thumbnail avatar-sm" alt="{{k.empName}}">                                            
+                                            {% else %}
+                                                <img src="/media/{{k.empImg}}" class="rounded-circle img-thumbnail avatar-sm" alt="{{k.empName}}">
+                                            {% endif %}
+                                            </a>
+                                            {% endfor %}
+    
+                                            {% comment %} <a href="javascript:void(0);" data-bs-container="#tooltip-container" data-bs-toggle="tooltip" data-bs-placement="top" title="Michael Zenaty" class="d-inline-block">
+                                                <img src="{% static 'assets/images/users/avatar-7.jpg' %}" class="rounded-circle img-thumbnail avatar-sm" alt="friend">
+                                            </a>
+    
+                                            <a href="javascript:void(0);" data-bs-container="#tooltip-container" data-bs-toggle="tooltip" data-bs-placement="top" title="James Anderson" class="d-inline-block">
+                                                <img src="{% static 'assets/images/users/avatar-8.jpg' %}" class="rounded-circle img-thumbnail avatar-sm" alt="friend">
+                                            </a>
+
+                                            <a href="javascript:void(0);" data-bs-container="#tooltip-container" data-bs-toggle="tooltip" data-bs-placement="top" title="Mat Helme" class="d-inline-block">
+                                                <img src="{% static 'assets/images/users/avatar-4.jpg' %}" class="rounded-circle img-thumbnail avatar-sm" alt="friend">
+                                            </a>
+    
+                                            <a href="javascript:void(0);" data-bs-container="#tooltip-container" data-bs-toggle="tooltip" data-bs-placement="top" title="Michael Zenaty" class="d-inline-block">
+                                                <img src="{% static 'assets/images/users/avatar-5.jpg' %}" class="rounded-circle img-thumbnail avatar-sm" alt="friend">
+                                            </a>
+    
+                                            <a href="javascript:void(0);" data-bs-container="#tooltip-container" data-bs-toggle="tooltip" data-bs-placement="top" title="James Anderson" class="d-inline-block">
+                                                <img src="{% static 'assets/images/users/avatar-3.jpg' %}" class="rounded-circle img-thumbnail avatar-sm" alt="friend">
+                                            </a> {% endcomment %}
+                                        </div>
+
+                                        <div class="row mt-3">
+                                        <div class="col-md-4">
+                                            <div class="mb-2">
+                                                <h5>Sector</h5>
+                                                <p>{{Project_obj.project_sector_FK.sector}}</p>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-8">
+                                            <div class="mb-2">
+                                                <h5>Project Type</h5>
+                                                <p>{% if projectTypeList %}
+                                                {% for i in projectTypeList %}
+                                                    {{i.projectType}}, 
+                                                {% endfor %}
+                                                {% else %}
+                                                    -
+                                                {% endif %}</p>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-12">
+                                            <div class="mb-2">
+                                                <h5>Language/Framework</h5>
+                                                <p>{% if projectTechList %}
+                                                {% for i in projectTechList %}
+                                                    {{i.tech}}, 
+                                                {% endfor %}
+                                                {% else %}
+                                                    -
+                                                {% endif %}</p>
+                                            </div>
+                                        </div>
+                                    </div>
+
+
+                                        <h5 class="mt-3">Project Overview:</h5>
+
+                                        <p class="text-muted mb-2">
+                                        {% if Project_obj.project_overview|length == 0 or Project_obj.project_overview == '' %}
+                                        <p>No project overview found for this project!</p>
+                                        {% else %}
+                                           {{Project_obj.project_overview}}
+                                        {% endif %}
+                                        </p>
+
+                                        <h5 class="card-title mb-3 mt-3">Files</h5>
+                                        {% if Project_obj.upload_files == '' and Project_obj.upload_files_1 == '' and Project_obj.upload_files_2 == '' and Project_obj.upload_files_3 == '' and Project_obj.upload_files_4 == '' %}
+                                        <h4>No files found!</h4>{% endif %}
+
+                                        {% if Project_obj.upload_files == None or Project_obj.upload_files == '' %}
+                                        {% else %}
+                                        <div class="card mb-1 shadow-none border">
+                                            <div class="p-3">
+                                                <div class="row align-items-center">
+                                                    <div class="col-auto">
+                                                        <div class="avatar-sm">
+                                                            <span class="avatar-title rounded">
+                                                                .{{Project_obj.upload_files_extension}}
+                                                            </span>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col ps-0">
+                                                        <a href="/media/{{Project_obj.upload_files}}" target="_blank"  class="text-muted fw-bold">{{Project_obj.upload_files}}</a>
+                                                        {% comment %} <p class="mb-0">{{Project_obj.upload_files}}</p> {% endcomment %}
+                                                    </div>
+                                                    <div class="col-auto">
+                                                        <!-- Button -->
+                                                        <a href="/media/{{Project_obj.upload_files}}" target="_blank" class="btn btn-link btn-lg text-muted">
+                                                            <i class="dripicons-download"></i>
+                                                        </a>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        {% endif %}
+
+                                        {% if Project_obj.upload_files_1 == None or Project_obj.upload_files_1 == '' %}
+                                        {% else %}
+                                        <div class="card mb-1 shadow-none border">
+                                            <div class="p-3">
+                                                <div class="row align-items-center">
+                                                    <div class="col-auto">
+                                                        <div class="avatar-sm">
+                                                            <span class="avatar-title rounded">
+                                                                .{{Project_obj.upload_files_extension_1}}
+                                                            </span>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col ps-0">
+                                                        <a href="/media/{{Project_obj.upload_files_1}}" target="_blank"  class="text-muted fw-bold">{{Project_obj.upload_files_1}}</a>
+                                                        {% comment %} <p class="mb-0">{{Project_obj.upload_files_1}}</p> {% endcomment %}
+                                                    </div>
+                                                    <div class="col-auto">
+                                                        <!-- Button -->
+                                                        <a href="/media/{{Project_obj.upload_files_1}}" target="_blank" class="btn btn-link btn-lg text-muted">
+                                                            <i class="dripicons-download"></i>
+                                                        </a>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        {% endif %}
+
+                                        {% if Project_obj.upload_files_2 == None or Project_obj.upload_files_2 == '' %}
+                                        {% else %}
+                                        <div class="card mb-1 shadow-none border">
+                                            <div class="p-3">
+                                                <div class="row align-items-center">
+                                                    <div class="col-auto">
+                                                        <div class="avatar-sm">
+                                                            <span class="avatar-title rounded">
+                                                                .{{Project_obj.upload_files_extension_2}}
+                                                            </span>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col ps-0">
+                                                        <a href="/media/{{Project_obj.upload_files_2}}" target="_blank"  class="text-muted fw-bold">{{Project_obj.upload_files_2}}</a>
+                                                        {% comment %} <p class="mb-0">{{Project_obj.upload_files_2}}</p> {% endcomment %}
+                                                    </div>
+                                                    <div class="col-auto">
+                                                        <!-- Button -->
+                                                        <a href="/media/{{Project_obj.upload_files_2}}" target="_blank" class="btn btn-link btn-lg text-muted">
+                                                            <i class="dripicons-download"></i>
+                                                        </a>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        {% endif %}
+
+                                        {% if Project_obj.upload_files_3 == None or Project_obj.upload_files_3 == '' %}
+                                        {% else %}
+                                        <div class="card mb-1 shadow-none border">
+                                            <div class="p-3">
+                                                <div class="row align-items-center">
+                                                    <div class="col-auto">
+                                                        <div class="avatar-sm">
+                                                            <span class="avatar-title rounded">
+                                                                .{{Project_obj.upload_files_extension_3}}
+                                                            </span>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col ps-0">
+                                                        <a href="/media/{{Project_obj.upload_files_3}}" target="_blank"  class="text-muted fw-bold">{{Project_obj.upload_files_3}}</a>
+                                                        {% comment %} <p class="mb-0">{{Project_obj.upload_files_3}}</p> {% endcomment %}
+                                                    </div>
+                                                    <div class="col-auto">
+                                                        <!-- Button -->
+                                                        <a href="/media/{{Project_obj.upload_files_3}}" target="_blank" class="btn btn-link btn-lg text-muted">
+                                                            <i class="dripicons-download"></i>
+                                                        </a>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        {% endif %}
+
+                                        {% if Project_obj.upload_files_4 == None or Project_obj.upload_files_4 == '' %}
+                                        {% else %}
+                                        <div class="card mb-1 shadow-none border">
+                                            <div class="p-3">
+                                                <div class="row align-items-center">
+                                                    <div class="col-auto">
+                                                        <div class="avatar-sm">
+                                                            <span class="avatar-title rounded">
+                                                                .{{Project_obj.upload_files_extension_4}}
+                                                            </span>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col ps-0">
+                                                        <a href="/media/{{Project_obj.upload_files_4}}" target="_blank"  class="text-muted fw-bold">{{Project_obj.upload_files_4}}</a>
+                                                        {% comment %} <p class="mb-0">{{Project_obj.upload_files_4}}</p> {% endcomment %}
+                                                    </div>
+                                                    <div class="col-auto">
+                                                        <!-- Button -->
+                                                        <a href="/media/{{Project_obj.upload_files_4}}" target="_blank" class="btn btn-link btn-lg text-muted">
+                                                            <i class="dripicons-download"></i>
+                                                        </a>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        {% endif %}
+                                    </div> <!-- end card-body-->
+                                    
+                                </div> <!-- end card-->
+
+                                
+                                <!-- end card-->
+                            </div> <!-- end col -->
+
+                            <div class="col-lg-6 col-xxl-4">
+                                <div class="card">
+                                    <div class="card-body">
+                                        <h5 class="card-title mb-3">Progress <span class="float-end">{{Project_obj.project_progress}}%</span></h5>
+                                        <!-- project progress-->
+                                                
+                                                <div class="progress progress-sm">
+                                                {% if Project_obj.project_progress <= 25 %}
+                                                <div class="progress-bar bg-danger" role="progressbar" aria-valuenow="{{Project_obj.project_progress}}" aria-valuemin="0" aria-valuemax="100" style="width: {{Project_obj.project_progress}}%;">
+                                                {% elif Project_obj.project_progress <= 50 %}
+                                                    <div class="progress-bar bg-warning" role="progressbar" aria-valuenow="{{Project_obj.project_progress}}" aria-valuemin="0" aria-valuemax="100" style="width: {{Project_obj.project_progress}}%;">
+                                                {% elif Project_obj.project_progress <= 75 %}
+                                                    <div class="progress-bar bg-info" role="progressbar" aria-valuenow="{{Project_obj.project_progress}}" aria-valuemin="0" aria-valuemax="100" style="width: {{Project_obj.project_progress}}%;">
+                                                {% elif Project_obj.project_progress <= 100 %}
+                                                    <div class="progress-bar bg-success" role="progressbar" aria-valuenow="{{Project_obj.project_progress}}" aria-valuemin="0" aria-valuemax="100" style="width: {{Project_obj.project_progress}}%;">
+                                                {% endif %}
+                                                    {% comment %} <div class="progress-bar" role="progressbar" aria-valuenow="100" aria-valuemin="0" aria-valuemax="60" style="width: 60%;"> {% endcomment %}
+                                                    </div><!-- /.progress-bar -->
+                                                </div><!-- /.progress -->
+                                    </div>
+                                </div>
+                                <!-- end card-->
+                                 <div class="card">
+                                    <div class="card-body">
+                                        <h4 class="card-title mb-3">URL's</h4>
+                                        {% if Project_obj.project_url_for == None and Project_obj.project_url_for_1 == None and Project_obj.project_url_for_2 == None and Project_obj.project_url_for_3 == None and Project_obj.project_url_for_4 == None %}
+                                        <h5>No url found!</h5>{% endif %}
+                                        {% if Project_obj.project_url_for == None %}
+                                        {% else %}
+                                        <div class="mb-2">
+                                            <label class="form-label d-block mb-0">{{Project_obj.project_url_for}}</label>
+                                            <a href="{{Project_obj.project_url}}" target="_blank">{{Project_obj.project_url}}</a>
+                                        </div>
+                                        {% endif %}
+                                        {% if Project_obj.project_url_for_1 == None %}
+                                        {% else %}
+                                        <div class="mb-2">
+                                            <label class="form-label d-block mb-0">{{Project_obj.project_url_for_1}}</label>
+                                            <a href="{{Project_obj.project_url_1}}" target="_blank">{{Project_obj.project_url_1}}</a>
+                                        </div>
+                                        {% endif %}
+                                        {% if Project_obj.project_url_for_2 == None %}
+                                        {% else %}
+                                        <div class="mb-2">
+                                            <label class="form-label d-block mb-0">{{Project_obj.project_url_for_2}}</label>
+                                            <a href="{{Project_obj.project_url_2}}" target="_blank">{{Project_obj.project_url_2}}</a>
+                                        </div>
+                                        {% endif %}
+                                        {% if Project_obj.project_url_for_3 == None %}
+                                        {% else %}
+                                        <div class="mb-2">
+                                            <label class="form-label d-block mb-0">{{Project_obj.project_url_for_3}}</label>
+                                            <a href="{{Project_obj.project_url_3}}" target="_blank">{{Project_obj.project_url_3}}</a>
+                                        </div>
+                                        {% endif %}
+                                        {% if Project_obj.project_url_for_4 == None %}
+                                        {% else %}
+                                        <div class="mb-2">
+                                            <label class="form-label d-block mb-0">{{Project_obj.project_url_for_4}}</label>
+                                            <a href="{{Project_obj.project_url_4}}" target="_blank">{{Project_obj.project_url_4}}</a>
+                                        </div>
+                                        {% endif %}
+                                        {% comment %} <div class="mb-2">
+                                            <label class="form-label d-block mb-0">Project progress Google Sheet</label>
+                                            <a href="https://docs.google.com/spreadsheets/d/1wZ2nUSPuvpr7oo97VXTw0qOal9SBohdrC--bntGRLLw/edit#gid=0" target="_blank">https://docs.google.com/spreadsheets/d/1wZ2nUSPuvpr7oo97VXTw0qOal9SBohdrC--bntGRLLw/edit#gid=0</a>
+                                        </div> {% endcomment %}
+                                    </div>
+                                </div>
+                                <div class="card">
+                                    <div class="card-body">
+                                        <h4 class="card-title mb-3">Module/Sub-modules</h4>
+                                          <div class="mb-2">
+                                            <div class="row">
+                                            {% if moduleCount == 0 %}
+                                                <p>No Module Found!</p>
+                                            {% else %}
+                                                <div class="col-md-12  ">
+                                                    <h5>Total Modules <span class="text-large badge bg-danger float-end">{{moduleCount}}</span></h5>
+                                                </div>
+                                               
+                                            {% endif %}
+                                            </div>
+                                          </div>
+                                            <div class="accordion custom-accordion" id="custom-accordion-one">
+                                            {% for i in module_obj %}
+                                                <div class="card mb-0">
+                                                    <div class="card-header" id="headingFour{{i.id}}">
+                                                        <h5 class="m-0">
+                                                            <a class="custom-accordion-title d-block py-1" data-bs-toggle="collapse" href="#collapseFour{{i.id}}" aria-expanded="false" aria-controls="collapseFour{{i.id}}">
+                                                                {{ forloop.counter }}.{{i.moduleName}}  <i class="mdi mdi-chevron-down accordion-arrow"></i>
+                                                            </a>
+                                                        </h5>
+                                                    </div>
+
+                                                    <div id="collapseFour{{i.id}}" class="collapse" aria-labelledby="headingFour{{i.id}}" data-bs-parent="#custom-accordion-one">
+                                                        <div class="card-body">
+                                                        <p><strong>Description -</strong> {{i.module_desc}}</p>
+                                                             {% if i.subModules|length > 0 %}
+                                                             <ol type="1" class="page-list">
+                                                             {% for n in i.subModules %}
+                                                                 <li>{{n}}</li>
+                                                             {% endfor %}
+                                                             </ol>
+                                                             {% else %}
+                                                                 <p>No submodule data found!</p>
+                                                             {% endif %}
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            {% endfor %}
+                                                {% comment %} <div class="card mb-0">
+                                                    <div class="card-header" id="headingFive">
+                                                        <h5 class="m-0">
+                                                            <a class="custom-accordion-title collapsed d-block py-1" data-bs-toggle="collapse" href="#collapseFive" aria-expanded="false" aria-controls="collapseFive">
+                                                               2. Sales Management <i class="mdi mdi-chevron-down accordion-arrow"></i>
+                                                            </a>
+                                                        </h5>
+                                                    </div>
+                                                    <div id="collapseFive" class="collapse" aria-labelledby="headingFive" data-bs-parent="#custom-accordion-one">
+                                                        <div class="card-body">
+                                                           <ol type="1" class="page-list">
+                                                                 <li>Orders List</li>
+                                                                 <li>Add Order </li>
+                                                                 <li>Edit Order </li>
+                                                                 <li>Delete Order </li>
+                                                             </ol>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="card mb-0">
+                                                    <div class="card-header" id="headingSix">
+                                                        <h5 class="m-0">
+                                                            <a class="custom-accordion-title collapsed d-block py-1" data-bs-toggle="collapse" href="#collapseSix" aria-expanded="false" aria-controls="collapseSix">
+                                                                3. Website management <i class="mdi mdi-chevron-down accordion-arrow"></i>
+                                                            </a>
+                                                        </h5>
+                                                    </div>
+                                                    <div id="collapseSix" class="collapse" aria-labelledby="headingSix" data-bs-parent="#custom-accordion-one">
+                                                        <div class="card-body">
+                                                            <ol type="1" class="page-list">
+                                                                 <li>Home Page</li>
+                                                                 <li>About page </li>
+                                                                 <li>order page </li>
+                                                                 
+                                                             </ol>
+                                                        </div>
+                                                    </div>
+                                                </div> {% endcomment %}
+                                                
+                                            </div>
+                                    </div> <!-- end card-body-->
+                                </div>
+
+                                
+                            </div>
+                        </div>
+                        <!-- end row -->
+                        
+                    </div> <!-- container -->
+
+                </div> <!-- content -->
+
+                <!-- Footer Start -->
+                <footer class="footer">
+                    <div class="container-fluid">
+                        <div class="row">
+                            <div class="col-md-6">
+                                <script>document.write(new Date().getFullYear())</script> © 18pixels 
+                            </div>
+                            
+                        </div>
+                    </div>
+                </footer>
+                <!-- end Footer -->
+
+            </div>
+
+            <!-- ============================================================== -->
+            <!-- End Page content -->
+            <!-- ============================================================== -->
+
+
+        </div>
+        <!-- END wrapper -->
+
+
+        <!-- Right Sidebar -->
+        <div class="end-bar">
+
+            <div class="rightbar-title">
+                <a href="javascript:void(0);" class="end-bar-toggle float-end">
+                    <i class="dripicons-cross noti-icon"></i>
+                </a>
+                <h5 class="m-0">Settings</h5>
+            </div>
+
+            <div class="rightbar-content h-100" data-simplebar>
+
+                <div class="p-3">
+                    <div class="alert alert-warning" role="alert">
+                        <strong>Customize </strong> the overall color scheme, sidebar menu, etc.
+                    </div>
+
+                    <!-- Settings -->
+                    <h5 class="mt-3">Color Scheme</h5>
+                    <hr class="mt-1" />
+
+                    <div class="form-check form-switch mb-1">
+                        <input class="form-check-input" type="checkbox" name="color-scheme-mode" value="light" id="light-mode-check" checked>
+                        <label class="form-check-label" for="light-mode-check">Light Mode</label>
+                    </div>
+
+                    <div class="form-check form-switch mb-1">
+                        <input class="form-check-input" type="checkbox" name="color-scheme-mode" value="dark" id="dark-mode-check">
+                        <label class="form-check-label" for="dark-mode-check">Dark Mode</label>
+                    </div>
+       
+
+                    <!-- Width -->
+                    <h5 class="mt-4">Width</h5>
+                    <hr class="mt-1" />
+                    <div class="form-check form-switch mb-1">
+                        <input class="form-check-input" type="checkbox" name="width" value="fluid" id="fluid-check" checked>
+                        <label class="form-check-label" for="fluid-check">Fluid</label>
+                    </div>
+
+                    <div class="form-check form-switch mb-1">
+                        <input class="form-check-input" type="checkbox" name="width" value="boxed" id="boxed-check">
+                        <label class="form-check-label" for="boxed-check">Boxed</label>
+                    </div>
+        
+
+                    <!-- Left Sidebar-->
+                    <h5 class="mt-4">Left Sidebar</h5>
+                    <hr class="mt-1" />
+                    <div class="form-check form-switch mb-1">
+                        <input class="form-check-input" type="checkbox" name="theme" value="default" id="default-check">
+                        <label class="form-check-label" for="default-check">Default</label>
+                    </div>
+
+                    <div class="form-check form-switch mb-1">
+                        <input class="form-check-input" type="checkbox" name="theme" value="light" id="light-check" checked>
+                        <label class="form-check-label" for="light-check">Light</label>
+                    </div>
+
+                    <div class="form-check form-switch mb-3">
+                        <input class="form-check-input" type="checkbox" name="theme" value="dark" id="dark-check">
+                        <label class="form-check-label" for="dark-check">Dark</label>
+                    </div>
+
+                    <div class="form-check form-switch mb-1">
+                        <input class="form-check-input" type="checkbox" name="compact" value="fixed" id="fixed-check" checked>
+                        <label class="form-check-label" for="fixed-check">Fixed</label>
+                    </div>
+
+                    <div class="form-check form-switch mb-1">
+                        <input class="form-check-input" type="checkbox" name="compact" value="condensed" id="condensed-check">
+                        <label class="form-check-label" for="condensed-check">Condensed</label>
+                    </div>
+
+                    <div class="form-check form-switch mb-1">
+                        <input class="form-check-input" type="checkbox" name="compact" value="scrollable" id="scrollable-check">
+                        <label class="form-check-label" for="scrollable-check">Scrollable</label>
+                    </div>
+
+                    <div class="d-grid mt-4">
+                        <button class="btn btn-primary" id="resetBtn">Reset to Default</button>
+            
+                        <a href="https://themes.getbootstrap.com/product/hyper-responsive-admin-dashboard-template/"
+                            class="btn btn-danger mt-3" target="_blank"><i class="mdi mdi-basket me-1"></i> Purchase Now</a>
+                    </div>
+                </div> <!-- end padding-->
+
+            </div>
+        </div>
+
+        <div class="rightbar-overlay"></div>
+        <!-- /End-bar -->
+
+
+        <!-- bundle -->
+        <script src="{% static 'assets/js/vendor.min.js' %}"></script>
+        <script src="{% static 'assets/js/app.min.js' %}"></script>
+
+        <!-- third party js -->
+        <script src="{% static 'assets/js/vendor/Chart.bundle.min.js' %}"></script>
+        <!-- third party js ends -->
+
+        <!-- demo app -->
+        <script src="{% static 'assets/js/pages/demo.project-detail.js' %}"></script>
+        <script src="{% static 'assets/js/custom.js' %}"></script>
+        <!-- end demo js-->
+
+    </body>
+
+ 
+</html>

@@ -1,0 +1,269 @@
+.add-ico {font-size: 28px; display: block;}
+.add-ico.ico1, .minus-ico.ico1 {font-size: 28px; display: block; position: absolute; right: 0; top:0;}
+.minus-ico.ico1 {top: -25px}
+.minus-ico {font-size: 28px; display: block; color: red!important}
+.bold{font-weight: 900; color: #333}
+.text-right {text-align: right;}
+.mr-3{margin-right: 15px}
+.view_det .form-label {margin: 0}
+.view_det .value {font-weight: 700; color: #333; font-size: 16px; margin: 0}
+.p_status {float: right;}
+.module_table tr td textarea {margin-bottom: 10px}
+ 
+.module_table tr.view .form-control {border:0; pointer-events: none; padding: 0; margin: 0}
+.table  .update_btn, .table  .del_btn {display: none; color: #fff; font-size: 14px}
+.module_table  .mod_list a{ position: absolute; top: 1px; right: 10px; display: none;}
+.module_table tr.del .mod_list a{display: block;}
+.page-list li {padding: 5px 0}
+.fs-13{font-size: 13px}
+.module_table textarea{resize: none;}
+.pro_name .select2-container .select2-selection--single .select2-selection__rendered {font-size: 18px; font-weight: 800}
+.task_tabs li {max-width: 150px; }
+.end-bar{width: 50%; right: -50%} 
+.table.fs-13{font-size: 13px; color: #333}
+.table .e_name{font-size: 12px; color: #000}
+.fs-15 {font-size: 14px}
+.fs-13{font-size: 13px;  }
+.task_list {font-size: 12px}
+.task_list tr td:nth-child(4) {font-weight: 700; font-size: 12px}
+.task_list tr td .badge {font-size: 11px}
+.text-orange {color: #ef890a!important}
+.text-green {color: #0dc94f!important}
+.bg-orange {background:   #ef890a!important}
+.bg-green {background: #0dc94f!important}
+.btn-gray {background: #ccc}
+.mr-2{margin-right: 5px}
+.title_n { font-size: 18px; color: #fff; position: relative;  margin-bottom: 25px}
+.title_n span {background: #eee; display: inline-block;padding: 5px 15px; border-radius: 20px ;position: relative;z-index: 1}
+.title_n:after {content: ""; background: #ddd; height: 1px; width: 100%; position: absolute; right: 0; bottom: 50%;z-index: 0}
+.title_n.today:after {background: #0acf973b}
+.title_n.upcoming:after {background: #727cf54d}
+.bday.card  {height: 100px; box-shadow: 3px 2px 13px 0px rgba(0,0,0,0.4);
+-webkit-box-shadow: 3px 2px 13px 0px rgba(0,0,0,0.4);-moz-box-shadow: 3px 2px 13px 0px rgba(0,0,0,0.2);}
+.bday.card .media {width: 40%; height: 100%; position: absolute; left: 0; top: 0;z-index: 10}
+.bday.card .media img{max-width: 100%;   }
+.bday.card .cont {margin-left: 45% ;}
+.bday.card .cont h4 {margin: 5px 0}
+.bday.card .cont h4, .bday.card .cont p{position: relative;z-index: 10; color: #333}
+.bday.card .cont img {position: absolute; opacity: 0.2; top: -100px; left: 0; width: 100%;    z-index: 0}
+
+.bday.card.hbd .media{ width: 70px; height: 70px; border-radius: 70px; overflow-y: hidden;  top: 15%; left: 5% } 
+.bday.card.hbd .cont {margin-left: 38%}
+.bday.card.hbd .cont h4 {margin: 15px 0 1px; font-size: 18px;}
+.bday.card.hbd  .cont img {top: 0}
+.bday.card.hbd .cont p a {font-size: 13px;  }
+.bday.card.hbd .date {position: absolute; width: 42px; height: 42px;  border-radius: 50px; font-size: 12px; right: -7px; top: -7px; z-index: 10; padding:12px 5px 0; text-align: center; line-height: 12px; font-weight: 600; color: #fff}
+.bday-table  .badge {font-size: 14px}
+.bday-modal-head {background: url(../images/happy-birthday-celebration-background-with-realistic-balloons_1017-22489.jpg)  0 -40px  no-repeat; background-size: 100%; padding-top: 50px }
+.bday.card .evt_name {position: absolute; z-index: 99; padding: 2px 5px; color: #fff; font-size: 11px; right: 0; border-radius: 0 0 0px 5px }
+.upcoming_events .bday.card .evt_name{ right: 40px; border-radius: 0 0 5px 5px }
+.events.card { padding: 0}
+.events.card .media {float: right; width: 45%}
+.events.card .media img  {max-width: 100%}
+.events.card .cont  h4{font-size: 31px; color: #333}
+.events.card .cont  h4 span {color: }
+.events.card .cont .value {background: #f3f6fe; border:solid 1px #bfc3f2; padding: 2px 10px; color: #2f39b8; font-weight: 600; margin-bottom: 5px ;display: inline-block;}
+.event-modal-head {background: url(../images/event-bg.webp)  0 -20px  no-repeat; background-size: 100%; padding-top: 80px; height: 200px}
+.event-modal-head h3{font-size: 42px; padding-top: 15px; color:#644a30; text-shadow:1px 2px #dac9b8; }
+
+.event-card {min-height: 500px}
+.event-card.small {min-height: 300px}
+.event-card .media { position: relative; height: 200px; left: 0 } 
+.event-card .media img{position: absolute; width: 100%; height: 100%; object-fit: cover; left: 0 }
+.event-card.small .media {height: 100px}
+.event-card  h4{color: #333}
+.event-card  .date {position: absolute; width: 60px; height: 60px;  border-radius: 50px; font-size: 16px; right: -10px; top: -10px; z-index: 10; padding:15px 5px 0; text-align: center; line-height: 18px; font-weight: 600; color: #fff;}
+
+.events.card .cont  h4 span { }
+.event-card.card .cont .value {background: #f3f6fe; border:solid 1px #bfc3f2; padding: 2px 10px; color: #2f39b8; font-weight: 600; margin-bottom: 5px ;display: inline-block;}
+.event-table tr th, .event-table tr td {font-size: 13px; color: #333; vertical-align: top;}
+.event-table tr td .badge {font-size: 12px}
+.event-table tr td img{max-width: 70px} 
+.mr-2{margin-right: 5px}
+.task_tabs.events_tabs li {max-width: 200px;}
+.no-events {opacity: .7}
+
+.tbl-history tbody {max-height: 200px; overflow: auto;}
+
+.email-list>li .email-sender-info .email-title {  left: 15px}
+.email-list>li {border-bottom: solid 1px #f6f6f6; }
+.email-list>li .email-content {left: 200px}
+.email-list>li .email-sender-info {width: 200px}
+.user-online .status {width: 15px; height: 15px; border-radius: 20px; display: block; }
+.user-online .online {background: rgb(25,204,84);box-shadow: 2px -1px 16px 0px rgba(25,204,84,0.9);
+-webkit-box-shadow: 2px -1px 16px 0px rgba(25,204,84,0.9);
+-moz-box-shadow: 2px -1px 16px 0px rgba(25,204,84,0.9);}
+.user-online .offline {background: red; box-shadow: 2px -1px 16px 0px rgba(204,25,25,0.75);
+-webkit-box-shadow: 2px -1px 16px 0px rgba(204,25,25,0.75);
+-moz-box-shadow: 2px -1px 16px 0px rgba(204,25,25,0.75);} 
+.jobs-table tr th, .jobs-table tr td {font-size: 13px; white-space: initial!important; word-wrap: break-word!important;}
+.jobs-table tr td  input[data-switch]+label {width: 40px; height: 24px;}
+.jobs-table tr td  input[data-switch]+label:before {top: 0; left: 2px}
+.jobs-table tr td  input[data-switch]:checked+label:after {left: 19px}
+.jobs-table tr td select {border-color: #ccc; outline: none;}
+
+
+/*events*/
+
+.birthday .balloons, .anniversary .balloons {position: fixed; z-index: 9999; width: 100%;  left: 10%; top: -110px;   }
+.birthday .balloons img, .anniversary .balloons img{max-width: 35%; position: absolute; opacity: .5}
+.birthday .balloons img:nth-child(2), .anniversary .balloons img:nth-child(2){left: 35%}
+.birthday .balloons img:nth-child(3), .anniversary .balloons img:nth-child(3){left: 40%}
+.birthday .navbar-custom .hb  {max-width: 180px; position: absolute; left: 50px; top: -5px}
+.birthday .b2, .anniversary .b2 {position: fixed; bottom: -30px; z-index: 99;left: -10px}
+.birthday .b2 img, .birthday .b2-1 img, .anniversary .b2 img, .anniversary .b2-1 img{max-width: 100px; transform-origin: bottom;  animation: balloon 10s infinite}
+
+.birthday .b2-1, .anniversary .b2-1 {position: fixed; bottom: -30px; z-index: 99;right: 30px}
+.birthday .b3, .anniversary .b3{position: fixed; left: -150px; top: -25px;z-index: 99}
+.birthday .b3 img, .anniversary .b3 img{max-width: 200px; transform: rotate(6deg);}
+.birthday .b4, .anniversary .b4{position: fixed; right: -170px; top: -5px;z-index: 9999}
+.birthday .b4 img, .anniversary .b4 img{max-width: 200px;}
+.anniversary .navbar-custom .anniv {max-width: 250px; position: absolute; left: 50px; top: -5px}
+.anniversary .navbar-custom h3{position: absolute; left: 300px; font-weight: 500; color: #999; top: 10px }
+.anniversary .navbar-custom h3 span {color: red; font-weight: 700; font-size: 40px}
+
+/*.anniversary .anim {position: absolute; animation: balloonnew 15s infinite ;width:50px; height: 80px; background: #ccc; border-radius: 60px 60px 0px 0px;z-index: 9999; left: 25%; bottom: 0;display: block;}*/
+.anniversary .anim, .birthday .anim   {
+  display:inline-block;
+   width:50px;
+  height:75px;
+ background: rgb(255,255,255);
+background: radial-gradient(circle, rgba(255,255,255,0.7539390756302521) 0%, rgba(99,119,144,1) 71%);
+  border-radius:80%;
+  position:fixed; bottom: -150px; left: 25%;
+  box-shadow:inset -10px -10px 0 rgba(0,0,0,0.07);
+  z-index:9999;
+  animation:balloonnew 15s ease-in-out   infinite; 
+  transform-origin:bottom center;
+  transition:transform 0.5s ease;
+}
+
+.anniversary .anim:before , .birthday .anim:before  {
+  content:"▲";
+  font-size:20px;
+  color:hsl(215,30%,50%);
+  display:block;
+  text-align:center;
+  width:100%;
+  position:absolute;
+  bottom:-12px;
+  z-index:-100;
+}
+
+.anniversary .anim:after, .birthday .anim:after {
+ display:inline-block; top:80px;
+  position:absolute;
+  height:50px;
+  width:1px;
+  left: 50%;
+  content:"";
+  background:rgba(0,0,0,0.2); 
+}
+.anniversary .anim.anim1, .birthday .anim.anim1 {
+	 animation:balloonnew 20s ease-in-out  infinite;
+	 background: rgb(255,255,255);
+	 background: radial-gradient(circle, rgba(255,255,255,0.7539390756302521) 0%, rgba(107,144,99,1) 71%); left: 50%;
+}
+.anniversary .anim.anim1:before, .birthday .anim.anim1:before { color:#6b9063;}
+.anniversary .anim.anim2, .birthday .anim.anim2 {
+	 animation:balloonnew 25s ease-in-out   infinite;
+	background: rgb(255,255,255);
+	background: radial-gradient(circle, rgba(255,255,255,0.7539390756302521) 0%, rgba(255,89,74,1) 71%); left: 75%;
+}
+.anniversary .anim.anim2:before, .birthday .anim.anim2:before { color:#ff594a;}
+.christmas .navbar-custom .merry-c {max-width:350px; position: absolute; left: 50px; top: -30px}
+.christmas .d1  {position: fixed; top: 0; z-index: 9999; left: 48%; top: -50px;opacity: .8}
+.christmas .d1 img{max-width: 250px}
+.christmas .d1 img:nth-child(2){margin-left: -50px}
+.christmas .d2 {position: fixed; top: 0; z-index: 9999; right:-30px; top: -20px}
+.christmas .d2 img{max-width: 150px; transform: scaleX(-1) rotate(-20deg);}
+.christmas .cap {position: fixed; top: 0; z-index: 9999; left:12%; top: -16px}
+.christmas .cap img{max-width: 100px; transform:   rotate(55deg);}
+.christmas .d3 {position: fixed; top: 0; z-index:  10; left:-40px; top: -5px}
+.christmas .d3 img{max-width: 250px; transform:   rotate(20deg); opacity: .8 }
+.christmas .logo { z-index: 9999}
+
+.christmas .d4 {position: fixed;  z-index:  9999; left:10px; bottom: -20px; animation: decor1 4s infinite}
+.christmas .d4 img{max-width: 200px;}
+
+.christmas .d5 {position: fixed;  z-index:  9999; right:-20px; bottom: 0px; animation: decor1 4s infinite}
+.christmas .d5 img{max-width: 100px;}
+
+.newyear .navbar-custom .hny {max-width:300px; position: absolute; left: 50px; top: -10px}
+.newyear .d1 {position: fixed; top: 0; z-index: 9999; left: 48%; top: -70px;opacity: .8}
+.newyear .d1 img{max-width: 250px}
+.newyear .d3 {position: fixed; top: 0; z-index:  10; left:-40px; top: -5px}
+.newyear .d3 img{max-width: 250px; transform:   rotate(20deg); opacity: .8 }
+.newyear .d2 {position: fixed; top: 0; z-index: 9999; right:-50px; top: -50px}
+.newyear .d2 img{max-width: 150px; transform: scaleX(-1) rotate(-20deg);}
+.newyear .lights {position: fixed;  z-index: 9999; left:-15px; top: 17%}
+.newyear .lights span {width: 25px; height: 25px; display: block; filter: blur(1px);border-radius: 40px; margin-bottom: 25px; animation: lights 2s infinite; opacity: .5}
+ .newyear .lights span:first-child, .newyear .lights span:nth-child(5){-webkit-box-shadow: 0px 0px 20px 8px rgba(255,204,0,1);
+-moz-box-shadow: 0px 0px 37px 8px rgba(255,204,0,1);box-shadow: 0px 0px 20px 8px rgba(255,204,0,1);
+  background: #e7a61a; animation-duration: 2.5s }
+  .newyear .lights span:nth-child(2),   .newyear .lights span:nth-child(6),   .newyear .lights span:nth-child(9){-webkit-box-shadow: 0px 0px 25px 5px rgba(80,250,120,1);
+-moz-box-shadow: 0px 0px 25px 5px rgba(80,250,120,1);box-shadow: 0px 0px 25px 8px rgba(80,250,120,1);background: #50fa78;  animation-duration: 1.5s}
+  .newyear .lights span:nth-child(3),   .newyear .lights span:nth-child(7),     .newyear .lights span:nth-child(10){-webkit-box-shadow: 0px 0px 33px 10px rgba(255,226,140,1);
+-moz-box-shadow: 0px 0px 33px 10px rgba(255,226,140,1);
+box-shadow: 0px 0px 33px 10px rgba(255,226,140,1);background: #ffe28c; animation-duration: 3s}
+  .newyear .lights span:nth-child(4),   .newyear .lights span:nth-child(8){-webkit-box-shadow: 0px 0px 33px 10px rgba(255,150,150,1);
+-moz-box-shadow: 0px 0px 33px 10px rgba(255,150,150,1);
+box-shadow: 0px 0px 33px 10px rgba(255,150,150,1);background: #ff9696; }
+
+@keyframes lights{
+  0{opacity: .5}
+  
+  50%{opacity: 1}
+ 
+  100%{opacity:.5}
+}
+
+@keyframes decor1{
+  0%{bottom: -20px}
+  50%{bottom: -10px}
+  100%{bottom: -20px}
+}
+/*@keyframes balloons {
+  0%,100%{ transform:translateY(0) rotate(-4deg); }
+  50%{ transform:translateY(-25px) rotate(4deg); }
+}
+*/
+@media (min-width: 1600px){
+  .birthday .balloons, .anniversary .balloons {top: -130px}
+}
+@media (min-width: 1800px){
+  .birthday .balloons, .anniversary .balloons {top: -140px}
+}
+@media (min-width: 1900px){
+  .birthday .balloons, .anniversary .balloons {top: -160px}
+}
+.smallfont tr th, .smallfont tr td { font-size: 12px; color: #222; vertical-align: top;
+}
+.vtop tr th {vertical-align: top;}
+.dt-print-view h1{font-size: 24px; text-align: center; margin-bottom: 20px}
+.scrollbar {height: 400px; overflow: auto; }
+  .scrollbar::-webkit-scrollbar {
+  width: 5px;
+}
+.scrollbar::-webkit-scrollbar-track {
+  box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.2);
+}
+.scrollbar::-webkit-scrollbar-thumb {
+  background-color: #ccc; border-radius: 5px
+}
+
+@keyframes balloon{
+	0% {transform: rotate(0);}
+	50% {transform: rotate(30deg);}
+	100% {transform: rotate(0);}
+}
+
+@keyframes balloonnew{
+	0% {bottom: -100px; transform:rotate(0deg) translateY(0);  }
+	10%{ transform:rotate(-10deg); }
+	30%{ transform:rotate(15deg); }
+	50%{ transform:rotate(-10deg) translateY(-25px);  }
+	60%{ transform:rotate(10deg); }
+	90%{ transform:rotate(-10deg); }
+	100% {bottom: 110%; transform:rotate(0deg);}
+}

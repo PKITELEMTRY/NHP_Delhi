@@ -1,0 +1,1624 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+    
+ 
+<head>
+        <meta charset="utf-8" />
+          <title>18Pixels | Management Tool</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta content="A fully featured admin theme which can be used to build CRM, CMS, etc." name="description" />
+        <meta content="Coderthemes" name="author" />
+        <!-- App favicon -->
+        <link rel="shortcut icon" href="{% static 'assets/images/favicon.ico' %}">
+
+        <!-- App css -->
+        <link href="{% static 'assets/css/icons.min.css' %}" rel="stylesheet" type="text/css" />
+        <link href="{% static 'assets/css/app.min.css' %}" rel="stylesheet" type="text/css" id="light-style" />
+        <link href="{% static 'assets/css/app-dark.min.css' %}" rel="stylesheet" type="text/css" id="dark-style" />
+        <link href="{% static 'assets/css/custom.css' %}" rel="stylesheet" type="text/css" />
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" integrity="sha512-Fo3rlrZj/k7ujTnHg4CGR2D7kSs0v4LLanw2qksYuRlEzO+tcaEPQogQ0KaoGN26/zrn20ImR1DfuLWnOo7aBA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+        <style>
+            .removed {
+                transition: all 0.5s ease-out;
+                opacity: 0;
+              }
+        </style>
+    </head>
+
+    <body class="loading" data-layout-config='{"leftSideBarTheme":"dark","layoutBoxed":false, "leftSidebarCondensed":false, "leftSidebarScrollable":false,"darkMode":false, "showRightSidebarOnStart": true}'>
+        <!-- Begin page -->
+        <div class="wrapper">
+            <!-- ========== Left Sidebar Start ========== -->
+            <div class="leftside-menu" id="sidebarMenus">
+            {% include 'base.html' %}
+              </div>
+            <!-- Left Sidebar End -->
+
+            <!-- ============================================================== -->
+            <!-- Start Page Content here -->
+            <!-- ============================================================== -->
+
+              <div class="content-page">
+                <div class="content">
+                    <!-- Topbar Start -->
+                     <div class="navbar-custom" id="load-navigation"> 
+                        {% include 'hearder.html' %}
+                     </div>
+                    <!-- end Topbar -->
+
+                    <!-- Start Content-->
+                    <div class="container-fluid">
+                        
+                        <!-- start page email-title -->
+                        <div class="row">
+                            <div class="col-12">
+                                <div class="page-title-box">
+                                    <div class="page-title-right">
+                                         <button type="button" class="btn btn-danger send_noti" data-bs-toggle="modal" data-bs-target="#compose-modal">Send Notification</button>
+                                    </div>
+                                    <h4 class="page-title">Notifications</h4>
+                                </div>
+                            </div>
+                        </div>     
+                        <!-- end page email-title --> 
+
+                        <div class="row">
+
+                            <!-- Right Sidebar -->
+                            <div class="col-12">
+                                <div class="card">
+                                    <div class="card-body">
+                                        <!-- Left sidebar -->
+                                        <div class="page-aside-left pt-0">
+                                            
+                                            <div class="email-menu-list mt-0">
+                                                <a href="{% url 'notification' %}" class="text-success fw-bold"><i class="dripicons-inbox me-2"></i>Inbox<span class="badge badge-success-lighten float-end ms-2" id='inbox-count'>-</span></a>
+                                                <a href="javascript: void(0);" onclick="hide_div1()" class="text-info fw-bold"><i class="dripicons-exit me-2"></i>Sent<span class="badge badge-info-lighten float-end ms-2" id='sent-count'>{{sent|length}}</span></a>
+                                                <a href="javascript: void(0);" onclick="hide_div2()" class="text-danger fw-bold"><i class="dripicons-trash me-2"></i>Trash<span class="badge badge-danger-lighten float-end ms-2" id='trash-count'>{{trash|length}}</span></a>
+                                                <a href="javascript: void(0);" onclick="hide_div3()" class="text-warning fw-bold"> <i class="dripicons-star me-2"></i>Starred<span class="badge badge-warning-lighten float-end ms-2" id='starred-count'>{{starred|length}}</span></a>
+
+                                               
+                                            </div>
+
+                                            <div class="mt-4">
+                                                <h6 class="text-uppercase">Filters</h6>
+                                                <hr>
+                                                <div class="email-menu-list labels-list mt-2">
+                                                     <select class="form-select mt-3">
+                                                          <option class="d-none">By Duration</option>
+                                                          <option>Today</option>
+                                                          <option>Last Week</option>
+                                                          <option>Last 15 days</option>
+                                                          <option>Last month</option>
+                                                          <option>Last 6 months</option>
+                                                     </select> 
+
+                                                    <div class="mb-1 mt-2">
+                                                       <select class="form-control select2" data-toggle="select2"    data-placeholder="By Employee" >
+                                                            <option></option>
+                                                            {% for i in emp_Obj %}
+                                                                <option value="{{i.id}}">{{i.employee_name}}</option>
+                                                            {% endfor %}
+                                                      </select>
+                                                    </div> 
+                                                      <div class="mb-1 mt-2">
+                                                           <div class=" position-relative" id="datepicker2">
+                                                          
+                                                            <input id="due_date" type="text" class="form-control" data-provide="datepicker" data-date-container="#datepicker2" data-date-format="d-M-yyyy" data-date-autoclose="true"    placeholder="By date">
+                                                        </div>
+                                                      </div>
+                                                      <div class="text-end mt-4">
+                                                        <button  type="button" class="btn btn-light btn-sm" data-bs-dismiss="modal" style="margin-right: 5px">Reset</button>
+                                                        <button type="button" class="btn btn-primary btn-sm" data-bs-dismiss="modal" >Appy</button>
+                                                     </div>
+                                                </div>
+                                            </div>
+
+                                            
+
+                                        </div>
+                                        <!-- End Left sidebar -->
+
+                                        <div class="page-aside-right p-0 pt-2" id="inbox-id">
+                                            {% if notificationObj %}
+                                            <div class="mt-0" style="max-height: 800px;overflow-y: scroll;">
+                                                <ul class="email-list">
+                                                {% for n in notificationObj %}
+                                                        {% if request.session.userType == 'masteR' %}
+                                                            {% if n.admin_read_status == True %}
+                                                            <li class="">
+                                                                <div class="email-sender-info">
+                                                                    {% if n.member_count == 1|floatformat:"0" %}
+                                                                        {% if n.notification_from.email == request.user.email %}
+                                                                            <a href="javascript: void(0);" class="email-title" not_id="{{n.id}}" onclick="view_notification(this)"><small><i class="fas fa-envelope-open"></i> <strong>me,</strong> {{n.notification_to.first_name|truncatechars:12}}</small></a>
+                                                                        {% else %}
+                                                                            <a href="javascript: void(0);" class="email-title" not_id="{{n.id}}" onclick="view_notification(this)"><small><i class="fas fa-envelope-open"></i> {{n.notification_from.first_name}}, {{n.notification_to.first_name|truncatechars:12}}</small></a>
+                                                                        {% endif %}
+                                                                    {% else %}
+                                                                        {% if n.notification_from.email == request.user.email %}
+                                                                            <a href="javascript: void(0);" class="email-title" not_id="{{n.id}}" onclick="view_notification(this)"><strong>me,</strong> {{n.first_rec}}</a>
+                                                                        {% else %}
+                                                                            <a href="javascript: void(0);" class="email-title" not_id="{{n.id}}" onclick="view_notification(this)">{{n.notification_sender}}, {{n.first_rec}}</a>
+                                                                        {% endif %}
+                                                                    {% endif %}
+                                                                </div>
+                                                                <div class="email-content">
+                                                                    <a href="javascript: void(0);" class="email-subject" not_id="{{n.id}}" onclick="view_notification(this)"><strong class="text-secondary">{{n.notification_subject}}</strong> - {{n.notification_message}}
+                                                                    </a>
+                                                                    <div class="email-date">
+                                                                    {% now "Y-m-d" as todays_date %}
+                                                                    {% if todays_date > n.created_at|date:"Y-m-d" %}
+                                                                        {{n.created_at| date:'d M, Y'}}
+                                                                    {% else %}
+                                                                        {{n.created_at| date:'h:i a'}}
+                                                                    {% endif %}
+                                                                    </div>
+                                                                </div>
+                                                                <div class="email-action-icons">
+                                                                    <ul class="list-inline">
+                                                                        <li class="list-inline-item">
+                                                                            <a href="javascript: void(0);" not_id="{{n.id}}" onclick="view_notification(this)"><i class="mdi mdi-eye read-det email-action-icons-item"></i></a>
+                                                                        </li>
+                                                                        <li class="list-inline-item">
+                                                                            <a href="javascript: void(0);" not_id="{{n.id}}" onclick='move_to_trash(this)'><i class="mdi mdi-delete email-action-icons-item"></i></a>
+                                                                        </li>
+                                                                        <li class="list-inline-item">
+                                                                            {% if n.admin_starred_status == True %}
+                                                                                <a href="javascript: void(0);" class='text-warning' not_id="{{n.id}}" onclick='remove_from_starred(this)'><i class="mdi mdi-star email-action-icons-item"></i></a>
+                                                                            {% else %}
+                                                                                <a href="javascript: void(0);" not_id="{{n.id}}" onclick='move_to_starred(this)'><i class="mdi mdi-star email-action-icons-item"></i></a>
+                                                                            {% endif %}
+                                                                        </li>
+                                                                    </ul>
+                                                                </div>
+                                                            </li>
+                                                            {% else %}
+                                                                <li class="">
+                                                                    <div class="email-sender-info">
+                                                                            {% if n.member_count == 1|floatformat:"0" %}
+                                                                                {% if n.notification_from.email == request.user.email %}
+                                                                                <a href="javascript: void(0);" class="email-title text-success" not_id="{{n.id}}" onclick="view_notification(this)"><small><i class="fas fa-envelope"></i> <strong>me,</strong> {{n.notification_to.first_name|truncatechars:12}}</small></a>
+                                                                                {% else %}
+                                                                                <a href="javascript: void(0);" class="email-title" not_id="{{n.id}}" onclick="view_notification(this)"><small>{{n.notification_from.first_name}}, {{n.notification_to.first_name|truncatechars:12}}</small></a>
+                                                                                {% endif %}
+                                                                                {% else %}
+                                                                                {% if n.notification_from.email == request.user.email %}
+                                                                                <a href="javascript: void(0);" class="email-title" not_id="{{n.id}}" onclick="view_notification(this)"><strong>me,</strong> {{n.first_rec}}</a>
+                                                                                {% else %}
+                                                                                <a href="javascript: void(0);" class="email-title" not_id="{{n.id}}" onclick="view_notification(this)">{{n.notification_sender}}, {{n.first_rec}}</a>
+                                                                                {% endif %}
+                                                                                {% endif %}
+                                                                            </div>
+                                                                            <div class="email-content">
+                                                                                <a href="javascript: void(0);" class="email-subject" not_id="{{n.id}}" onclick="view_notification(this)"><strong class="text-secondary">{{n.notification_subject}}</strong> - {{n.notification_message}}
+                                                                                </a>
+                                                                            <div class="email-date">
+                                                                                {% now "Y-m-d" as todays_date %}
+                                                                                {% if todays_date > n.created_at|date:"Y-m-d" %}
+                                                                                {{n.created_at| date:'d M, Y'}}
+                                                                                {% else %}
+                                                                                {{n.created_at| date:'h:i a'}}
+                                                                                {% endif %}
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="email-action-icons">
+                                                                        <ul class="list-inline">
+                                                                            <li class="list-inline-item">
+                                                                                <a href="javascript: void(0);" not_id="{{n.id}}" onclick="view_notification(this)"><i class="mdi mdi-eye read-det email-action-icons-item"></i></a>
+                                                                            </li>
+                                                                            <li class="list-inline-item">
+                                                                                <a href="javascript: void(0);" not_id="{{n.id}}" onclick='move_to_trash(this)'><i class="mdi mdi-delete email-action-icons-item"></i></a>
+                                                                            </li>
+                                                                            <li class="list-inline-item">
+                                                                            {% if n.admin_starred_status == True %}
+                                                                                <a href="javascript: void(0);" class='text-warning' not_id="{{n.id}}" onclick='remove_from_starred(this)'><i class="mdi mdi-star email-action-icons-item"></i></a>
+                                                                            {% else %}
+                                                                                <a href="javascript: void(0);" not_id="{{n.id}}" onclick='move_to_starred(this)'><i class="mdi mdi-star email-action-icons-item"></i></a>
+                                                                            {% endif %}
+                                                                            </li>
+                                                                        </ul>
+                                                                    </div>
+                                                                </li>
+                                                            {% endif %}
+                                                        {% elif request.session.userType == 'teacheR' %}
+                                                            {% if n.manager_read_status == True %}
+                                                                <li class="">
+                                                                    <div class="email-sender-info">
+                                                                    {% if n.member_count == 1|floatformat:"0" %}
+                                                                    {% if n.notification_from.email == 'admin@gmail.com' %}
+                                                                    <a href="javascript: void(0);" not_id="{{n.id}}" onclick="view_notification(this)" class="email-title"><small><i class="fas fa-envelope-open"></i> <strong>Admin</strong></small></a>
+                                                                    {% elif n.notification_from.username == request.user.username %}
+                                                                    <a href="javascript: void(0);" not_id="{{n.id}}" onclick="view_notification(this)" class="email-title"><small><i class="fas fa-envelope-open"></i> <strong>me, </strong>{{n.notification_to.first_name|truncatechars:12}}</small></a>
+                                                                            {% else %}
+                                                                            <a href="javascript: void(0);" not_id="{{n.id}}" onclick="view_notification(this)" class="email-title"><small><i class="fas fa-envelope-open"></i> {{n.notification_from.first_name|truncatechars:12}}</small></a>
+                                                                            {% endif %}
+                                                                        {% else %}
+                                                                        {% if n.notification_from.username == request.user.username %}
+                                                                        <a href="javascript: void(0);" not_id="{{n.id}}" onclick="view_notification(this)" class="email-title">{{n.notification_to.first_name|truncatechars:12}}</a>
+                                                                        {% elif n.notification_from.email == 'admin@gmail.com' %}
+                                                                                <a href="javascript: void(0);" not_id="{{n.id}}" onclick="view_notification(this)" class="email-title"><strong>Admin ,</strong>{{request.user.first_name|truncatechars:12}}(2)</a>
+                                                                                {% else %}
+                                                                                <a href="javascript: void(0);" not_id="{{n.id}}" onclick="view_notification(this)" class="email-title">{{n.notification_to.first_name|truncatechars:12}} (1)</a>
+                                                                                {% endif %}
+                                                                                {% endif %}
+                                                                    </div>
+                                                                    <div class="email-content">
+                                                                        <a href="javascript: void(0);" not_id="{{n.id}}" onclick="view_notification(this)" class="email-subject"><strong class="text-secondary">{{n.notification_subject}}</strong> - {{n.notification_message}}
+                                                                        </a>
+                                                                        <div class="email-date">
+                                                                            {% now "Y-m-d" as todays_date %}
+                                                                            {% if todays_date > n.created_at|date:"Y-m-d" %}
+                                                                            {{n.created_at| date:'d M, Y'}}
+                                                                            {% else %}
+                                                                            {{n.created_at| date:'h:i a'}}
+                                                                            {% endif %}
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="email-action-icons">
+                                                                        <ul class="list-inline">
+                                                                            <li class="list-inline-item">
+                                                                                <a href="javascript: void(0);" not_id="{{n.id}}" onclick="view_notification(this)"><i class="mdi mdi-eye read-det email-action-icons-item"></i></a>
+                                                                            </li>
+                                                                            <li class="list-inline-item">
+                                                                                <a href="javascript: void(0);" not_id="{{n.id}}" onclick='move_to_trash(this)'><i class="mdi mdi-delete email-action-icons-item"></i></a>
+                                                                            </li>
+                                                                            <li class="list-inline-item">
+                                                                            {% if n.manager_starred_status == True %}
+                                                                                <a href="javascript: void(0);" class='text-warning' not_id="{{n.id}}" onclick='remove_from_starred(this)'><i class="mdi mdi-star email-action-icons-item"></i></a>
+                                                                            {% else %}
+                                                                                <a href="javascript: void(0);" not_id="{{n.id}}" onclick='move_to_starred(this)'><i class="mdi mdi-star email-action-icons-item"></i></a>
+                                                                            {% endif %}
+                                                                            </li>
+                                                                        </ul>
+                                                                    </div>
+                                                                </li>
+                                                            {% else %}
+                                                                <li class="">
+                                                                    <div class="email-sender-info">
+                                                                    {% if n.member_count == 1|floatformat:"0" %}
+                                                                    {% if n.notification_from.email == 'admin@gmail.com' %}
+                                                                    <a href="javascript: void(0);" not_id="{{n.id}}" onclick="view_notification(this)" class="email-title text-success"><small><i class="fas fa-envelope"></i>  <strong>Admin</strong></small></a>
+                                                                    {% elif n.notification_from.username == request.user.username %}
+                                                                    <a href="javascript: void(0);" not_id="{{n.id}}" onclick="view_notification(this)" class="email-title text-success"><small><i class="fas fa-envelope"></i>  <strong>me, </strong>{{n.notification_to.first_name|truncatechars:12}}</small></a>
+                                                                            {% else %}
+                                                                            <a href="javascript: void(0);" not_id="{{n.id}}" onclick="view_notification(this)" class="email-title text-success"><small><i class="fas fa-envelope"></i>  {{n.notification_from.first_name|truncatechars:12}}</small></a>
+                                                                            {% endif %}
+                                                                        {% else %}
+                                                                        {% if n.notification_from.username == request.user.username %}
+                                                                        <a href="javascript: void(0);" not_id="{{n.id}}" onclick="view_notification(this)" class="email-title text-success"><i class="fas fa-envelope"></i>  {{n.notification_to.first_name|truncatechars:12}}</a>
+                                                                        {% elif n.notification_from.email == 'admin@gmail.com' %}
+                                                                                <a href="javascript: void(0);" not_id="{{n.id}}" onclick="view_notification(this)" class="email-title text-success"><strong><i class="fas fa-envelope"></i>  Admin ,</strong>{{request.user.first_name|truncatechars:12}}(2)</a>
+                                                                                {% else %}
+                                                                                <a href="javascript: void(0);" not_id="{{n.id}}" onclick="view_notification(this)" class="email-title text-success"><i class="fas fa-envelope"></i>  {{n.notification_to.first_name|truncatechars:12}} (1)</a>
+                                                                                {% endif %}
+                                                                                {% endif %}
+                                                                    </div>
+                                                                    <div class="email-content">
+                                                                        <a href="javascript: void(0);" not_id="{{n.id}}" onclick="view_notification(this)" class="email-subject"><strong class="text-secondary">{{n.notification_subject}}</strong> - {{n.notification_message}}
+                                                                        </a>
+                                                                        <div class="email-date">
+                                                                            {% now "Y-m-d" as todays_date %}
+                                                                            {% if todays_date > n.created_at|date:"Y-m-d" %}
+                                                                            {{n.created_at| date:'d M, Y'}}
+                                                                            {% else %}
+                                                                            {{n.created_at| date:'h:i a'}}
+                                                                            {% endif %}
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="email-action-icons">
+                                                                        <ul class="list-inline">
+                                                                            <li class="list-inline-item">
+                                                                                <a href="javascript: void(0);" not_id="{{n.id}}" onclick="view_notification(this)"><i class="mdi mdi-eye read-det email-action-icons-item"></i></a>
+                                                                            </li>
+                                                                            <li class="list-inline-item">
+                                                                                <a href="javascript: void(0);" not_id="{{n.id}}" onclick='move_to_trash(this)'><i class="mdi mdi-delete email-action-icons-item"></i></a>
+                                                                            </li>
+                                                                            <li class="list-inline-item">
+                                                                            {% if n.manager_starred_status == True %}
+                                                                                <a href="javascript: void(0);" class='text-warning' not_id="{{n.id}}" onclick='remove_from_starred(this)'><i class="mdi mdi-star email-action-icons-item"></i></a>
+                                                                            {% else %}
+                                                                                <a href="javascript: void(0);" not_id="{{n.id}}" onclick='move_to_starred(this)'><i class="mdi mdi-star email-action-icons-item"></i></a>
+                                                                            {% endif %}
+                                                                            </li>
+                                                                        </ul>
+                                                                    </div>
+                                                                </li>
+                                                            {% endif %}
+                                                        {% elif request.session.userType == 'studdenT' %}
+                                                            {% if n.emp_read_status == True %}
+                                                                <li class="">
+                                                                <div class="email-sender-info">
+                                                                    {% if n.member_count == 1|floatformat:"0" %}
+                                                                    {% if n.notification_from.email == 'admin@gmail.com' %}
+                                                                    <a href="javascript: void(0);" not_id="{{n.id}}" onclick="view_notification(this)" class="email-title"><small><i class="fas fa-envelope-open"></i> <strong>Admin</strong></small></a>
+                                                                    {% elif n.notification_from.username == request.user.username %}
+                                                                    <a href="javascript: void(0);" not_id="{{n.id}}" onclick="view_notification(this)" class="email-title"><small><i class="fas fa-envelope-open"></i> <strong>me, </strong>{{n.notification_to.first_name|truncatechars:12}}</small></a>
+                                                                    {% else %}
+                                                                    <a href="javascript: void(0);" not_id="{{n.id}}" onclick="view_notification(this)" class="email-title"><small><i class="fas fa-envelope-open"></i> {{n.notification_from.first_name|truncatechars:12}}</small></a>
+                                                                    {% endif %}
+                                                                    {% else %}
+                                                                    {% if n.notification_from.username == request.user.username %}
+                                                                    <a href="javascript: void(0);" not_id="{{n.id}}" onclick="view_notification(this)" class="email-title">{{n.notification_to.first_name|truncatechars:12}}</a>
+                                                                        {% elif n.notification_from.email == 'admin@gmail.com' %}
+                                                                        <a href="javascript: void(0);" not_id="{{n.id}}" onclick="view_notification(this)" class="email-title"><strong>Admin ,</strong>{{request.user.first_name|truncatechars:12}}(2)</a>
+                                                                        {% else %}
+                                                                        <a href="javascript: void(0);" not_id="{{n.id}}" onclick="view_notification(this)" class="email-title">{{n.notification_to.first_name|truncatechars:12}} (1)</a>
+                                                                        {% endif %}
+                                                                        {% endif %}
+                                                                    </div>
+                                                                    <div class="email-content">
+                                                                        <a href="javascript: void(0);" not_id="{{n.id}}" onclick="view_notification(this)" class="email-subject"><strong class="text-secondary">{{n.notification_subject}}</strong> - {{n.notification_message}}
+                                                                        </a>
+                                                                        <div class="email-date">
+                                                                            {% now "Y-m-d" as todays_date %}
+                                                                            {% if todays_date > n.created_at|date:"Y-m-d" %}
+                                                                            {{n.created_at| date:'d M, Y'}}
+                                                                            {% else %}
+                                                                            {{n.created_at| date:'h:i a'}}
+                                                                            {% endif %}
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="email-action-icons">
+                                                                        <ul class="list-inline">
+                                                                            <li class="list-inline-item">
+                                                                            <a href="javascript: void(0);" not_id="{{n.id}}" onclick="view_notification(this)"><i class="mdi mdi-eye read-det email-action-icons-item"></i></a>
+                                                                        </li>
+                                                                        <li class="list-inline-item">
+                                                                            <a href="javascript: void(0);" not_id="{{n.id}}" onclick='move_to_trash(this)'><i class="mdi mdi-delete email-action-icons-item"></i></a>
+                                                                        </li>
+                                                                        <li class="list-inline-item">
+                                                                            {% if n.emp_starred_status == True %}
+                                                                                <a href="javascript: void(0);" class='text-warning' not_id="{{n.id}}" onclick='remove_from_starred(this)'><i class="mdi mdi-star email-action-icons-item"></i></a>
+                                                                            {% else %}
+                                                                                <a href="javascript: void(0);" not_id="{{n.id}}" onclick='move_to_starred(this)'><i class="mdi mdi-star email-action-icons-item"></i></a>
+                                                                            {% endif %}
+                                                                        </li>
+                                                                    </ul>
+                                                                </div>
+                                                                </li>
+                                                            {% else %}
+                                                                <li class="">
+                                                                <div class="email-sender-info">
+                                                                    {% if n.member_count == 1|floatformat:"0" %}
+                                                                    {% if n.notification_from.email == 'admin@gmail.com' %}
+                                                                    <a href="javascript: void(0);" not_id="{{n.id}}" onclick="view_notification(this)" class="email-title text-success text-info"><small><i class="fas fa-envelope"></i>  <strong>Admin</strong></small></a>
+                                                                    {% elif n.notification_from.username == request.user.username %}
+                                                                    <a href="javascript: void(0);" not_id="{{n.id}}" onclick="view_notification(this)" class="email-title text-success"><small><i class="fas fa-envelope"></i>  <strong>me, </strong>{{n.notification_to.first_name|truncatechars:12}}</small></a>
+                                                                    {% else %}
+                                                                    <a href="javascript: void(0);" not_id="{{n.id}}" onclick="view_notification(this)" class="email-title text-success"><small><i class="fas fa-envelope"></i>  {{n.notification_from.first_name|truncatechars:12}}</small></a>
+                                                                    {% endif %}
+                                                                    {% else %}
+                                                                    {% if n.notification_from.username == request.user.username %}
+                                                                    <a href="javascript: void(0);" not_id="{{n.id}}" onclick="view_notification(this)" class="email-title text-success"><i class="fas fa-envelope"></i>  {{n.notification_to.first_name|truncatechars:12}}</a>
+                                                                        {% elif n.notification_from.email == 'admin@gmail.com' %}
+                                                                        <a href="javascript: void(0);" not_id="{{n.id}}" onclick="view_notification(this)" class="email-title text-success"><i class="fas fa-envelope"></i>  <strong>Admin ,</strong>{{request.user.first_name|truncatechars:12}}(2)</a>
+                                                                        {% else %}
+                                                                        <a href="javascript: void(0);" not_id="{{n.id}}" onclick="view_notification(this)" class="email-title text-success"><i class="fas fa-envelope"></i>  {{n.notification_to.first_name|truncatechars:12}} (1)</a>
+                                                                        {% endif %}
+                                                                        {% endif %}
+                                                                    </div>
+                                                                    <div class="email-content">
+                                                                        <a href="javascript: void(0);" not_id="{{n.id}}" onclick="view_notification(this)" class="email-subject"><strong class="text-secondary">{{n.notification_subject}}</strong> - {{n.notification_message}}
+                                                                        </a>
+                                                                        <div class="email-date">
+                                                                            {% now "Y-m-d" as todays_date %}
+                                                                            {% if todays_date > n.created_at|date:"Y-m-d" %}
+                                                                            {{n.created_at| date:'d M, Y'}}
+                                                                            {% else %}
+                                                                            {{n.created_at| date:'h:i a'}}
+                                                                            {% endif %}
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="email-action-icons">
+                                                                        <ul class="list-inline">
+                                                                            <li class="list-inline-item">
+                                                                            <a href="javascript: void(0);" not_id="{{n.id}}" onclick="view_notification(this)"><i class="mdi mdi-eye read-det email-action-icons-item"></i></a>
+                                                                        </li>
+                                                                        <li class="list-inline-item">
+                                                                            <a href="javascript: void(0);" not_id="{{n.id}}" onclick='move_to_trash(this)'><i class="mdi mdi-delete email-action-icons-item"></i></a>
+                                                                        </li>
+                                                                        <li class="list-inline-item">
+                                                                            {% if n.emp_starred_status == True %}
+                                                                                <a href="javascript: void(0);" class='text-warning' not_id="{{n.id}}" onclick='remove_from_starred(this)'><i class="mdi mdi-star email-action-icons-item"></i></a>
+                                                                            {% else %}
+                                                                                <a href="javascript: void(0);" not_id="{{n.id}}" onclick='move_to_starred(this)'><i class="mdi mdi-star email-action-icons-item"></i></a>
+                                                                            {% endif %}
+                                                                        </li>
+                                                                    </ul>
+                                                                </div>
+                                                                </li>
+                                                            {% endif %}
+                                                        {% endif %}
+                                                {% endfor %}
+                                                </ul>
+                                            </div>
+                                            {% else %}
+                                            <div class="mt-0">
+                                                <div class="text-center mt-4">
+                                                    <h5><i class="fas fa-bell text-success"></i> No new notifications available!</h5>
+                                                </div>
+                                            </div>
+                                            {% endif %}
+                                            <!-- end .mt-4 -->
+                                            
+                                            {% comment %} <div class="row">
+                                            {% if datalength > 10 %}
+                                                <div class="col-7 mt-1">
+                                                    Showing 1 - {{notificationObj|length}} of {{datalength}}
+                                                </div> <!-- end col-->
+                                                <div class="col-5">
+                                                    <div class="btn-group float-end">
+                                                        <button type="button" class="btn btn-light btn-sm"><i class="mdi mdi-chevron-left"></i></button>
+                                                        <button type="button" class="btn btn-info btn-sm"><i class="mdi mdi-chevron-right"></i></button>
+                                                    </div>
+                                                </div> <!-- end col-->
+                                            {% endif %}
+                                            </div> {% endcomment %}
+                                            <!-- end row-->
+                                        </div> 
+                                        <!-- end inbox-rightbar-->
+                                        {% comment %} ######################################################################################################## {% endcomment %}
+                                        {% comment %} ######################################################################################################## {% endcomment %}
+                                        <div class="page-aside-right p-0 pt-2" id="sent-id" style="display:none;">
+                                            {% if sent %}
+                                            <div class="mt-0" style="max-height: 800px;overflow-y: scroll;">
+                                                <ul class="email-list">
+                                                {% for n in sent %}
+                                                        {% if request.session.userType == 'masteR' %}
+                                                            {% if n.admin_read_status == True %}
+                                                            <li class="">
+                                                                <div class="email-sender-info">
+                                                                    {% if n.member_count == 1|floatformat:"0" %}
+                                                                        {% if n.notification_from.email == request.user.email %}
+                                                                            <a href="javascript: void(0);" class="email-title" not_id="{{n.id}}" onclick="view_notification(this)"><small><i class="fas fa-envelope-open"></i> <strong>me,</strong> {{n.notification_to.first_name|truncatechars:12}}</small></a>
+                                                                        {% else %}
+                                                                            <a href="javascript: void(0);" class="email-title" not_id="{{n.id}}" onclick="view_notification(this)"><small><i class="fas fa-envelope-open"></i> {{n.notification_from.first_name}}, {{n.notification_to.first_name|truncatechars:12}}</small></a>
+                                                                        {% endif %}
+                                                                    {% else %}
+                                                                        {% if n.notification_from.email == request.user.email %}
+                                                                            <a href="javascript: void(0);" class="email-title" not_id="{{n.id}}" onclick="view_notification(this)"><strong>me,</strong> {{n.first_rec}}</a>
+                                                                        {% else %}
+                                                                            <a href="javascript: void(0);" class="email-title" not_id="{{n.id}}" onclick="view_notification(this)">{{n.notification_sender}}, {{n.first_rec}}</a>
+                                                                        {% endif %}
+                                                                    {% endif %}
+                                                                </div>
+                                                                <div class="email-content">
+                                                                    <a href="javascript: void(0);" class="email-subject" not_id="{{n.id}}" onclick="view_notification(this)"><strong class="text-secondary">{{n.notification_subject}}</strong> - {{n.notification_message}}
+                                                                    </a>
+                                                                    <div class="email-date">
+                                                                    {% now "Y-m-d" as todays_date %}
+                                                                    {% if todays_date > n.created_at|date:"Y-m-d" %}
+                                                                        {{n.created_at| date:'d M, Y'}}
+                                                                    {% else %}
+                                                                        {{n.created_at| date:'h:i a'}}
+                                                                    {% endif %}
+                                                                    </div>
+                                                                </div>
+                                                                <div class="email-action-icons">
+                                                                    <ul class="list-inline">
+                                                                        <li class="list-inline-item">
+                                                                            <a href="javascript: void(0);" not_id="{{n.id}}" onclick="view_notification(this)"><i class="mdi mdi-eye read-det email-action-icons-item"></i></a>
+                                                                        </li>
+                                                                        <li class="list-inline-item">
+                                                                            <a href="javascript: void(0);" not_id="{{n.id}}" onclick='move_to_trash(this)'><i class="mdi mdi-delete email-action-icons-item"></i></a>
+                                                                        </li>
+                                                                        <li class="list-inline-item">
+                                                                            {% if n.admin_starred_status == True %}
+                                                                                <a href="javascript: void(0);" class='text-warning' not_id="{{n.id}}" onclick='remove_from_starred(this)'><i class="mdi mdi-star email-action-icons-item"></i></a>
+                                                                            {% else %}
+                                                                                <a href="javascript: void(0);" not_id="{{n.id}}" onclick='move_to_starred(this)'><i class="mdi mdi-star email-action-icons-item"></i></a>
+                                                                            {% endif %}
+                                                                        </li>
+                                                                    </ul>
+                                                                </div>
+                                                            </li>
+                                                            {% else %}
+                                                                <li class="">
+                                                                    <div class="email-sender-info">
+                                                                            {% if n.member_count == 1|floatformat:"0" %}
+                                                                                {% if n.notification_from.email == request.user.email %}
+                                                                                <a href="javascript: void(0);" class="email-title text-success" not_id="{{n.id}}" onclick="view_notification(this)"><small><i class="fas fa-envelope"></i> <strong>me,</strong> {{n.notification_to.first_name|truncatechars:12}}</small></a>
+                                                                                {% else %}
+                                                                                <a href="javascript: void(0);" class="email-title" not_id="{{n.id}}" onclick="view_notification(this)"><small>{{n.notification_from.first_name}}, {{n.notification_to.first_name|truncatechars:12}}</small></a>
+                                                                                {% endif %}
+                                                                                {% else %}
+                                                                                {% if n.notification_from.email == request.user.email %}
+                                                                                <a href="javascript: void(0);" class="email-title" not_id="{{n.id}}" onclick="view_notification(this)"><strong>me,</strong> {{n.first_rec}}</a>
+                                                                                {% else %}
+                                                                                <a href="javascript: void(0);" class="email-title" not_id="{{n.id}}" onclick="view_notification(this)">{{n.notification_sender}}, {{n.first_rec}}</a>
+                                                                                {% endif %}
+                                                                                {% endif %}
+                                                                            </div>
+                                                                            <div class="email-content">
+                                                                                <a href="javascript: void(0);" class="email-subject" not_id="{{n.id}}" onclick="view_notification(this)"><strong class="text-secondary">{{n.notification_subject}}</strong> - {{n.notification_message}}
+                                                                                </a>
+                                                                            <div class="email-date">
+                                                                                {% now "Y-m-d" as todays_date %}
+                                                                                {% if todays_date > n.created_at|date:"Y-m-d" %}
+                                                                                {{n.created_at| date:'d M, Y'}}
+                                                                                {% else %}
+                                                                                {{n.created_at| date:'h:i a'}}
+                                                                                {% endif %}
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="email-action-icons">
+                                                                        <ul class="list-inline">
+                                                                            <li class="list-inline-item">
+                                                                                <a href="javascript: void(0);" not_id="{{n.id}}" onclick="view_notification(this)"><i class="mdi mdi-eye read-det email-action-icons-item"></i></a>
+                                                                            </li>
+                                                                            <li class="list-inline-item">
+                                                                                <a href="javascript: void(0);" not_id="{{n.id}}" onclick='move_to_trash(this)'><i class="mdi mdi-delete email-action-icons-item"></i></a>
+                                                                            </li>
+                                                                            <li class="list-inline-item">
+                                                                            {% if n.admin_starred_status == True %}
+                                                                                <a href="javascript: void(0);" class='text-warning' not_id="{{n.id}}" onclick='remove_from_starred(this)'><i class="mdi mdi-star email-action-icons-item"></i></a>
+                                                                            {% else %}
+                                                                                <a href="javascript: void(0);" not_id="{{n.id}}" onclick='move_to_starred(this)'><i class="mdi mdi-star email-action-icons-item"></i></a>
+                                                                            {% endif %}
+                                                                            </li>
+                                                                        </ul>
+                                                                    </div>
+                                                                </li>
+                                                            {% endif %}
+                                                        {% elif request.session.userType == 'teacheR' %}
+                                                            {% if n.manager_read_status == True %}
+                                                                <li class="">
+                                                                    <div class="email-sender-info">
+                                                                    {% if n.member_count == 1|floatformat:"0" %}
+                                                                    {% if n.notification_from.email == 'admin@gmail.com' %}
+                                                                    <a href="javascript: void(0);" not_id="{{n.id}}" onclick="view_notification(this)" class="email-title"><small><i class="fas fa-envelope-open"></i> <strong>Admin</strong></small></a>
+                                                                    {% elif n.notification_from.username == request.user.username %}
+                                                                    <a href="javascript: void(0);" not_id="{{n.id}}" onclick="view_notification(this)" class="email-title"><small><i class="fas fa-envelope-open"></i> <strong>me, </strong>{{n.notification_to.first_name|truncatechars:12}}</small></a>
+                                                                            {% else %}
+                                                                            <a href="javascript: void(0);" not_id="{{n.id}}" onclick="view_notification(this)" class="email-title"><small><i class="fas fa-envelope-open"></i> {{n.notification_from.first_name|truncatechars:12}}</small></a>
+                                                                            {% endif %}
+                                                                        {% else %}
+                                                                        {% if n.notification_from.username == request.user.username %}
+                                                                        <a href="javascript: void(0);" not_id="{{n.id}}" onclick="view_notification(this)" class="email-title">{{n.notification_to.first_name|truncatechars:12}}</a>
+                                                                        {% elif n.notification_from.email == 'admin@gmail.com' %}
+                                                                                <a href="javascript: void(0);" not_id="{{n.id}}" onclick="view_notification(this)" class="email-title"><strong>Admin ,</strong>{{request.user.first_name|truncatechars:12}}(2)</a>
+                                                                                {% else %}
+                                                                                <a href="javascript: void(0);" not_id="{{n.id}}" onclick="view_notification(this)" class="email-title">{{n.notification_to.first_name|truncatechars:12}} (1)</a>
+                                                                                {% endif %}
+                                                                                {% endif %}
+                                                                    </div>
+                                                                    <div class="email-content">
+                                                                        <a href="javascript: void(0);" not_id="{{n.id}}" onclick="view_notification(this)" class="email-subject"><strong class="text-secondary">{{n.notification_subject}}</strong> - {{n.notification_message}}
+                                                                        </a>
+                                                                        <div class="email-date">
+                                                                            {% now "Y-m-d" as todays_date %}
+                                                                            {% if todays_date > n.created_at|date:"Y-m-d" %}
+                                                                            {{n.created_at| date:'d M, Y'}}
+                                                                            {% else %}
+                                                                            {{n.created_at| date:'h:i a'}}
+                                                                            {% endif %}
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="email-action-icons">
+                                                                        <ul class="list-inline">
+                                                                            <li class="list-inline-item">
+                                                                                <a href="javascript: void(0);" not_id="{{n.id}}" onclick="view_notification(this)"><i class="mdi mdi-eye read-det email-action-icons-item"></i></a>
+                                                                            </li>
+                                                                            <li class="list-inline-item">
+                                                                                <a href="javascript: void(0);" not_id="{{n.id}}" onclick='move_to_trash(this)'><i class="mdi mdi-delete email-action-icons-item"></i></a>
+                                                                            </li>
+                                                                            <li class="list-inline-item">
+                                                                            {% if n.manager_starred_status == True %}
+                                                                                <a href="javascript: void(0);" class='text-warning' not_id="{{n.id}}" onclick='remove_from_starred(this)'><i class="mdi mdi-star email-action-icons-item"></i></a>
+                                                                            {% else %}
+                                                                                <a href="javascript: void(0);" not_id="{{n.id}}" onclick='move_to_starred(this)'><i class="mdi mdi-star email-action-icons-item"></i></a>
+                                                                            {% endif %}
+                                                                            </li>
+                                                                        </ul>
+                                                                    </div>
+                                                                </li>
+                                                            {% else %}
+                                                                <li class="">
+                                                                    <div class="email-sender-info">
+                                                                    {% if n.member_count == 1|floatformat:"0" %}
+                                                                    {% if n.notification_from.email == 'admin@gmail.com' %}
+                                                                    <a href="javascript: void(0);" not_id="{{n.id}}" onclick="view_notification(this)" class="email-title text-success"><small><i class="fas fa-envelope"></i>  <strong>Admin</strong></small></a>
+                                                                    {% elif n.notification_from.username == request.user.username %}
+                                                                    <a href="javascript: void(0);" not_id="{{n.id}}" onclick="view_notification(this)" class="email-title text-success"><small><i class="fas fa-envelope"></i>  <strong>me, </strong>{{n.notification_to.first_name|truncatechars:12}}</small></a>
+                                                                            {% else %}
+                                                                            <a href="javascript: void(0);" not_id="{{n.id}}" onclick="view_notification(this)" class="email-title text-success"><small><i class="fas fa-envelope"></i>  {{n.notification_from.first_name|truncatechars:12}}</small></a>
+                                                                            {% endif %}
+                                                                        {% else %}
+                                                                        {% if n.notification_from.username == request.user.username %}
+                                                                        <a href="javascript: void(0);" not_id="{{n.id}}" onclick="view_notification(this)" class="email-title text-success"><i class="fas fa-envelope"></i>  {{n.notification_to.first_name|truncatechars:12}}</a>
+                                                                        {% elif n.notification_from.email == 'admin@gmail.com' %}
+                                                                                <a href="javascript: void(0);" not_id="{{n.id}}" onclick="view_notification(this)" class="email-title text-success"><strong><i class="fas fa-envelope"></i>  Admin ,</strong>{{request.user.first_name|truncatechars:12}}(2)</a>
+                                                                                {% else %}
+                                                                                <a href="javascript: void(0);" not_id="{{n.id}}" onclick="view_notification(this)" class="email-title text-success"><i class="fas fa-envelope"></i>  {{n.notification_to.first_name|truncatechars:12}} (1)</a>
+                                                                                {% endif %}
+                                                                                {% endif %}
+                                                                    </div>
+                                                                    <div class="email-content">
+                                                                        <a href="javascript: void(0);" not_id="{{n.id}}" onclick="view_notification(this)" class="email-subject"><strong class="text-secondary">{{n.notification_subject}}</strong> - {{n.notification_message}}
+                                                                        </a>
+                                                                        <div class="email-date">
+                                                                            {% now "Y-m-d" as todays_date %}
+                                                                            {% if todays_date > n.created_at|date:"Y-m-d" %}
+                                                                            {{n.created_at| date:'d M, Y'}}
+                                                                            {% else %}
+                                                                            {{n.created_at| date:'h:i a'}}
+                                                                            {% endif %}
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="email-action-icons">
+                                                                        <ul class="list-inline">
+                                                                            <li class="list-inline-item">
+                                                                                <a href="javascript: void(0);" not_id="{{n.id}}" onclick="view_notification(this)"><i class="mdi mdi-eye read-det email-action-icons-item"></i></a>
+                                                                            </li>
+                                                                            <li class="list-inline-item">
+                                                                                <a href="javascript: void(0);" not_id="{{n.id}}" onclick='move_to_trash(this)'><i class="mdi mdi-delete email-action-icons-item"></i></a>
+                                                                            </li>
+                                                                            <li class="list-inline-item">
+                                                                            {% if n.manager_starred_status == True %}
+                                                                                <a href="javascript: void(0);" class='text-warning' not_id="{{n.id}}" onclick='remove_from_starred(this)'><i class="mdi mdi-star email-action-icons-item"></i></a>
+                                                                            {% else %}
+                                                                                <a href="javascript: void(0);" not_id="{{n.id}}" onclick='move_to_starred(this)'><i class="mdi mdi-star email-action-icons-item"></i></a>
+                                                                            {% endif %}
+                                                                            </li>
+                                                                        </ul>
+                                                                    </div>
+                                                                </li>
+                                                            {% endif %}
+                                                        {% elif request.session.userType == 'studdenT' %}
+                                                            {% if n.emp_read_status == True %}
+                                                                <li class="">
+                                                                <div class="email-sender-info">
+                                                                    {% if n.member_count == 1|floatformat:"0" %}
+                                                                    {% if n.notification_from.email == 'admin@gmail.com' %}
+                                                                    <a href="javascript: void(0);" not_id="{{n.id}}" onclick="view_notification(this)" class="email-title"><small><i class="fas fa-envelope-open"></i> <strong>Admin</strong></small></a>
+                                                                    {% elif n.notification_from.username == request.user.username %}
+                                                                    <a href="javascript: void(0);" not_id="{{n.id}}" onclick="view_notification(this)" class="email-title"><small><i class="fas fa-envelope-open"></i> <strong>me, </strong>{{n.notification_to.first_name|truncatechars:12}}</small></a>
+                                                                    {% else %}
+                                                                    <a href="javascript: void(0);" not_id="{{n.id}}" onclick="view_notification(this)" class="email-title"><small><i class="fas fa-envelope-open"></i> {{n.notification_from.first_name|truncatechars:12}}</small></a>
+                                                                    {% endif %}
+                                                                    {% else %}
+                                                                    {% if n.notification_from.username == request.user.username %}
+                                                                    <a href="javascript: void(0);" not_id="{{n.id}}" onclick="view_notification(this)" class="email-title">{{n.notification_to.first_name|truncatechars:12}}</a>
+                                                                        {% elif n.notification_from.email == 'admin@gmail.com' %}
+                                                                        <a href="javascript: void(0);" not_id="{{n.id}}" onclick="view_notification(this)" class="email-title"><strong>Admin ,</strong>{{request.user.first_name|truncatechars:12}}(2)</a>
+                                                                        {% else %}
+                                                                        <a href="javascript: void(0);" not_id="{{n.id}}" onclick="view_notification(this)" class="email-title">{{n.notification_to.first_name|truncatechars:12}} (1)</a>
+                                                                        {% endif %}
+                                                                        {% endif %}
+                                                                    </div>
+                                                                    <div class="email-content">
+                                                                        <a href="javascript: void(0);" not_id="{{n.id}}" onclick="view_notification(this)" class="email-subject"><strong class="text-secondary">{{n.notification_subject}}</strong> - {{n.notification_message}}
+                                                                        </a>
+                                                                        <div class="email-date">
+                                                                            {% now "Y-m-d" as todays_date %}
+                                                                            {% if todays_date > n.created_at|date:"Y-m-d" %}
+                                                                            {{n.created_at| date:'d M, Y'}}
+                                                                            {% else %}
+                                                                            {{n.created_at| date:'h:i a'}}
+                                                                            {% endif %}
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="email-action-icons">
+                                                                        <ul class="list-inline">
+                                                                            <li class="list-inline-item">
+                                                                            <a href="javascript: void(0);" not_id="{{n.id}}" onclick="view_notification(this)"><i class="mdi mdi-eye read-det email-action-icons-item"></i></a>
+                                                                        </li>
+                                                                        <li class="list-inline-item">
+                                                                            <a href="javascript: void(0);" not_id="{{n.id}}" onclick='move_to_trash(this)'><i class="mdi mdi-delete email-action-icons-item"></i></a>
+                                                                        </li>
+                                                                        <li class="list-inline-item">
+                                                                            {% if n.emp_starred_status == True %}
+                                                                                <a href="javascript: void(0);" class='text-warning' not_id="{{n.id}}" onclick='remove_from_starred(this)'><i class="mdi mdi-star email-action-icons-item"></i></a>
+                                                                            {% else %}
+                                                                                <a href="javascript: void(0);" not_id="{{n.id}}" onclick='move_to_starred(this)'><i class="mdi mdi-star email-action-icons-item"></i></a>
+                                                                            {% endif %}
+                                                                        </li>
+                                                                    </ul>
+                                                                </div>
+                                                                </li>
+                                                            {% else %}
+                                                                <li class="">
+                                                                <div class="email-sender-info">
+                                                                    {% if n.member_count == 1|floatformat:"0" %}
+                                                                    {% if n.notification_from.email == 'admin@gmail.com' %}
+                                                                    <a href="javascript: void(0);" not_id="{{n.id}}" onclick="view_notification(this)" class="email-title text-success text-info"><small><i class="fas fa-envelope"></i>  <strong>Admin</strong></small></a>
+                                                                    {% elif n.notification_from.username == request.user.username %}
+                                                                    <a href="javascript: void(0);" not_id="{{n.id}}" onclick="view_notification(this)" class="email-title text-success"><small><i class="fas fa-envelope"></i>  <strong>me, </strong>{{n.notification_to.first_name|truncatechars:12}}</small></a>
+                                                                    {% else %}
+                                                                    <a href="javascript: void(0);" not_id="{{n.id}}" onclick="view_notification(this)" class="email-title text-success"><small><i class="fas fa-envelope"></i>  {{n.notification_from.first_name|truncatechars:12}}</small></a>
+                                                                    {% endif %}
+                                                                    {% else %}
+                                                                    {% if n.notification_from.username == request.user.username %}
+                                                                    <a href="javascript: void(0);" not_id="{{n.id}}" onclick="view_notification(this)" class="email-title text-success"><i class="fas fa-envelope"></i>  {{n.notification_to.first_name|truncatechars:12}}</a>
+                                                                        {% elif n.notification_from.email == 'admin@gmail.com' %}
+                                                                        <a href="javascript: void(0);" not_id="{{n.id}}" onclick="view_notification(this)" class="email-title text-success"><i class="fas fa-envelope"></i>  <strong>Admin ,</strong>{{request.user.first_name|truncatechars:12}}(2)</a>
+                                                                        {% else %}
+                                                                        <a href="javascript: void(0);" not_id="{{n.id}}" onclick="view_notification(this)" class="email-title text-success"><i class="fas fa-envelope"></i>  {{n.notification_to.first_name|truncatechars:12}} (1)</a>
+                                                                        {% endif %}
+                                                                        {% endif %}
+                                                                    </div>
+                                                                    <div class="email-content">
+                                                                        <a href="javascript: void(0);" not_id="{{n.id}}" onclick="view_notification(this)" class="email-subject"><strong class="text-secondary">{{n.notification_subject}}</strong> - {{n.notification_message}}
+                                                                        </a>
+                                                                        <div class="email-date">
+                                                                            {% now "Y-m-d" as todays_date %}
+                                                                            {% if todays_date > n.created_at|date:"Y-m-d" %}
+                                                                            {{n.created_at| date:'d M, Y'}}
+                                                                            {% else %}
+                                                                            {{n.created_at| date:'h:i a'}}
+                                                                            {% endif %}
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="email-action-icons">
+                                                                        <ul class="list-inline">
+                                                                            <li class="list-inline-item">
+                                                                            <a href="javascript: void(0);" not_id="{{n.id}}" onclick="view_notification(this)"><i class="mdi mdi-eye read-det email-action-icons-item"></i></a>
+                                                                        </li>
+                                                                        <li class="list-inline-item">
+                                                                            <a href="javascript: void(0);" not_id="{{n.id}}" onclick='move_to_trash(this)'><i class="mdi mdi-delete email-action-icons-item"></i></a>
+                                                                        </li>
+                                                                        <li class="list-inline-item">
+                                                                            {% if n.emp_starred_status == True %}
+                                                                                <a href="javascript: void(0);" class='text-warning' not_id="{{n.id}}" onclick='remove_from_starred(this)'><i class="mdi mdi-star email-action-icons-item"></i></a>
+                                                                            {% else %}
+                                                                                <a href="javascript: void(0);" not_id="{{n.id}}" onclick='move_to_starred(this)'><i class="mdi mdi-star email-action-icons-item"></i></a>
+                                                                            {% endif %}
+                                                                        </li>
+                                                                    </ul>
+                                                                </div>
+                                                                </li>
+                                                            {% endif %}
+                                                        {% endif %}
+                                                {% endfor %}
+                                                </ul>
+                                            </div>
+                                            {% else %}
+                                            <div class="mt-0">
+                                                <div class="text-center mt-4">
+                                                    <h5><i class="fas fa-bell text-info"></i> No sent notifications available!</h5>
+                                                </div>
+                                            </div>
+                                            {% endif %}
+                                            <!-- end .mt-4 -->
+                                            
+                                            {% comment %} <div class="row">
+                                            {% if sent|length > 10 %}
+                                                <div class="col-7 mt-1">
+                                                    Showing 1 - {{sent|length}} of {{sent|length}}
+                                                </div> <!-- end col-->
+                                                <div class="col-5">
+                                                    <div class="btn-group float-end">
+                                                        <button type="button" class="btn btn-light btn-sm"><i class="mdi mdi-chevron-left"></i></button>
+                                                        <button type="button" class="btn btn-info btn-sm"><i class="mdi mdi-chevron-right"></i></button>
+                                                    </div>
+                                                </div> <!-- end col-->
+                                            {% endif %}
+                                            </div> {% endcomment %}
+                                            <!-- end row-->
+                                        </div> 
+                                        {% comment %} ######################################################################################################## {% endcomment %}
+                                        {% comment %} ######################################################################################################## {% endcomment %}
+                                        <div class="page-aside-right p-0 pt-2" id="trash-id" style="display:none;">
+                                            {% if trash %}
+                                            <div class="mt-0" style="max-height: 800px;overflow-y: scroll;">
+                                                <ul class="email-list">
+                                                {% for n in trash %}
+                                                        {% if request.session.userType == 'masteR' %}
+                                                            {% if n.admin_read_status == True %}
+                                                            <li class="">
+                                                                <div class="email-sender-info">
+                                                                    {% if n.member_count == 1|floatformat:"0" %}
+                                                                        {% if n.notification_from.email == request.user.email %}
+                                                                            <a href="javascript: void(0);" class="email-title" not_id="{{n.id}}" onclick="view_notification(this)"><small><i class="fas fa-envelope-open"></i> <strong>me,</strong> {{n.notification_to.first_name|truncatechars:12}}</small></a>
+                                                                        {% else %}
+                                                                            <a href="javascript: void(0);" class="email-title" not_id="{{n.id}}" onclick="view_notification(this)"><small><i class="fas fa-envelope-open"></i> {{n.notification_from.first_name}}, {{n.notification_to.first_name|truncatechars:12}}</small></a>
+                                                                        {% endif %}
+                                                                    {% else %}
+                                                                        {% if n.notification_from.email == request.user.email %}
+                                                                            <a href="javascript: void(0);" class="email-title" not_id="{{n.id}}" onclick="view_notification(this)"><strong>me,</strong> {{n.first_rec}}</a>
+                                                                        {% else %}
+                                                                            <a href="javascript: void(0);" class="email-title" not_id="{{n.id}}" onclick="view_notification(this)">{{n.notification_sender}}, {{n.first_rec}}</a>
+                                                                        {% endif %}
+                                                                    {% endif %}
+                                                                </div>
+                                                                <div class="email-content">
+                                                                    <a href="javascript: void(0);" class="email-subject" not_id="{{n.id}}" onclick="view_notification(this)"><strong class="text-secondary">{{n.notification_subject}}</strong> - {{n.notification_message}}
+                                                                    </a>
+                                                                    <div class="email-date">
+                                                                    {% now "Y-m-d" as todays_date %}
+                                                                    {% if todays_date > n.created_at|date:"Y-m-d" %}
+                                                                        {{n.created_at| date:'d M, Y'}}
+                                                                    {% else %}
+                                                                        {{n.created_at| date:'h:i a'}}
+                                                                    {% endif %}
+                                                                    </div>
+                                                                </div>
+                                                                <div class="email-action-icons">
+                                                                    <ul class="list-inline">
+                                                                        <li class="list-inline-item">
+                                                                            <a href="javascript: void(0);" not_id="{{n.id}}" onclick="view_notification(this)"><i class="mdi mdi-eye read-det email-action-icons-item"></i></a>
+                                                                        </li>
+                                                                        {% comment %} <li class="list-inline-item">
+                                                                            <a href="javascript: void(0);" not_id="{{n.id}}" onclick='move_to_trash(this)'><i class="mdi mdi-delete email-action-icons-item"></i></a>
+                                                                        </li> {% endcomment %}
+                                                                        <li class="list-inline-item">
+                                                                            {% if n.admin_starred_status == True %}
+                                                                                <a href="javascript: void(0);" class='text-warning' not_id="{{n.id}}" onclick='remove_from_starred(this)'><i class="mdi mdi-star email-action-icons-item"></i></a>
+                                                                            {% else %}
+                                                                                <a href="javascript: void(0);" not_id="{{n.id}}" onclick='move_to_starred(this)'><i class="mdi mdi-star email-action-icons-item"></i></a>
+                                                                            {% endif %}
+                                                                        </li>
+                                                                    </ul>
+                                                                </div>
+                                                            </li>
+                                                            {% else %}
+                                                                <li class="">
+                                                                    <div class="email-sender-info">
+                                                                            {% if n.member_count == 1|floatformat:"0" %}
+                                                                                {% if n.notification_from.email == request.user.email %}
+                                                                                <a href="javascript: void(0);" class="email-title text-success" not_id="{{n.id}}" onclick="view_notification(this)"><small><i class="fas fa-envelope"></i> <strong>me,</strong> {{n.notification_to.first_name|truncatechars:12}}</small></a>
+                                                                                {% else %}
+                                                                                <a href="javascript: void(0);" class="email-title" not_id="{{n.id}}" onclick="view_notification(this)"><small>{{n.notification_from.first_name}}, {{n.notification_to.first_name|truncatechars:12}}</small></a>
+                                                                                {% endif %}
+                                                                                {% else %}
+                                                                                {% if n.notification_from.email == request.user.email %}
+                                                                                <a href="javascript: void(0);" class="email-title" not_id="{{n.id}}" onclick="view_notification(this)"><strong>me,</strong> {{n.first_rec}}</a>
+                                                                                {% else %}
+                                                                                <a href="javascript: void(0);" class="email-title" not_id="{{n.id}}" onclick="view_notification(this)">{{n.notification_sender}}, {{n.first_rec}}</a>
+                                                                                {% endif %}
+                                                                                {% endif %}
+                                                                            </div>
+                                                                            <div class="email-content">
+                                                                                <a href="javascript: void(0);" class="email-subject" not_id="{{n.id}}" onclick="view_notification(this)"><strong class="text-secondary">{{n.notification_subject}}</strong> - {{n.notification_message}}
+                                                                                </a>
+                                                                            <div class="email-date">
+                                                                                {% now "Y-m-d" as todays_date %}
+                                                                                {% if todays_date > n.created_at|date:"Y-m-d" %}
+                                                                                {{n.created_at| date:'d M, Y'}}
+                                                                                {% else %}
+                                                                                {{n.created_at| date:'h:i a'}}
+                                                                                {% endif %}
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="email-action-icons">
+                                                                        <ul class="list-inline">
+                                                                            <li class="list-inline-item">
+                                                                                <a href="javascript: void(0);" not_id="{{n.id}}" onclick="view_notification(this)"><i class="mdi mdi-eye read-det email-action-icons-item"></i></a>
+                                                                            </li>
+                                                                            {% comment %} <li class="list-inline-item">
+                                                                                <a href="javascript: void(0);" not_id="{{n.id}}" onclick='move_to_trash(this)'><i class="mdi mdi-delete email-action-icons-item"></i></a>
+                                                                            </li> {% endcomment %}
+                                                                            <li class="list-inline-item">
+                                                                            {% if n.admin_starred_status == True %}
+                                                                                <a href="javascript: void(0);" class='text-warning' not_id="{{n.id}}" onclick='remove_from_starred(this)'><i class="mdi mdi-star email-action-icons-item"></i></a>
+                                                                            {% else %}
+                                                                                <a href="javascript: void(0);" not_id="{{n.id}}" onclick='move_to_starred(this)'><i class="mdi mdi-star email-action-icons-item"></i></a>
+                                                                            {% endif %}
+                                                                            </li>
+                                                                        </ul>
+                                                                    </div>
+                                                                </li>
+                                                            {% endif %}
+                                                        {% elif request.session.userType == 'teacheR' %}
+                                                            {% if n.manager_read_status == True %}
+                                                                <li class="">
+                                                                    <div class="email-sender-info">
+                                                                    {% if n.member_count == 1|floatformat:"0" %}
+                                                                    {% if n.notification_from.email == 'admin@gmail.com' %}
+                                                                    <a href="javascript: void(0);" not_id="{{n.id}}" onclick="view_notification(this)" class="email-title"><small><i class="fas fa-envelope-open"></i> <strong>Admin</strong></small></a>
+                                                                    {% elif n.notification_from.username == request.user.username %}
+                                                                    <a href="javascript: void(0);" not_id="{{n.id}}" onclick="view_notification(this)" class="email-title"><small><i class="fas fa-envelope-open"></i> <strong>me, </strong>{{n.notification_to.first_name|truncatechars:12}}</small></a>
+                                                                            {% else %}
+                                                                            <a href="javascript: void(0);" not_id="{{n.id}}" onclick="view_notification(this)" class="email-title"><small><i class="fas fa-envelope-open"></i> {{n.notification_from.first_name|truncatechars:12}}</small></a>
+                                                                            {% endif %}
+                                                                        {% else %}
+                                                                        {% if n.notification_from.username == request.user.username %}
+                                                                        <a href="javascript: void(0);" not_id="{{n.id}}" onclick="view_notification(this)" class="email-title">{{n.notification_to.first_name|truncatechars:12}}</a>
+                                                                        {% elif n.notification_from.email == 'admin@gmail.com' %}
+                                                                                <a href="javascript: void(0);" not_id="{{n.id}}" onclick="view_notification(this)" class="email-title"><strong>Admin ,</strong>{{request.user.first_name|truncatechars:12}}(2)</a>
+                                                                                {% else %}
+                                                                                <a href="javascript: void(0);" not_id="{{n.id}}" onclick="view_notification(this)" class="email-title">{{n.notification_to.first_name|truncatechars:12}} (1)</a>
+                                                                                {% endif %}
+                                                                                {% endif %}
+                                                                    </div>
+                                                                    <div class="email-content">
+                                                                        <a href="javascript: void(0);" not_id="{{n.id}}" onclick="view_notification(this)" class="email-subject"><strong class="text-secondary">{{n.notification_subject}}</strong> - {{n.notification_message}}
+                                                                        </a>
+                                                                        <div class="email-date">
+                                                                            {% now "Y-m-d" as todays_date %}
+                                                                            {% if todays_date > n.created_at|date:"Y-m-d" %}
+                                                                            {{n.created_at| date:'d M, Y'}}
+                                                                            {% else %}
+                                                                            {{n.created_at| date:'h:i a'}}
+                                                                            {% endif %}
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="email-action-icons">
+                                                                        <ul class="list-inline">
+                                                                            <li class="list-inline-item">
+                                                                                <a href="javascript: void(0);" not_id="{{n.id}}" onclick="view_notification(this)"><i class="mdi mdi-eye read-det email-action-icons-item"></i></a>
+                                                                            </li>
+                                                                            {% comment %} <li class="list-inline-item">
+                                                                                <a href="javascript: void(0);" not_id="{{n.id}}" onclick='move_to_trash(this)'><i class="mdi mdi-delete email-action-icons-item"></i></a>
+                                                                            </li> {% endcomment %}
+                                                                            <li class="list-inline-item">
+                                                                            {% if n.manager_starred_status == True %}
+                                                                                <a href="javascript: void(0);" class='text-warning' not_id="{{n.id}}" onclick='remove_from_starred(this)'><i class="mdi mdi-star email-action-icons-item"></i></a>
+                                                                            {% else %}
+                                                                                <a href="javascript: void(0);" not_id="{{n.id}}" onclick='move_to_starred(this)'><i class="mdi mdi-star email-action-icons-item"></i></a>
+                                                                            {% endif %}
+                                                                            </li>
+                                                                        </ul>
+                                                                    </div>
+                                                                </li>
+                                                            {% else %}
+                                                                <li class="">
+                                                                    <div class="email-sender-info">
+                                                                    {% if n.member_count == 1|floatformat:"0" %}
+                                                                    {% if n.notification_from.email == 'admin@gmail.com' %}
+                                                                    <a href="javascript: void(0);" not_id="{{n.id}}" onclick="view_notification(this)" class="email-title text-success"><small><i class="fas fa-envelope"></i>  <strong>Admin</strong></small></a>
+                                                                    {% elif n.notification_from.username == request.user.username %}
+                                                                    <a href="javascript: void(0);" not_id="{{n.id}}" onclick="view_notification(this)" class="email-title text-success"><small><i class="fas fa-envelope"></i>  <strong>me, </strong>{{n.notification_to.first_name|truncatechars:12}}</small></a>
+                                                                            {% else %}
+                                                                            <a href="javascript: void(0);" not_id="{{n.id}}" onclick="view_notification(this)" class="email-title text-success"><small><i class="fas fa-envelope"></i>  {{n.notification_from.first_name|truncatechars:12}}</small></a>
+                                                                            {% endif %}
+                                                                        {% else %}
+                                                                        {% if n.notification_from.username == request.user.username %}
+                                                                        <a href="javascript: void(0);" not_id="{{n.id}}" onclick="view_notification(this)" class="email-title text-success"><i class="fas fa-envelope"></i>  {{n.notification_to.first_name|truncatechars:12}}</a>
+                                                                        {% elif n.notification_from.email == 'admin@gmail.com' %}
+                                                                                <a href="javascript: void(0);" not_id="{{n.id}}" onclick="view_notification(this)" class="email-title text-success"><strong><i class="fas fa-envelope"></i>  Admin ,</strong>{{request.user.first_name|truncatechars:12}}(2)</a>
+                                                                                {% else %}
+                                                                                <a href="javascript: void(0);" not_id="{{n.id}}" onclick="view_notification(this)" class="email-title text-success"><i class="fas fa-envelope"></i>  {{n.notification_to.first_name|truncatechars:12}} (1)</a>
+                                                                                {% endif %}
+                                                                                {% endif %}
+                                                                    </div>
+                                                                    <div class="email-content">
+                                                                        <a href="javascript: void(0);" not_id="{{n.id}}" onclick="view_notification(this)" class="email-subject"><strong class="text-secondary">{{n.notification_subject}}</strong> - {{n.notification_message}}
+                                                                        </a>
+                                                                        <div class="email-date">
+                                                                            {% now "Y-m-d" as todays_date %}
+                                                                            {% if todays_date > n.created_at|date:"Y-m-d" %}
+                                                                            {{n.created_at| date:'d M, Y'}}
+                                                                            {% else %}
+                                                                            {{n.created_at| date:'h:i a'}}
+                                                                            {% endif %}
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="email-action-icons">
+                                                                        <ul class="list-inline">
+                                                                            <li class="list-inline-item">
+                                                                                <a href="javascript: void(0);" not_id="{{n.id}}" onclick="view_notification(this)"><i class="mdi mdi-eye read-det email-action-icons-item"></i></a>
+                                                                            </li>
+                                                                            {% comment %} <li class="list-inline-item">
+                                                                                <a href="javascript: void(0);" not_id="{{n.id}}" onclick='move_to_trash(this)'><i class="mdi mdi-delete email-action-icons-item"></i></a>
+                                                                            </li> {% endcomment %}
+                                                                            <li class="list-inline-item">
+                                                                            {% if n.manager_starred_status == True %}
+                                                                                <a href="javascript: void(0);" class='text-warning' not_id="{{n.id}}" onclick='remove_from_starred(this)'><i class="mdi mdi-star email-action-icons-item"></i></a>
+                                                                            {% else %}
+                                                                                <a href="javascript: void(0);" not_id="{{n.id}}" onclick='move_to_starred(this)'><i class="mdi mdi-star email-action-icons-item"></i></a>
+                                                                            {% endif %}
+                                                                            </li>
+                                                                        </ul>
+                                                                    </div>
+                                                                </li>
+                                                            {% endif %}
+                                                        {% elif request.session.userType == 'studdenT' %}
+                                                            {% if n.emp_read_status == True %}
+                                                                <li class="">
+                                                                <div class="email-sender-info">
+                                                                    {% if n.member_count == 1|floatformat:"0" %}
+                                                                    {% if n.notification_from.email == 'admin@gmail.com' %}
+                                                                    <a href="javascript: void(0);" not_id="{{n.id}}" onclick="view_notification(this)" class="email-title"><small><i class="fas fa-envelope-open"></i> <strong>Admin</strong></small></a>
+                                                                    {% elif n.notification_from.username == request.user.username %}
+                                                                    <a href="javascript: void(0);" not_id="{{n.id}}" onclick="view_notification(this)" class="email-title"><small><i class="fas fa-envelope-open"></i> <strong>me, </strong>{{n.notification_to.first_name|truncatechars:12}}</small></a>
+                                                                    {% else %}
+                                                                    <a href="javascript: void(0);" not_id="{{n.id}}" onclick="view_notification(this)" class="email-title"><small><i class="fas fa-envelope-open"></i> {{n.notification_from.first_name|truncatechars:12}}</small></a>
+                                                                    {% endif %}
+                                                                    {% else %}
+                                                                    {% if n.notification_from.username == request.user.username %}
+                                                                    <a href="javascript: void(0);" not_id="{{n.id}}" onclick="view_notification(this)" class="email-title">{{n.notification_to.first_name|truncatechars:12}}</a>
+                                                                        {% elif n.notification_from.email == 'admin@gmail.com' %}
+                                                                        <a href="javascript: void(0);" not_id="{{n.id}}" onclick="view_notification(this)" class="email-title"><strong>Admin ,</strong>{{request.user.first_name|truncatechars:12}}(2)</a>
+                                                                        {% else %}
+                                                                        <a href="javascript: void(0);" not_id="{{n.id}}" onclick="view_notification(this)" class="email-title">{{n.notification_to.first_name|truncatechars:12}} (1)</a>
+                                                                        {% endif %}
+                                                                        {% endif %}
+                                                                    </div>
+                                                                    <div class="email-content">
+                                                                        <a href="javascript: void(0);" not_id="{{n.id}}" onclick="view_notification(this)" class="email-subject"><strong class="text-secondary">{{n.notification_subject}}</strong> - {{n.notification_message}}
+                                                                        </a>
+                                                                        <div class="email-date">
+                                                                            {% now "Y-m-d" as todays_date %}
+                                                                            {% if todays_date > n.created_at|date:"Y-m-d" %}
+                                                                            {{n.created_at| date:'d M, Y'}}
+                                                                            {% else %}
+                                                                            {{n.created_at| date:'h:i a'}}
+                                                                            {% endif %}
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="email-action-icons">
+                                                                        <ul class="list-inline">
+                                                                            <li class="list-inline-item">
+                                                                            <a href="javascript: void(0);" not_id="{{n.id}}" onclick="view_notification(this)"><i class="mdi mdi-eye read-det email-action-icons-item"></i></a>
+                                                                        </li>
+                                                                        {% comment %} <li class="list-inline-item">
+                                                                            <a href="javascript: void(0);" not_id="{{n.id}}" onclick='move_to_trash(this)'><i class="mdi mdi-delete email-action-icons-item"></i></a>
+                                                                        </li> {% endcomment %}
+                                                                        <li class="list-inline-item">
+                                                                            {% if n.emp_starred_status == True %}
+                                                                                <a href="javascript: void(0);" class='text-warning' not_id="{{n.id}}" onclick='remove_from_starred(this)'><i class="mdi mdi-star email-action-icons-item"></i></a>
+                                                                            {% else %}
+                                                                                <a href="javascript: void(0);" not_id="{{n.id}}" onclick='move_to_starred(this)'><i class="mdi mdi-star email-action-icons-item"></i></a>
+                                                                            {% endif %}
+                                                                        </li>
+                                                                    </ul>
+                                                                </div>
+                                                                </li>
+                                                            {% else %}
+                                                                <li class="">
+                                                                <div class="email-sender-info">
+                                                                    {% if n.member_count == 1|floatformat:"0" %}
+                                                                    {% if n.notification_from.email == 'admin@gmail.com' %}
+                                                                    <a href="javascript: void(0);" not_id="{{n.id}}" onclick="view_notification(this)" class="email-title text-success text-info"><small><i class="fas fa-envelope"></i>  <strong>Admin</strong></small></a>
+                                                                    {% elif n.notification_from.username == request.user.username %}
+                                                                    <a href="javascript: void(0);" not_id="{{n.id}}" onclick="view_notification(this)" class="email-title text-success"><small><i class="fas fa-envelope"></i>  <strong>me, </strong>{{n.notification_to.first_name|truncatechars:12}}</small></a>
+                                                                    {% else %}
+                                                                    <a href="javascript: void(0);" not_id="{{n.id}}" onclick="view_notification(this)" class="email-title text-success"><small><i class="fas fa-envelope"></i>  {{n.notification_from.first_name|truncatechars:12}}</small></a>
+                                                                    {% endif %}
+                                                                    {% else %}
+                                                                    {% if n.notification_from.username == request.user.username %}
+                                                                    <a href="javascript: void(0);" not_id="{{n.id}}" onclick="view_notification(this)" class="email-title text-success"><i class="fas fa-envelope"></i>  {{n.notification_to.first_name|truncatechars:12}}</a>
+                                                                        {% elif n.notification_from.email == 'admin@gmail.com' %}
+                                                                        <a href="javascript: void(0);" not_id="{{n.id}}" onclick="view_notification(this)" class="email-title text-success"><i class="fas fa-envelope"></i>  <strong>Admin ,</strong>{{request.user.first_name|truncatechars:12}}(2)</a>
+                                                                        {% else %}
+                                                                        <a href="javascript: void(0);" not_id="{{n.id}}" onclick="view_notification(this)" class="email-title text-success"><i class="fas fa-envelope"></i>  {{n.notification_to.first_name|truncatechars:12}} (1)</a>
+                                                                        {% endif %}
+                                                                        {% endif %}
+                                                                    </div>
+                                                                    <div class="email-content">
+                                                                        <a href="javascript: void(0);" not_id="{{n.id}}" onclick="view_notification(this)" class="email-subject"><strong class="text-secondary">{{n.notification_subject}}</strong> - {{n.notification_message}}
+                                                                        </a>
+                                                                        <div class="email-date">
+                                                                            {% now "Y-m-d" as todays_date %}
+                                                                            {% if todays_date > n.created_at|date:"Y-m-d" %}
+                                                                            {{n.created_at| date:'d M, Y'}}
+                                                                            {% else %}
+                                                                            {{n.created_at| date:'h:i a'}}
+                                                                            {% endif %}
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="email-action-icons">
+                                                                        <ul class="list-inline">
+                                                                            <li class="list-inline-item">
+                                                                            <a href="javascript: void(0);" not_id="{{n.id}}" onclick="view_notification(this)"><i class="mdi mdi-eye read-det email-action-icons-item"></i></a>
+                                                                        </li>
+                                                                        {% comment %} <li class="list-inline-item">
+                                                                            <a href="javascript: void(0);" not_id="{{n.id}}" onclick='move_to_trash(this)'><i class="mdi mdi-delete email-action-icons-item"></i></a>
+                                                                        </li> {% endcomment %}
+                                                                        <li class="list-inline-item">
+                                                                            {% if n.emp_starred_status == True %}
+                                                                                <a href="javascript: void(0);" class='text-warning' not_id="{{n.id}}" onclick='remove_from_starred(this)'><i class="mdi mdi-star email-action-icons-item"></i></a>
+                                                                            {% else %}
+                                                                                <a href="javascript: void(0);" not_id="{{n.id}}" onclick='move_to_starred(this)'><i class="mdi mdi-star email-action-icons-item"></i></a>
+                                                                            {% endif %}
+                                                                        </li>
+                                                                    </ul>
+                                                                </div>
+                                                                </li>
+                                                            {% endif %}
+                                                        {% endif %}
+                                                {% endfor %}
+                                                </ul>
+                                            </div>
+                                            {% else %}
+                                            <div class="mt-0">
+                                                <div class="text-center mt-4">
+                                                    <h5><i class="fas fa-bell text-danger"></i> No trash notifications available!</h5>
+                                                </div>
+                                            </div>
+                                            {% endif %}
+                                            <!-- end .mt-4 -->
+                                            
+                                            {% comment %} <div class="row">
+                                            {% if trash|length > 10 %}
+                                                <div class="col-7 mt-1">
+                                                    Showing 1 - {{trash|length}} of {{trash|length}}
+                                                </div> <!-- end col-->
+                                                <div class="col-5">
+                                                    <div class="btn-group float-end">
+                                                        <button type="button" class="btn btn-light btn-sm"><i class="mdi mdi-chevron-left"></i></button>
+                                                        <button type="button" class="btn btn-info btn-sm"><i class="mdi mdi-chevron-right"></i></button>
+                                                    </div>
+                                                </div> <!-- end col-->
+                                            {% endif %}
+                                            </div> {% endcomment %}
+                                            <!-- end row-->
+                                        </div> 
+                                        {% comment %} ######################################################################################################## {% endcomment %}
+                                        {% comment %} ######################################################################################################## {% endcomment %}
+                                        <div class="page-aside-right p-0 pt-2" id="starred-id" style="display:none;">
+                                            {% if starred %}
+                                            <div class="mt-0" style="max-height: 800px;overflow-y: scroll;">
+                                                <ul class="email-list">
+                                                {% for n in starred %}
+                                                        {% if request.session.userType == 'masteR' %}
+                                                            {% if n.admin_read_status == True %}
+                                                            <li class="">
+                                                                <div class="email-sender-info">
+                                                                    {% if n.member_count == 1|floatformat:"0" %}
+                                                                        {% if n.notification_from.email == request.user.email %}
+                                                                            <a href="javascript: void(0);" class="email-title" not_id="{{n.id}}" onclick="view_notification(this)"><small><i class="fas fa-envelope-open"></i> <strong>me,</strong> {{n.notification_to.first_name|truncatechars:12}}</small></a>
+                                                                        {% else %}
+                                                                            <a href="javascript: void(0);" class="email-title" not_id="{{n.id}}" onclick="view_notification(this)"><small><i class="fas fa-envelope-open"></i> {{n.notification_from.first_name}}, {{n.notification_to.first_name|truncatechars:12}}</small></a>
+                                                                        {% endif %}
+                                                                    {% else %}
+                                                                        {% if n.notification_from.email == request.user.email %}
+                                                                            <a href="javascript: void(0);" class="email-title" not_id="{{n.id}}" onclick="view_notification(this)"><strong>me,</strong> {{n.first_rec}}</a>
+                                                                        {% else %}
+                                                                            <a href="javascript: void(0);" class="email-title" not_id="{{n.id}}" onclick="view_notification(this)">{{n.notification_sender}}, {{n.first_rec}}</a>
+                                                                        {% endif %}
+                                                                    {% endif %}
+                                                                </div>
+                                                                <div class="email-content">
+                                                                    <a href="javascript: void(0);" class="email-subject" not_id="{{n.id}}" onclick="view_notification(this)"><strong class="text-secondary">{{n.notification_subject}}</strong> - {{n.notification_message}}
+                                                                    </a>
+                                                                    <div class="email-date">
+                                                                    {% now "Y-m-d" as todays_date %}
+                                                                    {% if todays_date > n.created_at|date:"Y-m-d" %}
+                                                                        {{n.created_at| date:'d M, Y'}}
+                                                                    {% else %}
+                                                                        {{n.created_at| date:'h:i a'}}
+                                                                    {% endif %}
+                                                                    </div>
+                                                                </div>
+                                                                <div class="email-action-icons">
+                                                                    <ul class="list-inline">
+                                                                        <li class="list-inline-item">
+                                                                            <a href="javascript: void(0);" not_id="{{n.id}}" onclick="view_notification(this)"><i class="mdi mdi-eye read-det email-action-icons-item"></i></a>
+                                                                        </li>
+                                                                        <li class="list-inline-item">
+                                                                            <a href="javascript: void(0);" not_id="{{n.id}}" onclick='move_to_trash(this)'><i class="mdi mdi-delete email-action-icons-item"></i></a>
+                                                                        </li>
+                                                                        <li class="list-inline-item">
+                                                                            {% if n.admin_starred_status == True %}
+                                                                                <a href="javascript: void(0);" class='text-warning' not_id="{{n.id}}" onclick='remove_from_starred(this)'><i class="mdi mdi-star email-action-icons-item"></i></a>
+                                                                            {% else %}
+                                                                                <a href="javascript: void(0);" not_id="{{n.id}}" onclick='move_to_starred(this)'><i class="mdi mdi-star email-action-icons-item"></i></a>
+                                                                            {% endif %}
+                                                                        </li>
+                                                                    </ul>
+                                                                </div>
+                                                            </li>
+                                                            {% else %}
+                                                                <li class="">
+                                                                    <div class="email-sender-info">
+                                                                            {% if n.member_count == 1|floatformat:"0" %}
+                                                                                {% if n.notification_from.email == request.user.email %}
+                                                                                <a href="javascript: void(0);" class="email-title text-success" not_id="{{n.id}}" onclick="view_notification(this)"><small><i class="fas fa-envelope"></i> <strong>me,</strong> {{n.notification_to.first_name|truncatechars:12}}</small></a>
+                                                                                {% else %}
+                                                                                <a href="javascript: void(0);" class="email-title" not_id="{{n.id}}" onclick="view_notification(this)"><small>{{n.notification_from.first_name}}, {{n.notification_to.first_name|truncatechars:12}}</small></a>
+                                                                                {% endif %}
+                                                                                {% else %}
+                                                                                {% if n.notification_from.email == request.user.email %}
+                                                                                <a href="javascript: void(0);" class="email-title" not_id="{{n.id}}" onclick="view_notification(this)"><strong>me,</strong> {{n.first_rec}}</a>
+                                                                                {% else %}
+                                                                                <a href="javascript: void(0);" class="email-title" not_id="{{n.id}}" onclick="view_notification(this)">{{n.notification_sender}}, {{n.first_rec}}</a>
+                                                                                {% endif %}
+                                                                                {% endif %}
+                                                                            </div>
+                                                                            <div class="email-content">
+                                                                                <a href="javascript: void(0);" class="email-subject" not_id="{{n.id}}" onclick="view_notification(this)"><strong class="text-secondary">{{n.notification_subject}}</strong> - {{n.notification_message}}
+                                                                                </a>
+                                                                            <div class="email-date">
+                                                                                {% now "Y-m-d" as todays_date %}
+                                                                                {% if todays_date > n.created_at|date:"Y-m-d" %}
+                                                                                {{n.created_at| date:'d M, Y'}}
+                                                                                {% else %}
+                                                                                {{n.created_at| date:'h:i a'}}
+                                                                                {% endif %}
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="email-action-icons">
+                                                                        <ul class="list-inline">
+                                                                            <li class="list-inline-item">
+                                                                                <a href="javascript: void(0);" not_id="{{n.id}}" onclick="view_notification(this)"><i class="mdi mdi-eye read-det email-action-icons-item"></i></a>
+                                                                            </li>
+                                                                            <li class="list-inline-item">
+                                                                                <a href="javascript: void(0);" not_id="{{n.id}}" onclick='move_to_trash(this)'><i class="mdi mdi-delete email-action-icons-item"></i></a>
+                                                                            </li>
+                                                                            <li class="list-inline-item">
+                                                                            {% if n.admin_starred_status == True %}
+                                                                                <a href="javascript: void(0);" class='text-warning' not_id="{{n.id}}" onclick='remove_from_starred(this)'><i class="mdi mdi-star email-action-icons-item"></i></a>
+                                                                            {% else %}
+                                                                                <a href="javascript: void(0);" not_id="{{n.id}}" onclick='move_to_starred(this)'><i class="mdi mdi-star email-action-icons-item"></i></a>
+                                                                            {% endif %}
+                                                                            </li>
+                                                                        </ul>
+                                                                    </div>
+                                                                </li>
+                                                            {% endif %}
+                                                        {% elif request.session.userType == 'teacheR' %}
+                                                            {% if n.manager_read_status == True %}
+                                                                <li class="">
+                                                                    <div class="email-sender-info">
+                                                                    {% if n.member_count == 1|floatformat:"0" %}
+                                                                    {% if n.notification_from.email == 'admin@gmail.com' %}
+                                                                    <a href="javascript: void(0);" not_id="{{n.id}}" onclick="view_notification(this)" class="email-title"><small><i class="fas fa-envelope-open"></i> <strong>Admin</strong></small></a>
+                                                                    {% elif n.notification_from.username == request.user.username %}
+                                                                    <a href="javascript: void(0);" not_id="{{n.id}}" onclick="view_notification(this)" class="email-title"><small><i class="fas fa-envelope-open"></i> <strong>me, </strong>{{n.notification_to.first_name|truncatechars:12}}</small></a>
+                                                                            {% else %}
+                                                                            <a href="javascript: void(0);" not_id="{{n.id}}" onclick="view_notification(this)" class="email-title"><small><i class="fas fa-envelope-open"></i> {{n.notification_from.first_name|truncatechars:12}}</small></a>
+                                                                            {% endif %}
+                                                                        {% else %}
+                                                                        {% if n.notification_from.username == request.user.username %}
+                                                                        <a href="javascript: void(0);" not_id="{{n.id}}" onclick="view_notification(this)" class="email-title">{{n.notification_to.first_name|truncatechars:12}}</a>
+                                                                        {% elif n.notification_from.email == 'admin@gmail.com' %}
+                                                                                <a href="javascript: void(0);" not_id="{{n.id}}" onclick="view_notification(this)" class="email-title"><strong>Admin ,</strong>{{request.user.first_name|truncatechars:12}}(2)</a>
+                                                                                {% else %}
+                                                                                <a href="javascript: void(0);" not_id="{{n.id}}" onclick="view_notification(this)" class="email-title">{{n.notification_to.first_name|truncatechars:12}} (1)</a>
+                                                                                {% endif %}
+                                                                                {% endif %}
+                                                                    </div>
+                                                                    <div class="email-content">
+                                                                        <a href="javascript: void(0);" not_id="{{n.id}}" onclick="view_notification(this)" class="email-subject"><strong class="text-secondary">{{n.notification_subject}}</strong> - {{n.notification_message}}
+                                                                        </a>
+                                                                        <div class="email-date">
+                                                                            {% now "Y-m-d" as todays_date %}
+                                                                            {% if todays_date > n.created_at|date:"Y-m-d" %}
+                                                                            {{n.created_at| date:'d M, Y'}}
+                                                                            {% else %}
+                                                                            {{n.created_at| date:'h:i a'}}
+                                                                            {% endif %}
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="email-action-icons">
+                                                                        <ul class="list-inline">
+                                                                            <li class="list-inline-item">
+                                                                                <a href="javascript: void(0);" not_id="{{n.id}}" onclick="view_notification(this)"><i class="mdi mdi-eye read-det email-action-icons-item"></i></a>
+                                                                            </li>
+                                                                            <li class="list-inline-item">
+                                                                                <a href="javascript: void(0);" not_id="{{n.id}}" onclick='move_to_trash(this)'><i class="mdi mdi-delete email-action-icons-item"></i></a>
+                                                                            </li>
+                                                                            <li class="list-inline-item">
+                                                                            {% if n.manager_starred_status == True %}
+                                                                                <a href="javascript: void(0);" class='text-warning' not_id="{{n.id}}" onclick='remove_from_starred(this)'><i class="mdi mdi-star email-action-icons-item"></i></a>
+                                                                            {% else %}
+                                                                                <a href="javascript: void(0);" not_id="{{n.id}}" onclick='move_to_starred(this)'><i class="mdi mdi-star email-action-icons-item"></i></a>
+                                                                            {% endif %}
+                                                                            </li>
+                                                                        </ul>
+                                                                    </div>
+                                                                </li>
+                                                            {% else %}
+                                                                <li class="">
+                                                                    <div class="email-sender-info">
+                                                                    {% if n.member_count == 1|floatformat:"0" %}
+                                                                    {% if n.notification_from.email == 'admin@gmail.com' %}
+                                                                    <a href="javascript: void(0);" not_id="{{n.id}}" onclick="view_notification(this)" class="email-title text-success"><small><i class="fas fa-envelope"></i>  <strong>Admin</strong></small></a>
+                                                                    {% elif n.notification_from.username == request.user.username %}
+                                                                    <a href="javascript: void(0);" not_id="{{n.id}}" onclick="view_notification(this)" class="email-title text-success"><small><i class="fas fa-envelope"></i>  <strong>me, </strong>{{n.notification_to.first_name|truncatechars:12}}</small></a>
+                                                                            {% else %}
+                                                                            <a href="javascript: void(0);" not_id="{{n.id}}" onclick="view_notification(this)" class="email-title text-success"><small><i class="fas fa-envelope"></i>  {{n.notification_from.first_name|truncatechars:12}}</small></a>
+                                                                            {% endif %}
+                                                                        {% else %}
+                                                                        {% if n.notification_from.username == request.user.username %}
+                                                                        <a href="javascript: void(0);" not_id="{{n.id}}" onclick="view_notification(this)" class="email-title text-success"><i class="fas fa-envelope"></i>  {{n.notification_to.first_name|truncatechars:12}}</a>
+                                                                        {% elif n.notification_from.email == 'admin@gmail.com' %}
+                                                                                <a href="javascript: void(0);" not_id="{{n.id}}" onclick="view_notification(this)" class="email-title text-success"><strong><i class="fas fa-envelope"></i>  Admin ,</strong>{{request.user.first_name|truncatechars:12}}(2)</a>
+                                                                                {% else %}
+                                                                                <a href="javascript: void(0);" not_id="{{n.id}}" onclick="view_notification(this)" class="email-title text-success"><i class="fas fa-envelope"></i>  {{n.notification_to.first_name|truncatechars:12}} (1)</a>
+                                                                                {% endif %}
+                                                                                {% endif %}
+                                                                    </div>
+                                                                    <div class="email-content">
+                                                                        <a href="javascript: void(0);" not_id="{{n.id}}" onclick="view_notification(this)" class="email-subject"><strong class="text-secondary">{{n.notification_subject}}</strong> - {{n.notification_message}}
+                                                                        </a>
+                                                                        <div class="email-date">
+                                                                            {% now "Y-m-d" as todays_date %}
+                                                                            {% if todays_date > n.created_at|date:"Y-m-d" %}
+                                                                            {{n.created_at| date:'d M, Y'}}
+                                                                            {% else %}
+                                                                            {{n.created_at| date:'h:i a'}}
+                                                                            {% endif %}
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="email-action-icons">
+                                                                        <ul class="list-inline">
+                                                                            <li class="list-inline-item">
+                                                                                <a href="javascript: void(0);" not_id="{{n.id}}" onclick="view_notification(this)"><i class="mdi mdi-eye read-det email-action-icons-item"></i></a>
+                                                                            </li>
+                                                                            <li class="list-inline-item">
+                                                                                <a href="javascript: void(0);" not_id="{{n.id}}" onclick='move_to_trash(this)'><i class="mdi mdi-delete email-action-icons-item"></i></a>
+                                                                            </li>
+                                                                            <li class="list-inline-item">
+                                                                            {% if n.manager_starred_status == True %}
+                                                                                <a href="javascript: void(0);" class='text-warning' not_id="{{n.id}}" onclick='remove_from_starred(this)'><i class="mdi mdi-star email-action-icons-item"></i></a>
+                                                                            {% else %}
+                                                                                <a href="javascript: void(0);" not_id="{{n.id}}" onclick='move_to_starred(this)'><i class="mdi mdi-star email-action-icons-item"></i></a>
+                                                                            {% endif %}
+                                                                            </li>
+                                                                        </ul>
+                                                                    </div>
+                                                                </li>
+                                                            {% endif %}
+                                                        {% elif request.session.userType == 'studdenT' %}
+                                                            {% if n.emp_read_status == True %}
+                                                                <li class="">
+                                                                <div class="email-sender-info">
+                                                                    {% if n.member_count == 1|floatformat:"0" %}
+                                                                    {% if n.notification_from.email == 'admin@gmail.com' %}
+                                                                    <a href="javascript: void(0);" not_id="{{n.id}}" onclick="view_notification(this)" class="email-title"><small><i class="fas fa-envelope-open"></i> <strong>Admin</strong></small></a>
+                                                                    {% elif n.notification_from.username == request.user.username %}
+                                                                    <a href="javascript: void(0);" not_id="{{n.id}}" onclick="view_notification(this)" class="email-title"><small><i class="fas fa-envelope-open"></i> <strong>me, </strong>{{n.notification_to.first_name|truncatechars:12}}</small></a>
+                                                                    {% else %}
+                                                                    <a href="javascript: void(0);" not_id="{{n.id}}" onclick="view_notification(this)" class="email-title"><small><i class="fas fa-envelope-open"></i> {{n.notification_from.first_name|truncatechars:12}}</small></a>
+                                                                    {% endif %}
+                                                                    {% else %}
+                                                                    {% if n.notification_from.username == request.user.username %}
+                                                                    <a href="javascript: void(0);" not_id="{{n.id}}" onclick="view_notification(this)" class="email-title">{{n.notification_to.first_name|truncatechars:12}}</a>
+                                                                        {% elif n.notification_from.email == 'admin@gmail.com' %}
+                                                                        <a href="javascript: void(0);" not_id="{{n.id}}" onclick="view_notification(this)" class="email-title"><strong>Admin ,</strong>{{request.user.first_name|truncatechars:12}}(2)</a>
+                                                                        {% else %}
+                                                                        <a href="javascript: void(0);" not_id="{{n.id}}" onclick="view_notification(this)" class="email-title">{{n.notification_to.first_name|truncatechars:12}} (1)</a>
+                                                                        {% endif %}
+                                                                        {% endif %}
+                                                                    </div>
+                                                                    <div class="email-content">
+                                                                        <a href="javascript: void(0);" not_id="{{n.id}}" onclick="view_notification(this)" class="email-subject"><strong class="text-secondary">{{n.notification_subject}}</strong> - {{n.notification_message}}
+                                                                        </a>
+                                                                        <div class="email-date">
+                                                                            {% now "Y-m-d" as todays_date %}
+                                                                            {% if todays_date > n.created_at|date:"Y-m-d" %}
+                                                                            {{n.created_at| date:'d M, Y'}}
+                                                                            {% else %}
+                                                                            {{n.created_at| date:'h:i a'}}
+                                                                            {% endif %}
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="email-action-icons">
+                                                                        <ul class="list-inline">
+                                                                            <li class="list-inline-item">
+                                                                            <a href="javascript: void(0);" not_id="{{n.id}}" onclick="view_notification(this)"><i class="mdi mdi-eye read-det email-action-icons-item"></i></a>
+                                                                        </li>
+                                                                        <li class="list-inline-item">
+                                                                            <a href="javascript: void(0);" not_id="{{n.id}}" onclick='move_to_trash(this)'><i class="mdi mdi-delete email-action-icons-item"></i></a>
+                                                                        </li>
+                                                                        <li class="list-inline-item">
+                                                                            {% if n.emp_starred_status == True %}
+                                                                                <a href="javascript: void(0);" class='text-warning' not_id="{{n.id}}" onclick='remove_from_starred(this)'><i class="mdi mdi-star email-action-icons-item"></i></a>
+                                                                            {% else %}
+                                                                                <a href="javascript: void(0);" not_id="{{n.id}}" onclick='move_to_starred(this)'><i class="mdi mdi-star email-action-icons-item"></i></a>
+                                                                            {% endif %}
+                                                                        </li>
+                                                                    </ul>
+                                                                </div>
+                                                                </li>
+                                                            {% else %}
+                                                                <li class="">
+                                                                <div class="email-sender-info">
+                                                                    {% if n.member_count == 1|floatformat:"0" %}
+                                                                    {% if n.notification_from.email == 'admin@gmail.com' %}
+                                                                    <a href="javascript: void(0);" not_id="{{n.id}}" onclick="view_notification(this)" class="email-title text-success text-info"><small><i class="fas fa-envelope"></i>  <strong>Admin</strong></small></a>
+                                                                    {% elif n.notification_from.username == request.user.username %}
+                                                                    <a href="javascript: void(0);" not_id="{{n.id}}" onclick="view_notification(this)" class="email-title text-success"><small><i class="fas fa-envelope"></i>  <strong>me, </strong>{{n.notification_to.first_name|truncatechars:12}}</small></a>
+                                                                    {% else %}
+                                                                    <a href="javascript: void(0);" not_id="{{n.id}}" onclick="view_notification(this)" class="email-title text-success"><small><i class="fas fa-envelope"></i>  {{n.notification_from.first_name|truncatechars:12}}</small></a>
+                                                                    {% endif %}
+                                                                    {% else %}
+                                                                    {% if n.notification_from.username == request.user.username %}
+                                                                    <a href="javascript: void(0);" not_id="{{n.id}}" onclick="view_notification(this)" class="email-title text-success"><i class="fas fa-envelope"></i>  {{n.notification_to.first_name|truncatechars:12}}</a>
+                                                                        {% elif n.notification_from.email == 'admin@gmail.com' %}
+                                                                        <a href="javascript: void(0);" not_id="{{n.id}}" onclick="view_notification(this)" class="email-title text-success"><i class="fas fa-envelope"></i>  <strong>Admin ,</strong>{{request.user.first_name|truncatechars:12}}(2)</a>
+                                                                        {% else %}
+                                                                        <a href="javascript: void(0);" not_id="{{n.id}}" onclick="view_notification(this)" class="email-title text-success"><i class="fas fa-envelope"></i>  {{n.notification_to.first_name|truncatechars:12}} (1)</a>
+                                                                        {% endif %}
+                                                                        {% endif %}
+                                                                    </div>
+                                                                    <div class="email-content">
+                                                                        <a href="javascript: void(0);" not_id="{{n.id}}" onclick="view_notification(this)" class="email-subject"><strong class="text-secondary">{{n.notification_subject}}</strong> - {{n.notification_message}}
+                                                                        </a>
+                                                                        <div class="email-date">
+                                                                            {% now "Y-m-d" as todays_date %}
+                                                                            {% if todays_date > n.created_at|date:"Y-m-d" %}
+                                                                            {{n.created_at| date:'d M, Y'}}
+                                                                            {% else %}
+                                                                            {{n.created_at| date:'h:i a'}}
+                                                                            {% endif %}
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="email-action-icons">
+                                                                        <ul class="list-inline">
+                                                                            <li class="list-inline-item">
+                                                                            <a href="javascript: void(0);" not_id="{{n.id}}" onclick="view_notification(this)"><i class="mdi mdi-eye read-det email-action-icons-item"></i></a>
+                                                                        </li>
+                                                                        <li class="list-inline-item">
+                                                                            <a href="javascript: void(0);" not_id="{{n.id}}" onclick='move_to_trash(this)'><i class="mdi mdi-delete email-action-icons-item"></i></a>
+                                                                        </li>
+                                                                        <li class="list-inline-item">
+                                                                            {% if n.emp_starred_status == True %}
+                                                                                <a href="javascript: void(0);" class='text-warning' not_id="{{n.id}}" onclick='remove_from_starred(this)'><i class="mdi mdi-star email-action-icons-item"></i></a>
+                                                                            {% else %}
+                                                                                <a href="javascript: void(0);" not_id="{{n.id}}" onclick='move_to_starred(this)'><i class="mdi mdi-star email-action-icons-item"></i></a>
+                                                                            {% endif %}
+                                                                        </li>
+                                                                    </ul>
+                                                                </div>
+                                                                </li>
+                                                            {% endif %}
+                                                        {% endif %}
+                                                {% endfor %}
+                                                </ul>
+                                            </div>
+                                            {% else %}
+                                            <div class="mt-0">
+                                                <div class="text-center mt-4">
+                                                    <h5><i class="fas fa-bell text-warning"></i> No starred notifications available!</h5>
+                                                </div>
+                                            </div>
+                                            {% endif %}
+                                            <!-- end .mt-4 -->
+                                            
+                                            {% comment %} <div class="row">
+                                            {% if starred|length > 10 %}
+                                                <div class="col-7 mt-1">
+                                                    Showing 1 - {{starred|length}} of {{starred|length}}
+                                                </div> <!-- end col-->
+                                                <div class="col-5">
+                                                    <div class="btn-group float-end">
+                                                        <button type="button" class="btn btn-light btn-sm"><i class="mdi mdi-chevron-left"></i></button>
+                                                        <button type="button" class="btn btn-info btn-sm"><i class="mdi mdi-chevron-right"></i></button>
+                                                    </div>
+                                                </div> <!-- end col-->
+                                            {% endif %}
+                                            </div> {% endcomment %}
+                                            <!-- end row-->
+                                        </div> 
+                                        {% comment %} ######################################################################################################## {% endcomment %}
+                                        {% comment %} ######################################################################################################## {% endcomment %}
+
+
+                                    </div>
+                                    <!-- end card-body -->
+                                    <div class="clearfix"></div>
+                                </div> <!-- end card-box -->
+
+                            </div> <!-- end Col -->
+                        </div><!-- End row -->
+                        
+                    </div> <!-- container -->
+
+                </div> <!-- content -->
+
+
+                <!-- Compose Modal -->
+                <div id="compose-modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="compose-header-modalLabel" aria-hidden="true">
+                    <div class="modal-dialog">
+                        <div class="modal-content">
+                            <div class="modal-header modal-colored-header bg-primary">
+                                <h4 class="modal-title" id="compose-header-modalLabel">New Message</h4>
+                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                            </div>
+                            <div class="p-1">
+                                <div class="modal-body px-3 pt-3 pb-0">
+                                    <form>
+                                        <div class="mb-2">
+                                            <label for="msgto" class="form-label">Send To</label>
+                                        {% if request.session.userType == 'masteR' %}
+                                            <label class="float-end send-to-all"><input type="checkbox" name="" id='sendToAll'> <span>All</span></label>
+                                        {% endif %}
+                                            <div class="sel_emp">
+                                             <select class="select2  form-control select2-multiple" data-toggle="select2" multiple="multiple" data-placeholder="Select ..." id="employeeList">
+                                                {% comment %} <option>Select</option> {% endcomment %}
+                                                {% for i in emp_Obj %}
+                                                    <option value="{{i.id}}">{{i.employee_name}}</option>
+                                                {% endfor %}
+                                            </select>
+                                          </div>
+                                        </div>
+                                        <div class="mb-2">
+                                            <label for="mailsubject" class="form-label">Subject</label>
+                                            <input type="text" id="mailsubject" class="form-control" placeholder="Your subject" onkeypress="return /[a-zA-Z0-9 ]/i.test(event.key)">
+                                        </div>
+                                        <div class="write-mdg-box mb-3">
+                                            <label class="form-label">Message</label>
+                                            <textarea  style="height: 150px" class="form-control" id='mailText' onkeypress="return /[a-zA-Z0-9,. ]/i.test(event.key)"></textarea>
+                                        </div>
+                                    </form>
+                                </div>
+                                <div class="px-3 pb-3 text-right">
+                                    <button type="button" class="btn btn-primary btn-sm" onclick='add_notifications()'><i class="mdi mdi-send me-1"></i> Send Message</button>&nbsp;
+                                    <button type="button" class="btn btn-light btn-sm" data-bs-dismiss="modal">Cancel</button>
+                                </div>
+                            </div>
+                        </div><!-- /.modal-content -->
+                    </div><!-- /.modal-dialog -->
+                </div><!-- /.modal -->
+
+
+                 <!-- read modal -->
+                <div class="modal fade task-modal-content show" id="read" tabindex="-1" role="dialog" aria-labelledby="NewTaskModalLabel" aria-modal="true" >
+                    <div class="modal-dialog modal-dialog-centered modal-lg">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h4 class="modal-title" id="NewTaskModalLabel">Notification</h4>
+                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                            </div>
+                            <div class="modal-body">
+                                <form class="p-2">
+                                    <div class="row">
+                                     <div class="mb-3 col-md-12">
+                                        
+                                        <p>To, <strong id='to_data'>You</strong></p>
+                                        <h4 class="mt-3   text-danger" id='title_data'>Subject: Ada Project</h4>
+                                        <p class="mt-3" id='message_data'>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
+                                        tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
+                                        quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
+                                        consequat. </p>
+                                        <p class="text-end mt-5">
+                                           <span class="float-start text-start">Date: <br><span id='date_data'>Nov 18, 2021</span></span>
+                                            From, <br> <strong id='from_data'>18Pixels</strong>
+                                        </p>
+                                    </div>
+                                      
+                                    
+                                  </div>
+         
+                                    
+                                    
+                                </form>
+                            </div>
+                        </div><!-- /.modal-content -->
+                    </div><!-- /.modal-dialog -->
+                </div>
+                <!-- /End-modal -->
+               <!-- Footer Start -->
+            <footer class="footer">
+                <div class="container-fluid">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <script>document.write(new Date().getFullYear())</script> © 18pixels 
+                        </div>
+                        
+                    </div>
+                </div>
+            </footer>
+            <!-- end Footer -->
+
+            </div>
+
+            <!-- ============================================================== -->
+            <!-- End Page content -->
+            <!-- ============================================================== -->
+
+
+        </div>
+        <!-- END wrapper -->
+
+ 
+
+        <!-- bundle -->
+        <script src="{% static 'assets/js/vendor.min.js' %}"></script>
+        <script src="{% static 'assets/js/app.min.js' %}"></script>
+
+        <!-- SimpleMDE js -->
+        <script src="{% static 'assets/js/vendor/simplemde.min.js' %}"></script>
+
+        <!-- Page init js -->
+        <script src="{% static 'assets/js/pages/demo.inbox.js' %}"></script>
+        <script src="{% static 'assets/js/custom.js' %}"></script>
+
+        <script src="{% static 'assets/js/admin_JS/notification_JS/add_notifications.js' %}"></script>
+        <script src="{% static 'assets/js/admin_JS/notification_JS/view_notifications.js' %}"></script>
+        <script src="{% static 'assets/js/admin_JS/notification_JS/notification_operations.js' %}"></script>
+
+        <script type="text/javascript">
+            $( document ).ready(function() {
+                localStorage.setItem("notification_type", "Inbox");
+            });
+        </script>
+    </body>
+
+ 
+</html>

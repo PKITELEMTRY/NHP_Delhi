@@ -1,0 +1,384 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+ 
+<head>
+        <meta charset="utf-8" />
+         <title>18Pixels | Management Tool</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta content="" />
+        <meta content="Coderthemes" name="author" />
+        <!-- App favicon -->
+        <link rel="shortcut icon" href="{% static 'assets/images/favicon.ico' %}">
+
+        <!-- third party css -->
+        <link href="{% static 'assets/css/vendor/dataTables.bootstrap5.css' %}" rel="stylesheet" type="text/css" />
+        <link href="{% static 'assets/css/vendor/responsive.bootstrap5.css' %}" rel="stylesheet" type="text/css" />
+        <!-- third party css end -->
+
+        <!-- App css -->
+        <link href="{% static 'assets/css/icons.min.css' %}" rel="stylesheet" type="text/css" />
+        <link href="{% static 'assets/css/app.min.css' %}" rel="stylesheet" type="text/css" id="light-style" />
+        <link href="{% static 'assets/css/app-dark.min.css' %}" rel="stylesheet" type="text/css" id="dark-style" />
+        <link href="{% static 'assets/css/custom.css' %}" rel="stylesheet" type="text/css"  />
+
+    </head>
+
+    <body class="loading" data-layout-config='{"leftSideBarTheme":"dark","layoutBoxed":false, "leftSidebarCondensed":false, "leftSidebarScrollable":false,"darkMode":false, "showRightSidebarOnStart": true}'>
+        <!-- Begin page -->
+        <div class="wrapper">
+            <!-- ========== Left Sidebar Start ========== -->
+            <div class="leftside-menu" id="sidebarMenus">
+                {% include 'base.html' %}
+            </div>
+            <!-- Left Sidebar End -->
+            <!-- ============================================================== -->
+            <!-- Start Page Content here -->
+            <!-- ============================================================== -->
+            <div class="content-page">
+                <div class="content">
+                    <!-- Topbar Start -->
+                   <div class="navbar-custom" id="load-navigation"> 
+                   {% include 'hearder.html' %}
+                   </div>
+                    <!-- end Topbar -->
+                    <!-- Start Content-->
+                    <div class="container-fluid">
+                        <!-- start page title -->
+                        
+
+                        <div class="page-title-box  pt-2 mb-2" >
+
+                            <div class="row">
+                                 <div class="col-md-3">
+                                <div class="page-title-box">
+                                    <h4 class="page-title">Users   Online/Offline Status</h4>
+                                </div>
+                             </div>
+                                <div class="col-md-5 text-end  mb-2 pt-3">
+                                      Filter By
+                                </div>
+                                {% comment %} <div class="col-md-3 pt-2">
+                                   <select class="form-control select2" data-toggle="select2"    data-placeholder="Select Employee" >
+                                        <option></option>
+                                        {% for i in empObj %}
+                                        <option value="{{i.id}}">{{i.employee_name}}</option>
+                                        {% endfor %}
+                                  </select>
+                                </div> {% endcomment %}
+                                
+                                <div class="col-md-2 pt-2" >
+                                   <select class="form-control select2" data-toggle="select2"  id='filter-user'  data-placeholder="Select status" >
+                                        <option></option>
+                                        <option value="Online">Online</option>
+                                        <option value="Offline">Offline</option>
+                                        <option value="never-logged-in">Never Logged In</option>
+                                  </select>
+                                </div>
+                                
+                                <div class="col-md-2 text-end  pt-2">
+                                   <a class="btn btn-success ms-3" onclick="filter_users()">Search</a>
+                                   <a href=""  style="margin-left: 15px">Clear</a>
+                               </div>
+                                <!--  <div class="col-md-8 text-end    ">
+                                    
+                                 </div> -->
+                            </div>
+
+                            <div class="row">
+                                <div class="col-md-12 text-left  pt-2 pr-3">
+                                    <span class="btn btn-sm btn-success"><strong><i class="fas fa-sign-in-alt"></i> Online Users : </strong>{{queryset_length}}</span>&nbsp;<span class="btn btn-sm btn-danger"><strong><i class="fas fa-sign-out-alt"></i> Offline Users : </strong>{{offlineUser_length}}</span>&nbsp;<span class="btn btn-sm btn-warning text-white"><strong><i class="fas fa-exclamation-triangle"></i> Never logged in Users : </strong>{{never_logged_in_count}}</span>&nbsp;<span class="btn btn-sm btn-info"><strong><i class="fa-solid fa-briefcase"></i> Work from Office users : </strong>{{wfo}} &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <strong><i class="fa-solid fa-house-user"></i> Work from Home users : </strong>{{wfh}}</span>
+                                </div>
+                            </div>
+                             
+                        </div>   
+                        <!-- end page title --> 
+
+                        <div class="row">
+                            <div class="col-12">
+                                <div class="card">
+                                    <div class="card-body">
+                                        <div class="table-responsive">
+                                          <table id="basic-datatable" class="table dt-responsive nowrap w-100 user-online">
+                                            <thead>
+                                                <tr>
+                                                    <th width="100">S.No.</th>
+                                                    <th>Employee</th>
+                                                    <th width="200"  >Login Mode</th>
+                                                    <th width="200"  >Status</th>
+                                                    <th width="200"  >Details</th>
+
+                                                     
+                                                </tr>
+                                            </thead>
+                                            <tbody id='data_append'>
+                                            {% for i in empObj %}
+                                                <tr>
+                                                    <td>{{ forloop.counter }}</td>
+                                                    <td class="e_name">
+                                                    {% if i.profile_image == '' or i.profile_image == None %}
+                                                        <img src="https://images.vexels.com/media/users/3/129616/isolated/preview/fb517f8913bd99cd48ef00facb4a67c0-businessman-avatar-silhouette-by-vexels.png" alt="image" class="avatar-xs rounded-circle me-1">
+                                                    {% else %}
+                                                        <img src="/media/{{i.profile_image}}" alt="image" class="avatar-xs rounded-circle me-1">
+                                                    {% endif %}
+                                                        {{i.employee_name}}
+                                                    </td>
+                                                    {% if i.active == True %}
+                                                        <td><strong class="text-success">{{i.logMode}}</strong></td>
+                                                        <td><span data-bs-toggle="popover" data-bs-trigger="hover" data-bs-content="Online"  data-bs-placement="top" class="online status"  ></span></td>
+                                                        <td class="text-success"><i class="fas fa-sign-in-alt"></i> &nbsp;<small>Logged In at :</small> <strong>{{i.userFK.last_login | date:'h:i a'}}</strong></td> 
+                                                    {% else %}
+                                                    <td><strong class="text-danger">{{i.logMode}}</strong></td>
+                                                     <td><span data-bs-toggle="popover" data-bs-trigger="hover" data-bs-content="Offline"  data-bs-placement="top" class="offline status"  ></span></td>
+                                                     {% if i.last_logged_in == 'Never logged in' %}
+                                                     <td class="text-warning"><strong><i class="fas fa-exclamation-triangle"></i> &nbsp;Never Logged In</strong></td> 
+                                                     {% else %}
+                                                     <td class="text-danger"><i class="fas fa-sign-out-alt"></i> &nbsp;<small>Last Seen : <strong>{{i.userFK.last_login | date:'d-M-y | h:i a'}}</strong></small></td> 
+                                                     {% endif %}
+                                                     {% endif %}
+                                                </tr>
+                                            {% endfor %}
+                                                {% comment %} <tr>
+                                                    <td>1</td>
+                                                    <td class="e_name">
+                                                        <img src="assets\images\users\avatar-2.jpg" alt="image" class="avatar-xs rounded-circle me-1">
+                                                        Rohit Kumar
+                                                    </td>
+                                                     <td  ><span data-bs-toggle="popover" data-bs-trigger="hover" data-bs-content="Logged-in at 10:00 Am "  data-bs-placement="top" title="Online" class="online status"  ></span></td> 
+                                                </tr>
+                                                <tr>
+                                                    <td>2</td>
+                                                       <td class="e_name">
+                                                        <img src="assets\images\users\avatar-3.jpg" alt="image" class="avatar-xs rounded-circle me-1">
+                                                        Pradeep Singh
+                                                    </td>
+                                                     <td  ><span data-bs-toggle="popover" data-bs-trigger="hover" data-bs-content="Last Seen: 2 hours ago"  data-bs-placement="top" title="Offine" class="offline status"  ></span></td>
+                                                      
+                                                    
+                                                </tr>
+
+                                                <tr>
+                                                    <td>3</td>
+                                                       <td class="e_name">
+                                                        <img src="assets\images\users\avatar-5.jpg" alt="image" class="avatar-xs rounded-circle me-1">
+                                                        Kapil Dev
+                                                    </td>
+                                                      <td  ><span data-bs-toggle="popover" data-bs-trigger="hover" data-bs-content="Logged-in at 10:00 Am "  data-bs-placement="top" title="Online" class="online status"  ></span></td>
+                                                     
+                                                     
+                                                    
+                                                    
+                                                </tr> {% endcomment %}
+                                            </tbody>
+                                        </table>
+                                        </div>
+                                    </div> <!-- end card-body-->
+                                </div> <!-- end card-->
+                            </div> <!-- end col -->
+                        </div>
+                        <!-- end row -->
+                        
+                    </div> <!-- container -->
+
+                </div> <!-- content -->
+
+                <!-- Footer Start -->
+                <footer class="footer">
+                    <div class="container-fluid">
+                        <div class="row">
+                            <div class="col-md-6">
+                                <script>document.write(new Date().getFullYear())</script> © 18pixels 
+                            </div>
+                            
+                        </div>
+                    </div>
+                </footer>
+                <!-- end Footer -->
+
+            </div>
+
+            <!-- ============================================================== -->
+            <!-- End Page content -->
+            <!-- ============================================================== -->
+
+
+        </div>
+        <!-- END wrapper -->
+
+        <!-- add desig modal -->
+        <div class="modal fade task-modal-content show" id="add-new-desig" tabindex="-1" role="dialog" aria-labelledby="NewTaskModalLabel" aria-modal="true" >
+            <div class="modal-dialog modal-dialog-centered modal-md">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h4 class="modal-title" id="NewTaskModalLabel">Add Leave</h4>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <form class="p-2">
+                            <div class="row">
+                                <div class="col-md-12">
+                                    
+                                    <div class="mb-3  ">
+                                        <label for="task-title" class="form-label">Select year</label>
+                                        <select class="form-select">
+                                            <option>2022</option>
+                                             <option>2021</option>
+                                        </select>
+                                    </div>
+                                     <div class="mb-3 position-relative" id="datepicker2">
+                                        <label class="form-label">Date</label>
+                                        <input id="due_date" type="text" class="form-control" data-provide="datepicker" data-date-container="#datepicker2" data-date-format="d-M-yyyy" data-date-autoclose="true"    placeholder="d-M-yyyy">
+                                    </div>
+                                    <div class="mb-3">
+                                        <label for="task-title" class="form-label">Holiday</label>
+                                        <input type="text" class="form-control  "  placeholder="Enter holiday name">
+                                    </div>
+                                 </div>
+                               </div>
+                              <div class="text-end mt-4">
+                                <button  type="button" class="btn btn-light" data-bs-dismiss="modal" >Cancel</button>
+                                <button type="button" class="btn btn-primary" data-bs-dismiss="modal" >Create</button>
+                             </div>
+                        </form>
+                    </div>
+                </div><!-- /.modal-content -->
+            </div><!-- /.modal-dialog -->
+        </div>
+        <!-- /End-modal -->
+
+           <!--detail modal -->
+        <div class="modal fade task-modal-content show" id="view-det" tabindex="-1" role="dialog" aria-labelledby="NewTaskModalLabel" aria-modal="true" >
+            <div class="modal-dialog modal-dialog-centered modal-lg">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h4 class="modal-title" id="NewTaskModalLabel">Leave History</h4>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <form class="p-1 pt-0">
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <div class="mb-3 text-center">
+                                       <h4> <img src="assets\images\users\avatar-5.jpg" alt="image" class="avatar-md rounded-circle me-1">
+                                           Kapil Dev </h4>
+                                    </div>
+                                     <div class="mb-3 position-relative" id="datepicker2">
+                                        <table class="table table-bordered table-striped tbl-history">
+                                            <thead>
+                                               <tr>
+                                                   <th>S.No.</th>
+                                                   <th>Leave date</th>
+                                                    <th>No. of Leave</th>
+                                                   <th>Reason</th>
+                                                  
+                                               </tr> 
+                                           </thead>
+                                           <tbody>
+                                               <tr>
+                                                   <td>1</td>
+                                                   <td>Nov 01, 2021</td>
+                                                   <td>01</td>
+                                                   <td>Sick leave</td>
+                                               </tr>
+                                                <tr>
+                                                   <td>2</td>
+                                                   <td>Sept 11, 2021</td>
+                                                   <td>01</td>
+                                                   <td>Personal Work</td>
+                                               </tr>
+                                                <tr>
+                                                   <td>1</td>
+                                                   <td>Nov 01, 2021</td>
+                                                   <td>01</td>
+                                                   <td>Sick leave</td>
+                                               </tr>
+                                                <tr>
+                                                   <td>2</td>
+                                                   <td>Sept 11, 2021</td>
+                                                   <td>01</td>
+                                                   <td>Personal Work</td>
+                                               </tr>
+
+                                                
+
+                                           </tbody>
+                                        </table>
+                                    </div>
+                                   
+                                 </div>
+                               </div>
+                              <div class="text-end mt-4">
+                                <button  type="button" class="btn btn-light" data-bs-dismiss="modal" >Close</button>
+                               
+                             </div>
+                        </form>
+                    </div>
+                </div><!-- /.modal-content -->
+            </div><!-- /.modal-dialog -->
+        </div>
+        <!-- /End-modal -->
+
+         <!-- edit desig modal -->
+        <div class="modal fade task-modal-content show" id="edit-desig" tabindex="-1" role="dialog" aria-labelledby="NewTaskModalLabel" aria-modal="true" >
+            <div class="modal-dialog modal-dialog-centered modal-md">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h4 class="modal-title" id="NewTaskModalLabel">Edit Details</h4>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <form class="p-2">
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <div class="mb-3">
+                                        <label for="task-title" class="form-label">Select year</label>
+                                        <select class="form-select">
+                                              <option selected="">2022</option>
+                                             <option>2021</option>
+                                        </select>
+                                    </div>
+                                     <div class="mb-3 position-relative" id="datepicker3">
+                                        <label class="form-label">Date</label>
+                                        <input id="due_date" type="text" class="form-control" data-provide="datepicker" data-date-container="#datepicker3" data-date-format="d-M-yyyy" data-date-autoclose="true"    placeholder="d-M-yyyy" value="24-Nov-2021">
+                                    </div>
+                                    <div class="mb-3">
+                                        <label for="task-title" class="form-label">Holiday</label>
+                                        <input type="text" class="form-control"  placeholder="Enter holiday name" value="Diwali">
+                                    </div>
+                                </div>
+                              </div>
+                        
+                            <div class="text-end mt-4">
+                                <button  type="button" class="btn btn-light" data-bs-dismiss="modal" >Cancel</button>
+                                <button type="button" class="btn btn-primary" data-bs-dismiss="modal" >Update</button>
+                            </div>
+                        </form>
+                    </div>
+                </div><!-- /.modal-content -->
+            </div><!-- /.modal-dialog -->
+        </div>
+        <!-- /End-modal -->
+
+
+        <!-- bundle -->
+        <script src="{% static 'assets/js/vendor.min.js' %}"></script>
+        <script src="{% static 'assets/js/app.min.js' %}"></script>
+
+        <!-- third party js -->
+        <script src="{% static 'assets/js/vendor/jquery.dataTables.min.js' %}"></script>
+        <script src="{% static 'assets/js/vendor/dataTables.bootstrap5.js' %}"></script>
+        <script src="{% static 'assets/js/vendor/dataTables.responsive.min.js' %}"></script>
+        <script src="{% static 'assets/js/vendor/responsive.bootstrap5.min.js' %}"></script>
+        <script src="{% static 'assets/js/vendor/dataTables.checkboxes.min.js' %}"></script>
+        <!-- third party js ends -->
+
+        <!-- demo app -->
+        <script src="{% static 'assets/js/pages/demo.datatable-init.js' %}"></script>
+
+         <script src="{% static 'assets/js/custom.js' %}"></script>
+         <script src="{% static 'assets/js/admin_JS/employee_JS/online_users_filter.js' %}"></script>
+        <!-- end demo js-->
+
+    </body>
+ 
+</html>

@@ -1,0 +1,1810 @@
+﻿{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+
+    <head>
+        <meta charset="utf-8">
+        <title>18Pixels | Management Tool</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta content="A fully featured admin theme which can be used to build CRM, CMS, etc." name="description">
+        <meta content="Coderthemes" name="author">
+        <!-- App favicon -->
+        <link rel="shortcut icon" href="{% static 'assets/images/favicon.ico' %}">
+
+        <!-- Quill css -->
+        <link href="{% static 'assets/css/vendor/quill.bubble.css' %}" rel="stylesheet" type="text/css">
+        <link href="{% static 'assets/css/vendor/quill.core.css' %}" rel="stylesheet" type="text/css">
+        <link href="{% static 'assets/css/vendor/quill.snow.css' %}" rel="stylesheet" type="text/css">
+
+        <!-- App css -->
+        <link href="{% static 'assets/css/icons.min.css' %}" rel="stylesheet" type="text/css">
+        <link href="{% static 'assets/css/app.min.css' %}" rel="stylesheet" type="text/css" id="light-style">
+        <link href="{% static 'assets/css/app-dark.min.css' %}" rel="stylesheet" type="text/css" id="dark-style">
+        <link href="{% static 'assets/css/custom.css' %}" rel="stylesheet" type="text/css"  >
+        <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    </head>
+
+<body class="loading" data-layout-config='{"leftSideBarTheme":"dark","layoutBoxed":false, "leftSidebarCondensed":false, "leftSidebarScrollable":false,"darkMode":false, "showRightSidebarOnStart": true}'>
+        <!-- Begin page -->
+ <div class="wrapper">
+    <!-- ========== Left Sidebar Start ========== -->
+     <div class="leftside-menu" id="sidebarMenus">
+            {% include 'base.html' %}
+
+      </div>
+        <!-- Left Sidebar End -->
+
+        <!-- ============================================================== -->
+        <!-- Start Page Content here -->
+        <!-- ============================================================== -->
+
+    <div class="content-page">
+        <div class="content">
+            <!-- Topbar Start -->
+            <div class="navbar-custom" id="load-navigation">
+                {% include 'hearder.html' %}
+            </div>
+            <!-- end Topbar -->
+
+            <!-- Start Content-->
+            <div class="container-fluid">
+                <div class="row">
+                    <div class="col-md-12">
+                        <!-- start page title -->
+                        <div class="page-title-box  pt-2" >
+                            <div class="row">
+                            {% if projectObj|length <= 0 %}
+                             <hr>
+                            <h3>No project found!</h3>
+                            {% else %}
+                                <div class="col-md-4 pro_name mb-2">
+                                       <select class="form-control select2 text-large" data-toggle="select2" id='project_analytics_filter' onchange='project_analytics_filter()'  data-placeholder="Select Project">
+                                            <option selected="" value='All'> All</option>
+                                            {% for i in projectObj %}
+                                                <option value="{{i.id}}">{{i.project_name}}</option>
+                                            {% endfor %}
+                                    </select> 
+                                </div>
+                                <div class="col-md-4" id='moduleDiv' style='pointer-events:none;opacity:0.3;'>
+                                 <select class="form-control select2" data-toggle="select2" id='get_subModule_list' onchange="get_subModule_list()"  data-placeholder="Select Module">
+                                        <option></option>
+                                </select>
+                                </div>
+                                 <div class="col-md-4" id='subModuleDiv' style='pointer-events:none;opacity:0.3;'>
+                                     <select class="form-control select2" data-toggle="select2" id='subMod'   data-placeholder="Select Sub Module"  >
+                                            <option></option>
+                                    </select>
+                                </div>
+                                {% if  request.session.userType == 'masteR' or request.session.userType == 'teacheR' %}
+                                <div class="col-md-4">
+                                    <select class="form-control select2 text-large" data-toggle="select2"   data-placeholder="By  Employee" id='employeeID'>
+                                            <option></option>
+                                            {% for i in employeeObj %}
+                                                <option value="{{i.id}}">{{i.employee_name}}</option>
+                                            {% endfor %}
+                                    </select> 
+                                </div>
+                                {% endif %}
+                                <div class="col-md-2"> 
+                                   <select class="form-control select2 text-large" data-toggle="select2"   data-placeholder="By Date" id='dueDate' onchange="customDate(this)">
+                                        <option></option>
+                                       <option value="today">Today</option>
+                                       <option value="tommorow">Tommorow</option>
+                                       <option value="custom">Custom Dates</option>
+                                   </select> 
+                               </div>
+                                <div class="col-md-2" id='custom-date-div' style="display:none;"> 
+                                    {% comment %} <input type="text" class="form-control " id="datepicker-custom" data-toggle="date-picker" data-single-date-picker="true" value=""> {% endcomment %}
+                                    <input type="text" class="form-control" name="daterange" value="" placeholder="Select date range" />
+                                </div>
+                                <div class="col-md-2"> 
+                                   <select class="form-control select2 text-large" data-toggle="select2"   data-placeholder="By  Status" id='status'>
+                                        <option></option>
+                                       <option value='To do'>To do</option>
+                                       <option value='Doing'>Doing</option>
+                                       <option value='Review'>Review</option>
+                                       <option value='Done'>Done</option>
+                                   </select> 
+                               </div>
+                               {% if request.session.userType == 'masteR' or request.session.userType == 'teacheR' %}
+                                <div class="col-md-2 mt-1 text-end  ">
+                                  <a   class="btn btn-success  ms-3" onclick='filterTasks()'><i class="fa-solid fa-magnifying-glass"></i> Search</a>
+                                  <a href=""  style="margin-left: 15px">Clear</a>
+                               </div>
+                               {% else %}
+                                <div class="col-md-6 mt-1 text-end  ">
+                                  <a   class="btn btn-success  ms-3" onclick='filterTasks()'><i class="fa-solid fa-magnifying-glass"></i> Search</a>
+                                  <a href=""  style="margin-left: 15px">Clear</a>
+                               </div>
+                               {% endif %}
+                            </div>
+                             
+                        </div>
+                        <!-- end page title -->
+                        <!-- tabs -->
+                        <div class="row">
+                            <div class="col-md-12 mt-4">
+                                {% now "Y-m-d" as todays_date %}
+{% comment %} {% if todays_date < '2022-o1-10'|date:"Y-m-d" %}
+   <h1>It's not too late!</h1>
+{% else %}
+    <h1>It's late!</h1>
+{% endif %} {% endcomment %}
+                                <a   class="btn btn-primary btn-sm  ms-3 add_new_task float-end" data-bs-toggle="modal" data-bs-target="#add-new-task-modal"><i class="fa-solid fa-plus"></i> Add New Task</a>
+                                <a href='{% url 'task_report' %}'  class="btn btn-secondary btn-sm  ms-3 float-end"><i class="fa-solid fa-file-chart-pie"></i> Task Report</a>
+
+                                 <ul class="nav task_tabs  nav-tabs nav-justified nav-bordered mb-0">
+                                    <li class="nav-item"  >
+                                        <a href="#home-b2" data-bs-toggle="tab" aria-expanded="false" class="nav-link    active">
+                                            <i class="mdi mdi-home-variant d-md-none d-block"></i>
+                                            <span class="d-none d-md-block">Tasks</span>
+                                        </a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a href="#profile-b2" data-bs-toggle="tab" aria-expanded="true" class="nav-link ">
+                                            <i class="mdi mdi-account-circle d-md-none d-block"></i>
+                                            <span class="d-none d-md-block">Dashboard &nbsp;&nbsp;<div  style="display:none;" id='spinner_dashboard' class="spinner-border spinner-border-sm text-primary" role="status">
+                                               <span class="sr-only"></span>
+                                            </div></span>
+                                        </a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a href="#settings-b2" data-bs-toggle="tab" aria-expanded="false" class="nav-link">
+                                            <i class="mdi mdi-settings-outline d-md-none d-block"></i>
+                                            <span class="d-none d-md-block">Overview &nbsp;&nbsp;<div style="display:none;" id='spinner_overview' class="spinner-border spinner-border-sm text-primary" role="status">
+                                               <span class="sr-only"></span>
+                                            </div></span>
+                                        </a>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+
+                         <div class="tab-content">
+                            <div class="tab-pane show active" id="home-b2">
+                                           <!-- tasks panel -->
+                                <div class="mt-0">
+                                    <div class="filters mb-3">
+                                        <div class="row">
+                                            <!-- <div class="col-md-1 pt-1"><label class="badge fs-15 bg-secondary text-light">Filters</label></div> -->
+                                            
+
+
+                                        </div>
+
+                                    </div>
+
+                                    <!-- doing review -->
+                                <div class="mt-3 mb-3">
+
+                                    <h5 class="m-0 pb-2">
+                                        <a class="text-success" data-bs-toggle="collapse" href="#generalTasks" role="button" aria-expanded="false" aria-controls="generalTasks">
+                                            <i class='uil uil-angle-down font-18'></i>General Tasks <span class="text-muted">({{generalTaskObj|length}})</span>
+                                        </a>
+                                    </h5>
+                                    {% if generalTaskObj|length > 0 %}
+                                    <div class="collapse show" id="generalTasks">
+                                    {% else %}
+                                    <div class="collapse" id="generalTasks">
+                                    {% endif %}
+                                        <div class="card mb-0">
+                                            <div class="card-body">
+                                                     <table class="table task_list fs-13 ">
+                                                    <thead>
+                                                        <tr>
+                                                           <th>Task</th>
+                                                           <th>Assigned to</th>
+                                                           <th>Task Date-Time</th>
+                                                           <th>Priority</th>
+                                                           <th>Action</th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                    {% for k in generalTaskObj %}
+                                                        <tr>
+                                                            <td>
+                                                                <a  class="bold  text-primary end-bar-toggle" style="cursor:pointer;" onclick='view_task(this)' taskId="{{k.id}}">{{k.task_title}}<i class="mdi mdi-chevron-right  fs-15  "></i></a>
+                                                            </td>
+                                                            <td class="e_name">
+                                                                {% if k.employeeFK.profile_image == '' or k.employeeFK.profile_image == None %}
+                                                                    <img src="https://images.vexels.com/media/users/3/129616/isolated/preview/fb517f8913bd99cd48ef00facb4a67c0-businessman-avatar-silhouette-by-vexels.png" alt="image" class="avatar-xs rounded-circle me-1">
+                                                                {% else %}
+                                                                    <img src="/media/{{k.employeeFK.profile_image}}" alt="image" class="avatar-xs rounded-circle me-1">
+                                                                {% endif %}
+                                                                {{k.employeeFK.employee_name}}
+                                                            </td>
+                                                            {% if k.status  == 'today' %}
+                                                                <td><span class="text-success">
+                                                                    {{k.due_date}}, {{k.due_time}}</span>
+                                                                </td>
+                                                            {% elif k.status  == 'delay' %}
+                                                                <td><span class="text-info">
+                                                                    {{k.due_date}}
+                                                                </td>
+                                                            {% elif k.status  == 'tommorow' %}
+                                                                <td><span class="text-warning">
+                                                                    {{k.due_date}}, {{k.due_time}}</span>
+                                                                </td>
+                                                            {% else %}
+                                                                <td><span class="text-info">
+                                                                    {{k.due_date}}, {{k.due_time}}</span>
+                                                                </td>
+                                                            {% endif %}
+                                                            {% if k.priority == 'Low' %}
+                                                            <td><span class="badge badge-warning-lighten p-1">{{k.priority}}</span></td>
+                                                            {% elif k.priority == 'Medium' %}
+                                                            <td><span class="badge badge-info-lighten p-1">{{k.priority}}</span></td>
+                                                            {% else %}
+                                                            <td><span class="badge badge-danger-lighten p-1">{{k.priority}}</span></td>
+                                                            {% endif %}
+                                                            
+                                                            <td>
+                                                            {% if request.session.userType == 'masteR' %}
+                                                                <a data-bs-toggle="modal" data-bs-target="#edit--general-task-modal" href="javascript:;" class="action-icon text-warning" onclick='get_general_task_update(this)' taskId="{{k.id}}" empId="{{k.empID}}" onclick='get_general_task_update(this)' taskId="{{n.id}}"> <i class="mdi mdi-square-edit-outline"></i></a>
+                                                                <a href="javascript:void(0);" class="action-icon text-danger" taskID={{k.id}} onclick="delete_task(this)"> <i class="mdi mdi-delete-outline"></i></a>
+                                                            {% elif request.session.userType == 'teacheR' %}
+                                                                {% if k.created_by == 'Admin' %}
+                                                                    <a style='pointer-events:none;' data-bs-toggle="modal" data-bs-target="#edit--general-task-modal" href="javascript:;" class="action-icon text-secondary"> <i class="mdi mdi-square-edit-outline"></i></a>
+                                                                    <a style='pointer-events:none;' href="javascript:void(0);" class="action-icon text-secondary" taskID={{k.id}} onclick="delete_task(this)"> <i class="mdi mdi-delete-outline"></i></a>
+                                                                {% elif k.created_by == 'Manager' %}
+                                                                    <a data-bs-toggle="modal" data-bs-target="#edit--general-task-modal" href="javascript:;" class="action-icon text-warning" onclick='get_general_task_update(this)' taskId="{{k.id}}"> <i class="mdi mdi-square-edit-outline"></i></a>
+                                                                    <a href="javascript:void(0);" class="action-icon text-danger" taskID={{k.id}} onclick="delete_task(this)"> <i class="mdi mdi-delete-outline"></i></a>
+                                                                {% elif k.created_by == 'Employee' %}
+                                                                    <a data-bs-toggle="modal" data-bs-target="#edit--general-task-modal" href="javascript:;" class="action-icon text-warning" onclick='get_general_task_update(this)' taskId="{{k.id}}"> <i class="mdi mdi-square-edit-outline"></i></a>
+                                                                    <a href="javascript:void(0);" class="action-icon text-danger" taskID={{k.id}} onclick="delete_task(this)"> <i class="mdi mdi-delete-outline"></i></a>
+                                                                {% endif %}
+                                                            {% comment %} ===================================   MANAGER CONTROLS    ============================================================ {% endcomment %}
+                                                            {% elif request.session.userType == 'studdenT' %}
+                                                                {% if k.created_by == 'Admin' %}
+                                                                    <a style='pointer-events:none;' data-bs-toggle="modal" data-bs-target="#edit--general-task-modal" href="javascript:;" class="action-icon text-secondary"> <i class="mdi mdi-square-edit-outline"></i></a>
+                                                                    <a style='pointer-events:none;' href="javascript:void(0);" class="action-icon text-secondary" taskID={{k.id}} onclick="delete_task(this)"> <i class="mdi mdi-delete-outline"></i></a>
+                                                                {% elif k.created_by == 'Manager' %}
+                                                                    <a style='pointer-events:none;' data-bs-toggle="modal" data-bs-target="#edit--general-task-modal" href="javascript:;" class="action-icon text-secondary"> <i class="mdi mdi-square-edit-outline"></i></a>
+                                                                    <a style='pointer-events:none;' href="javascript:void(0);" class="action-icon text-secondary" taskID={{k.id}} onclick="delete_task(this)"> <i class="mdi mdi-delete-outline"></i></a>
+                                                                {% elif k.created_by == 'Employee' %}
+                                                                    <a data-bs-toggle="modal" data-bs-target="#edit--general-task-modal" href="javascript:;" onclick='get_general_task_update(this)' taskId="{{k.id}}" class="action-icon text-warning"> <i class="mdi mdi-square-edit-outline"></i></a>
+                                                                    <a href="javascript:void(0);" class="action-icon text-danger" taskID={{k.id}} onclick="delete_task(this)"> <i class="mdi mdi-delete-outline"></i></a>
+                                                                {% endif %}
+                                                            {% endif %}
+                                                            </td>
+                                                        </tr>
+                                                    {% endfor %}
+                                                         {% comment %} <tr>
+                                                            <td>Rozana</td>
+                                                            <td>
+                                                                <a  class="bold text-orange end-bar-toggle" href="javascript:;">Peer partner page developement  <i class="mdi mdi-chevron-right  fs-15  "></i></a>
+                                                            </td>
+                                                            <td class="e_name">
+                                                                <img src="{% static 'assets\images\users\avatar-2.jpg' %}" alt="image" class="avatar-xs rounded-circle me-1"  >
+                                                                Manish
+                                                            </td>
+                                                            <td><span class="text-success">Tommorow, 6:00 pm</span></td>
+                                                            <td><span class="badge badge-danger-lighten p-1">High</span></td>
+                                                            <td><select class="form-control-light"><option>To do</option><option selected="">Doing</option><option>Done</option></select></td>
+                                                            <td><a data-bs-toggle="modal" data-bs-target="#edit-task-modal" href="javascript:;" class="action-icon text-warning"> <i class="mdi mdi-square-edit-outline"></i></a>
+                                                            <a href="javascript:void(0);" class="action-icon text-danger"> <i class="mdi mdi-delete-outline"></i></a></td>
+                                                        </tr>
+                                                         <tr >
+                                                            <td>Agrijunction</td>
+                                                            <td>
+                                                                <a  class="bold  text-orange end-bar-toggle" href="javascript:;">Home Page new design implementation  <i class="mdi mdi-chevron-right  fs-15  "></i></a>
+                                                            </td>
+                                                            <td class="e_name">
+                                                                <img src="{% static 'assets\images\users\avatar-2.jpg' %}" alt="image" class="avatar-xs rounded-circle me-1"  >
+                                                                Anuj Pathak
+                                                            </td>
+                                                            <td><span class="text-info">oct 18, 12:00 pm</span></td>
+                                                            <td><span class="badge badge-info-lighten p-1">Medium</span></td>
+                                                            <td><select class="form-control-light"><option>To do</option><option selected="">Doing</option><option>Done</option></select></td>
+                                                            <td><a data-bs-toggle="modal" data-bs-target="#edit-task-modal" href="javascript:;" class="action-icon text-warning"> <i class="mdi mdi-square-edit-outline"></i></a>
+                                                            <a href="javascript:void(0);" class="action-icon text-danger"> <i class="mdi mdi-delete-outline"></i></a></td>
+                                                        </tr> {% endcomment %}
+
+                                                    </tbody>
+                                               </table>
+ 
+                                                
+                                            </div> <!-- end card-body-->
+                                        </div> <!-- end card -->
+                                    </div> <!-- end collapse-->
+                                </div>
+                        <!-- end review tasks -->
+
+
+                                    <h5 class="m-0 pb-2">
+                                        <a class="text-primary" data-bs-toggle="collapse" href="#todayTasks" role="button" aria-expanded="false" aria-controls="todayTasks">
+                                            <i class='uil uil-angle-down font-18'></i>To do<span class="text-muted">({{todoTaskObj|length}})</span>
+                                        </a>
+                                    </h5>
+
+                                    {% if todoTaskObj|length > 0 %}
+                                    <div class="collapse show" id="todayTasks">
+                                    {% else %}
+                                    <div class="collapse" id="todayTasks">
+                                    {% endif %}
+                                        <div class="card mb-0">
+                                            <div class="card-body">
+                                               <table class="table task_list fs-13 ">
+                                                    <thead>
+                                                        <tr>
+                                                           <th>Project</th>
+                                                           <th>Task</th>
+                                                           <th>Assigned to</th>
+                                                           <th>Due date</th>
+                                                           <th>Priority</th>
+                                                           <th>Change status</th>
+                                                           <th>Action</th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                    {% for i in todoTaskObj %}
+                                                        <tr>
+                                                            <td>{{i.projectFK.project_name}}</td>
+                                                            <td>
+                                                                <a  class="bold  text-primary end-bar-toggle" style="cursor:pointer;" onclick='view_task(this)' taskId="{{i.id}}">{{i.task_title}}<i class="mdi mdi-chevron-right  fs-15  "></i></a>
+                                                            </td>
+                                                            <td class="e_name">
+                                                                {% if i.employeeFK.profile_image == '' or i.employeeFK.profile_image == None %}
+                                                                    <img src="https://images.vexels.com/media/users/3/129616/isolated/preview/fb517f8913bd99cd48ef00facb4a67c0-businessman-avatar-silhouette-by-vexels.png" alt="image" class="avatar-xs rounded-circle me-1">
+                                                                {% else %}
+                                                                    <img src="/media/{{i.employeeFK.profile_image}}" alt="image" class="avatar-xs rounded-circle me-1">
+                                                                {% endif %}
+                                                                {{i.employeeFK.employee_name}}
+                                                            </td>
+                                                            {% if i.status  == 'today' %}
+                                                                <td><span class="text-success">
+                                                                    {{i.due_date}}, {{i.due_time}}</span>
+                                                                </td>
+                                                            {% elif i.status  == 'delay' %}
+                                                                <td><span class="text-danger">
+                                                                    {{i.due_date}}, <small>
+                                                                    {% if i.delayed_by > 0 %}
+                                                                        (Delayed by {{i.delayed_by}} days)</small></span>
+                                                                    {% else %}
+                                                                        (Delayed)</small></span>
+                                                                    {% endif %}
+                                                                </td>
+                                                            {% elif i.status  == 'tommorow' %}
+                                                                <td><span class="text-warning">
+                                                                    {{i.due_date}}, {{i.due_time}}</span>
+                                                                </td>
+                                                            {% else %}
+                                                                <td><span class="text-info">
+                                                                    {{i.due_date}}, {{i.due_time}}</span>
+                                                                </td>
+                                                            {% endif %}
+                                                            {% if i.priority == 'Low' %}
+                                                            <td><span class="badge badge-warning-lighten p-1">{{i.priority}}</span></td>
+                                                            {% elif i.priority == 'Medium' %}
+                                                            <td><span class="badge badge-info-lighten p-1">{{i.priority}}</span></td>
+                                                            {% else %}
+                                                            <td><span class="badge badge-danger-lighten p-1">{{i.priority}}</span></td>
+                                                            {% endif %}
+
+
+                                                            <td>
+                                                            {% comment %} -------------------------------------------------------- {% endcomment %}
+                                                            {% if request.session.userType == 'masteR' %}
+                                                            <select class="form-control-light" taskID="{{i.id}}" onchange="edit_task_status(this)">
+                                                                <option value='To do' selected>To do</option>
+                                                                <option value='Doing'>Doing</option>
+                                                                <option value='Review'>Review</option>
+                                                                <option value='Done'>Done</option>
+                                                            </select>
+                                                            {% elif request.session.userType == 'teacheR' %}
+                                                            <select class="form-control-light" taskID="{{i.id}}" onchange="edit_task_status(this)">
+                                                                <option value='To do' selected>To do</option>
+                                                                <option value='Doing'>Doing</option>
+                                                                <option value='Review'>Review</option>
+                                                                {% comment %} {% if i.created_by == 'Manager' %} {% endcomment %}
+                                                                    <option value='Done'>Done</option>
+                                                                {% comment %} {% endif %} {% endcomment %}
+                                                            </select>
+                                                            {% elif request.session.userType == 'studdenT' %}
+                                                            <select class="form-control-light" taskID="{{i.id}}" onchange="edit_task_status(this)">
+                                                                <option value='To do' selected>To do</option>
+                                                                <option value='Doing'>Doing</option>
+                                                                <option value='Review'>Review</option>
+                                                                <option value='Done'>Done</option>
+                                                            </select>
+                                                            {% endif %}
+                                                            {% comment %} -------------------------------------------------------- {% endcomment %}
+                                                            
+                                                            </td>
+                                                            <td>
+                                                            {% comment %} ===================================   ADMIN CONTROLS    ============================================================ {% endcomment %}
+                                                            {% if request.session.userType == 'masteR' %}
+                                                                <a data-bs-toggle="modal" data-bs-target="#edit-task-modal" href="javascript:;" class="action-icon text-warning" onclick='get_update_task(this)' taskId="{{i.id}}" empId="{{i.empID}}" onclick='get_update_task(this)' taskId="{{n.id}}"> <i class="mdi mdi-square-edit-outline"></i></a>
+                                                                <a href="javascript:void(0);" class="action-icon text-danger" taskID={{i.id}} onclick="delete_task(this)"> <i class="mdi mdi-delete-outline"></i></a>
+                                                            {% comment %} ===================================   MANAGER CONTROLS    ============================================================ {% endcomment %}
+                                                            {% elif request.session.userType == 'teacheR' %}
+                                                                {% if i.created_by == 'Admin' %}
+                                                                    <a style='pointer-events:none;' data-bs-toggle="modal" data-bs-target="#edit-task-modal" href="javascript:;" class="action-icon text-secondary"> <i class="mdi mdi-square-edit-outline"></i></a>
+                                                                    <a style='pointer-events:none;' href="javascript:void(0);" class="action-icon text-secondary" taskID={{i.id}} onclick="delete_task(this)"> <i class="mdi mdi-delete-outline"></i></a>
+                                                                {% elif i.created_by == 'Manager' %}
+                                                                    <a data-bs-toggle="modal" data-bs-target="#edit-task-modal" href="javascript:;" class="action-icon text-warning" onclick='get_update_task(this)' taskId="{{i.id}}"> <i class="mdi mdi-square-edit-outline"></i></a>
+                                                                    <a href="javascript:void(0);" class="action-icon text-danger" taskID={{i.id}} onclick="delete_task(this)"> <i class="mdi mdi-delete-outline"></i></a>
+                                                                {% elif i.created_by == 'Employee' %}
+                                                                    <a data-bs-toggle="modal" data-bs-target="#edit-task-modal" href="javascript:;" class="action-icon text-warning" onclick='get_update_task(this)' taskId="{{i.id}}"> <i class="mdi mdi-square-edit-outline"></i></a>
+                                                                    <a href="javascript:void(0);" class="action-icon text-danger" taskID={{i.id}} onclick="delete_task(this)"> <i class="mdi mdi-delete-outline"></i></a>
+                                                                {% endif %}
+                                                            {% comment %} ===================================   EMPLOYEE CONTROLS    ============================================================ {% endcomment %}
+                                                            {% elif request.session.userType == 'studdenT' %}
+                                                                {% if i.created_by == 'Admin' %}
+                                                                    <a style='pointer-events:none;' data-bs-toggle="modal" data-bs-target="#edit-task-modal" href="javascript:;" class="action-icon text-secondary"> <i class="mdi mdi-square-edit-outline"></i></a>
+                                                                    <a style='pointer-events:none;' href="javascript:void(0);" class="action-icon text-secondary" taskID={{i.id}} onclick="delete_task(this)"> <i class="mdi mdi-delete-outline"></i></a>
+                                                                {% elif i.created_by == 'Manager' %}
+                                                                    <a style='pointer-events:none;' data-bs-toggle="modal" data-bs-target="#edit-task-modal" href="javascript:;" class="action-icon text-secondary"> <i class="mdi mdi-square-edit-outline"></i></a>
+                                                                    <a style='pointer-events:none;' href="javascript:void(0);" class="action-icon text-secondary" taskID={{i.id}} onclick="delete_task(this)"> <i class="mdi mdi-delete-outline"></i></a>
+                                                                {% elif i.created_by == 'Employee' %}
+                                                                    <a data-bs-toggle="modal" data-bs-target="#edit-task-modal" href="javascript:;" onclick='get_update_task(this)' taskId="{{i.id}}" class="action-icon text-warning"> <i class="mdi mdi-square-edit-outline"></i></a>
+                                                                    <a href="javascript:void(0);" class="action-icon text-danger" taskID={{i.id}} onclick="delete_task(this)"> <i class="mdi mdi-delete-outline"></i></a>
+                                                                {% endif %}
+                                                            {% endif %}
+                                                            {% comment %} ======================================================================================================================== {% endcomment %}
+                                                            </td>
+                                                        </tr>
+                                                    {% endfor %}
+                                                    </tbody>
+                                               </table>
+                                                
+                                            </div> <!-- end card-body-->
+                                        </div> <!-- end card -->
+                                    </div> <!-- end .collapse-->
+                                </div> <!-- end .mt-2-->
+
+                                <!-- doing tasks -->
+                                <div class="mt-3">
+
+                                    <h5 class="m-0 pb-2">
+                                        <a class="text-orange" data-bs-toggle="collapse" href="#upcomingTasks" role="button" aria-expanded="false" aria-controls="upcomingTasks">
+                                            <i class='uil uil-angle-down font-18'></i>Doing <span class="text-muted">({{doingTaskObj|length}})</span>
+                                        </a>
+                                    </h5>
+                                    {% if doingTaskObj|length > 0 %}
+                                    <div class="collapse show" id="upcomingTasks">
+                                    {% else %}
+                                    <div class="collapse" id="upcomingTasks">
+                                    {% endif %}
+                                        <div class="card mb-0">
+                                            <div class="card-body">
+                                                     <table class="table task_list fs-13 ">
+                                                    <thead>
+                                                        <tr>
+                                                           <th>Project</th>
+                                                           <th>Task</th>
+                                                           <th>Assigned to</th>
+                                                           <th>Due date</th>
+                                                           <th>Priority</th>
+                                                           <th>Change status</th>
+                                                           <th>Action</th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                    {% for k in doingTaskObj %}
+                                                        <tr>
+                                                            <td>{{k.projectFK.project_name}}</td>
+                                                            <td>
+                                                                <a  class="bold  text-primary end-bar-toggle" style="cursor:pointer;" onclick='view_task(this)' taskId="{{k.id}}">{{k.task_title}}<i class="mdi mdi-chevron-right  fs-15  "></i></a>
+                                                            </td>
+                                                            <td class="e_name">
+                                                                {% if k.employeeFK.profile_image == '' or k.employeeFK.profile_image == None %}
+                                                                    <img src="https://images.vexels.com/media/users/3/129616/isolated/preview/fb517f8913bd99cd48ef00facb4a67c0-businessman-avatar-silhouette-by-vexels.png" alt="image" class="avatar-xs rounded-circle me-1">
+                                                                {% else %}
+                                                                    <img src="/media/{{k.employeeFK.profile_image}}" alt="image" class="avatar-xs rounded-circle me-1">
+                                                                {% endif %}
+                                                                {{k.employeeFK.employee_name}}
+                                                            </td>
+                                                            {% if k.status  == 'today' %}
+                                                                <td><span class="text-success">
+                                                                    {{k.due_date}}, {{k.due_time}}</span>
+                                                                </td>
+                                                            {% elif k.status  == 'delay' %}
+                                                                <td><span class="text-danger">
+                                                                    {{k.due_date}}, <small>
+                                                                    {% if k.delayed_by > 0 %}
+                                                                        (Delayed by {{k.delayed_by}} days)</small></span>
+                                                                    {% else %}
+                                                                        (Delayed)</small></span>
+                                                                    {% endif %}
+                                                                </td>
+                                                            {% elif k.status  == 'tommorow' %}
+                                                                <td><span class="text-warning">
+                                                                    {{k.due_date}}, {{k.due_time}}</span>
+                                                                </td>
+                                                            {% else %}
+                                                                <td><span class="text-info">
+                                                                    {{k.due_date}}, {{k.due_time}}</span>
+                                                                </td>
+                                                            {% endif %}
+                                                            {% if k.priority == 'Low' %}
+                                                            <td><span class="badge badge-warning-lighten p-1">{{k.priority}}</span></td>
+                                                            {% elif k.priority == 'Medium' %}
+                                                            <td><span class="badge badge-info-lighten p-1">{{k.priority}}</span></td>
+                                                            {% else %}
+                                                            <td><span class="badge badge-danger-lighten p-1">{{k.priority}}</span></td>
+                                                            {% endif %}
+                                                            <td>
+                                                            {% comment %} -------------------------------------------------------- {% endcomment %}
+                                                            {% if request.session.userType == 'masteR' %}
+                                                            <select class="form-control-light" taskID="{{k.id}}" onchange="edit_task_status(this)">
+                                                                <option value='To do'>To do</option>
+                                                                <option value='Doing' selected>Doing</option>
+                                                                <option value='Review'>Review</option>
+                                                                <option value='Done'>Done</option>
+                                                            </select>
+                                                            {% elif request.session.userType == 'teacheR' %}
+                                                            <select class="form-control-light" taskID="{{k.id}}" onchange="edit_task_status(this)">
+                                                                <option value='To do'>To do</option>
+                                                                <option value='Doing' selected>Doing</option>
+                                                                <option value='Review'>Review</option>
+                                                                {% comment %} {% if i.created_by == 'Manager' %} {% endcomment %}
+                                                                    <option value='Done'>Done</option>
+                                                                {% comment %} {% endif %} {% endcomment %}
+                                                            </select>
+                                                            {% elif request.session.userType == 'studdenT' %}
+                                                            <select class="form-control-light" taskID="{{k.id}}" onchange="edit_task_status(this)">
+                                                                <option value='To do'>To do</option>
+                                                                <option value='Doing' selected>Doing</option>
+                                                                <option value='Review'>Review</option>
+                                                                <option value='Done'>Done</option>
+                                                            </select>
+                                                            {% endif %}
+                                                            {% comment %} -------------------------------------------------------- {% endcomment %}
+                                                            
+                                                            </td>
+                                                            <td>
+                                                            {% if request.session.userType == 'masteR' %}
+                                                                <a data-bs-toggle="modal" data-bs-target="#edit-task-modal" href="javascript:;" class="action-icon text-warning" onclick='get_update_task(this)' taskId="{{k.id}}" empId="{{k.empID}}" onclick='get_update_task(this)' taskId="{{n.id}}"> <i class="mdi mdi-square-edit-outline"></i></a>
+                                                                <a href="javascript:void(0);" class="action-icon text-danger" taskID={{k.id}} onclick="delete_task(this)"> <i class="mdi mdi-delete-outline"></i></a>
+                                                            {% elif request.session.userType == 'teacheR' %}
+                                                                {% if k.created_by == 'Admin' %}
+                                                                    <a style='pointer-events:none;' data-bs-toggle="modal" data-bs-target="#edit-task-modal" href="javascript:;" class="action-icon text-secondary"> <i class="mdi mdi-square-edit-outline"></i></a>
+                                                                    <a style='pointer-events:none;' href="javascript:void(0);" class="action-icon text-secondary" taskID={{k.id}} onclick="delete_task(this)"> <i class="mdi mdi-delete-outline"></i></a>
+                                                                {% elif k.created_by == 'Manager' %}
+                                                                    <a data-bs-toggle="modal" data-bs-target="#edit-task-modal" href="javascript:;" class="action-icon text-warning" onclick='get_update_task(this)' taskId="{{k.id}}"> <i class="mdi mdi-square-edit-outline"></i></a>
+                                                                    <a href="javascript:void(0);" class="action-icon text-danger" taskID={{k.id}} onclick="delete_task(this)"> <i class="mdi mdi-delete-outline"></i></a>
+                                                                {% elif k.created_by == 'Employee' %}
+                                                                    <a data-bs-toggle="modal" data-bs-target="#edit-task-modal" href="javascript:;" class="action-icon text-warning" onclick='get_update_task(this)' taskId="{{k.id}}"> <i class="mdi mdi-square-edit-outline"></i></a>
+                                                                    <a href="javascript:void(0);" class="action-icon text-danger" taskID={{k.id}} onclick="delete_task(this)"> <i class="mdi mdi-delete-outline"></i></a>
+                                                                {% endif %}
+                                                            {% elif request.session.userType == 'studdenT' %}
+                                                                {% if k.created_by == 'Admin' %}
+                                                                    <a style='pointer-events:none;' data-bs-toggle="modal" data-bs-target="#edit-task-modal" href="javascript:;" class="action-icon text-secondary"> <i class="mdi mdi-square-edit-outline"></i></a>
+                                                                    <a style='pointer-events:none;' href="javascript:void(0);" class="action-icon text-secondary" taskID={{k.id}} onclick="delete_task(this)"> <i class="mdi mdi-delete-outline"></i></a>
+                                                                {% elif k.created_by == 'Manager' %}
+                                                                    <a style='pointer-events:none;' data-bs-toggle="modal" data-bs-target="#edit-task-modal" href="javascript:;" class="action-icon text-secondary"> <i class="mdi mdi-square-edit-outline"></i></a>
+                                                                    <a style='pointer-events:none;' href="javascript:void(0);" class="action-icon text-secondary" taskID={{k.id}} onclick="delete_task(this)"> <i class="mdi mdi-delete-outline"></i></a>
+                                                                {% elif k.created_by == 'Employee' %}
+                                                                    <a data-bs-toggle="modal" data-bs-target="#edit-task-modal" href="javascript:;" onclick='get_update_task(this)' taskId="{{k.id}}" class="action-icon text-warning"> <i class="mdi mdi-square-edit-outline"></i></a>
+                                                                    <a href="javascript:void(0);" class="action-icon text-danger" taskID={{k.id}} onclick="delete_task(this)"> <i class="mdi mdi-delete-outline"></i></a>
+                                                                {% endif %}
+                                                            {% endif %}
+                                                            </td>
+                                                        </tr>
+                                                    {% endfor %}
+                                                         {% comment %} <tr>
+                                                            <td>Rozana</td>
+                                                            <td>
+                                                                <a  class="bold text-orange end-bar-toggle" href="javascript:;">Peer partner page developement  <i class="mdi mdi-chevron-right  fs-15  "></i></a>
+                                                            </td>
+                                                            <td class="e_name">
+                                                                <img src="{% static 'assets\images\users\avatar-2.jpg' %}" alt="image" class="avatar-xs rounded-circle me-1"  >
+                                                                Manish
+                                                            </td>
+                                                            <td><span class="text-success">Tommorow, 6:00 pm</span></td>
+                                                            <td><span class="badge badge-danger-lighten p-1">High</span></td>
+                                                            <td><select class="form-control-light"><option>To do</option><option selected="">Doing</option><option>Done</option></select></td>
+                                                            <td><a data-bs-toggle="modal" data-bs-target="#edit-task-modal" href="javascript:;" class="action-icon text-warning"> <i class="mdi mdi-square-edit-outline"></i></a>
+                                                            <a href="javascript:void(0);" class="action-icon text-danger"> <i class="mdi mdi-delete-outline"></i></a></td>
+                                                        </tr>
+                                                         <tr >
+                                                            <td>Agrijunction</td>
+                                                            <td>
+                                                                <a  class="bold  text-orange end-bar-toggle" href="javascript:;">Home Page new design implementation  <i class="mdi mdi-chevron-right  fs-15  "></i></a>
+                                                            </td>
+                                                            <td class="e_name">
+                                                                <img src="{% static 'assets\images\users\avatar-2.jpg' %}" alt="image" class="avatar-xs rounded-circle me-1"  >
+                                                                Anuj Pathak
+                                                            </td>
+                                                            <td><span class="text-info">oct 18, 12:00 pm</span></td>
+                                                            <td><span class="badge badge-info-lighten p-1">Medium</span></td>
+                                                            <td><select class="form-control-light"><option>To do</option><option selected="">Doing</option><option>Done</option></select></td>
+                                                            <td><a data-bs-toggle="modal" data-bs-target="#edit-task-modal" href="javascript:;" class="action-icon text-warning"> <i class="mdi mdi-square-edit-outline"></i></a>
+                                                            <a href="javascript:void(0);" class="action-icon text-danger"> <i class="mdi mdi-delete-outline"></i></a></td>
+                                                        </tr> {% endcomment %}
+
+                                                    </tbody>
+                                               </table>
+ 
+                                                
+                                            </div> <!-- end card-body-->
+                                        </div> <!-- end card -->
+                                    </div> <!-- end collapse-->
+                                </div>
+                        <!-- end doing tasks -->
+
+                        <!-- doing review -->
+                                <div class="mt-3">
+
+                                    <h5 class="m-0 pb-2">
+                                        <a class="text-danger" data-bs-toggle="collapse" href="#reviewTasks" role="button" aria-expanded="false" aria-controls="reviewTasks">
+                                            <i class='uil uil-angle-down font-18'></i>Review <span class="text-muted">({{reviewTaskObj|length}})</span>
+                                        </a>
+                                    </h5>
+                                    {% if reviewTaskObj|length > 0 %}
+                                    <div class="collapse show" id="reviewTasks">
+                                    {% else %}
+                                    <div class="collapse" id="reviewTasks">
+                                    {% endif %}
+                                        <div class="card mb-0">
+                                            <div class="card-body">
+                                                     <table class="table task_list fs-13 ">
+                                                    <thead>
+                                                        <tr>
+                                                           <th>Project</th>
+                                                           <th>Task</th>
+                                                           <th>Assigned to</th>
+                                                           <th>Due date</th>
+                                                           <th>Priority</th>
+                                                           <th>Change status</th>
+                                                           <th>Action</th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                    {% for k in reviewTaskObj %}
+                                                        <tr>
+                                                            <td>{{k.projectFK.project_name}}</td>
+                                                            <td>
+                                                                <a  class="bold  text-primary end-bar-toggle" style="cursor:pointer;" onclick='view_task(this)' taskId="{{k.id}}">{{k.task_title}}<i class="mdi mdi-chevron-right  fs-15  "></i></a>
+                                                            </td>
+                                                            <td class="e_name">
+                                                                {% if k.employeeFK.profile_image == '' or k.employeeFK.profile_image == None %}
+                                                                    <img src="https://images.vexels.com/media/users/3/129616/isolated/preview/fb517f8913bd99cd48ef00facb4a67c0-businessman-avatar-silhouette-by-vexels.png" alt="image" class="avatar-xs rounded-circle me-1">
+                                                                {% else %}
+                                                                    <img src="/media/{{k.employeeFK.profile_image}}" alt="image" class="avatar-xs rounded-circle me-1">
+                                                                {% endif %}
+                                                                {{k.employeeFK.employee_name}}
+                                                            </td>
+                                                            {% if k.status  == 'today' %}
+                                                                <td><span class="text-success">
+                                                                    {{k.due_date}}, {{k.due_time}}</span>
+                                                                </td>
+                                                            {% elif k.status  == 'delay' %}
+                                                                <td><span class="text-info">
+                                                                    {{k.due_date}}
+                                                                    {% comment %} , <small>
+                                                                    {% if k.delayed_by > 0 %}
+                                                                        (Delayed by {{k.delayed_by}} days)</small></span>
+                                                                    {% else %}
+                                                                        (Delayed)</small></span>
+                                                                    {% endif %} {% endcomment %}
+                                                                </td>
+                                                            {% elif k.status  == 'tommorow' %}
+                                                                <td><span class="text-warning">
+                                                                    {{k.due_date}}, {{k.due_time}}</span>
+                                                                </td>
+                                                            {% else %}
+                                                                <td><span class="text-info">
+                                                                    {{k.due_date}}, {{k.due_time}}</span>
+                                                                </td>
+                                                            {% endif %}
+                                                            {% if k.priority == 'Low' %}
+                                                            <td><span class="badge badge-warning-lighten p-1">{{k.priority}}</span></td>
+                                                            {% elif k.priority == 'Medium' %}
+                                                            <td><span class="badge badge-info-lighten p-1">{{k.priority}}</span></td>
+                                                            {% else %}
+                                                            <td><span class="badge badge-danger-lighten p-1">{{k.priority}}</span></td>
+                                                            {% endif %}
+                                                            <td>
+                                                            {% comment %} -------------------------------------------------------- {% endcomment %}
+                                                            {% if request.session.userType == 'masteR' %}
+                                                            <select class="form-control-light" taskID="{{k.id}}" onchange="edit_task_status(this)">
+                                                                <option value='To do'>To do</option>
+                                                                <option value='Doing'>Doing</option>
+                                                                <option value='Review' selected>Review</option>
+                                                                <option value='Done'>Done</option>
+                                                            </select>
+                                                            {% elif request.session.userType == 'teacheR' %}
+                                                            <select class="form-control-light" taskID="{{k.id}}" onchange="edit_task_status(this)">
+                                                                <option value='To do'>To do</option>
+                                                                <option value='Doing'>Doing</option>
+                                                                <option value='Review' selected>Review</option>
+                                                                {% comment %} {% if k.created_by == 'Manager' %} {% endcomment %}
+                                                                <option value='Done'>Done</option>
+                                                                {% comment %} {% endif %}                                      {% endcomment %}
+                                                           </select>
+                                                            {% elif request.session.userType == 'studdenT' %}
+                                                            <select class="form-control-light" taskID="{{k.id}}" onchange="edit_task_status(this)">
+                                                                <option value='To do'>To do</option>
+                                                                <option value='Doing'>Doing</option>
+                                                                <option value='Review' selected>Review</option>
+                                                                <option value='Done'>Done</option>
+                                                            </select>
+                                                            {% endif %}
+                                                            {% comment %} -------------------------------------------------------- {% endcomment %}
+                                                            
+                                                            </td>
+                                                            <td>
+                                                            {% if request.session.userType == 'masteR' %}
+                                                                <a data-bs-toggle="modal" data-bs-target="#edit-task-modal" href="javascript:;" class="action-icon text-warning" onclick='get_update_task(this)' taskId="{{k.id}}" empId="{{k.empID}}" onclick='get_update_task(this)' taskId="{{n.id}}"> <i class="mdi mdi-square-edit-outline"></i></a>
+                                                                <a href="javascript:void(0);" class="action-icon text-danger" taskID={{k.id}} onclick="delete_task(this)"> <i class="mdi mdi-delete-outline"></i></a>
+                                                            {% elif request.session.userType == 'teacheR' %}
+                                                                {% if k.created_by == 'Admin' %}
+                                                                    <a style='pointer-events:none;' data-bs-toggle="modal" data-bs-target="#edit-task-modal" href="javascript:;" class="action-icon text-secondary"> <i class="mdi mdi-square-edit-outline"></i></a>
+                                                                    <a style='pointer-events:none;' href="javascript:void(0);" class="action-icon text-secondary" taskID={{k.id}} onclick="delete_task(this)"> <i class="mdi mdi-delete-outline"></i></a>
+                                                                {% elif k.created_by == 'Manager' %}
+                                                                    <a data-bs-toggle="modal" data-bs-target="#edit-task-modal" href="javascript:;" class="action-icon text-warning" onclick='get_update_task(this)' taskId="{{k.id}}"> <i class="mdi mdi-square-edit-outline"></i></a>
+                                                                    <a href="javascript:void(0);" class="action-icon text-danger" taskID={{k.id}} onclick="delete_task(this)"> <i class="mdi mdi-delete-outline"></i></a>
+                                                                {% elif k.created_by == 'Employee' %}
+                                                                    <a data-bs-toggle="modal" data-bs-target="#edit-task-modal" href="javascript:;" class="action-icon text-warning" onclick='get_update_task(this)' taskId="{{k.id}}"> <i class="mdi mdi-square-edit-outline"></i></a>
+                                                                    <a href="javascript:void(0);" class="action-icon text-danger" taskID={{k.id}} onclick="delete_task(this)"> <i class="mdi mdi-delete-outline"></i></a>
+                                                                {% endif %}
+                                                            {% comment %} ===================================   MANAGER CONTROLS    ============================================================ {% endcomment %}
+                                                            {% elif request.session.userType == 'studdenT' %}
+                                                                {% if k.created_by == 'Admin' %}
+                                                                    <a style='pointer-events:none;' data-bs-toggle="modal" data-bs-target="#edit-task-modal" href="javascript:;" class="action-icon text-secondary"> <i class="mdi mdi-square-edit-outline"></i></a>
+                                                                    <a style='pointer-events:none;' href="javascript:void(0);" class="action-icon text-secondary" taskID={{k.id}} onclick="delete_task(this)"> <i class="mdi mdi-delete-outline"></i></a>
+                                                                {% elif k.created_by == 'Manager' %}
+                                                                    <a style='pointer-events:none;' data-bs-toggle="modal" data-bs-target="#edit-task-modal" href="javascript:;" class="action-icon text-secondary"> <i class="mdi mdi-square-edit-outline"></i></a>
+                                                                    <a style='pointer-events:none;' href="javascript:void(0);" class="action-icon text-secondary" taskID={{k.id}} onclick="delete_task(this)"> <i class="mdi mdi-delete-outline"></i></a>
+                                                                {% elif k.created_by == 'Employee' %}
+                                                                    <a data-bs-toggle="modal" data-bs-target="#edit-task-modal" href="javascript:;" onclick='get_update_task(this)' taskId="{{k.id}}" class="action-icon text-warning"> <i class="mdi mdi-square-edit-outline"></i></a>
+                                                                    <a href="javascript:void(0);" class="action-icon text-danger" taskID={{k.id}} onclick="delete_task(this)"> <i class="mdi mdi-delete-outline"></i></a>
+                                                                {% endif %}
+                                                            {% endif %}
+                                                            </td>
+                                                        </tr>
+                                                    {% endfor %}
+                                                         {% comment %} <tr>
+                                                            <td>Rozana</td>
+                                                            <td>
+                                                                <a  class="bold text-orange end-bar-toggle" href="javascript:;">Peer partner page developement  <i class="mdi mdi-chevron-right  fs-15  "></i></a>
+                                                            </td>
+                                                            <td class="e_name">
+                                                                <img src="{% static 'assets\images\users\avatar-2.jpg' %}" alt="image" class="avatar-xs rounded-circle me-1"  >
+                                                                Manish
+                                                            </td>
+                                                            <td><span class="text-success">Tommorow, 6:00 pm</span></td>
+                                                            <td><span class="badge badge-danger-lighten p-1">High</span></td>
+                                                            <td><select class="form-control-light"><option>To do</option><option selected="">Doing</option><option>Done</option></select></td>
+                                                            <td><a data-bs-toggle="modal" data-bs-target="#edit-task-modal" href="javascript:;" class="action-icon text-warning"> <i class="mdi mdi-square-edit-outline"></i></a>
+                                                            <a href="javascript:void(0);" class="action-icon text-danger"> <i class="mdi mdi-delete-outline"></i></a></td>
+                                                        </tr>
+                                                         <tr >
+                                                            <td>Agrijunction</td>
+                                                            <td>
+                                                                <a  class="bold  text-orange end-bar-toggle" href="javascript:;">Home Page new design implementation  <i class="mdi mdi-chevron-right  fs-15  "></i></a>
+                                                            </td>
+                                                            <td class="e_name">
+                                                                <img src="{% static 'assets\images\users\avatar-2.jpg' %}" alt="image" class="avatar-xs rounded-circle me-1"  >
+                                                                Anuj Pathak
+                                                            </td>
+                                                            <td><span class="text-info">oct 18, 12:00 pm</span></td>
+                                                            <td><span class="badge badge-info-lighten p-1">Medium</span></td>
+                                                            <td><select class="form-control-light"><option>To do</option><option selected="">Doing</option><option>Done</option></select></td>
+                                                            <td><a data-bs-toggle="modal" data-bs-target="#edit-task-modal" href="javascript:;" class="action-icon text-warning"> <i class="mdi mdi-square-edit-outline"></i></a>
+                                                            <a href="javascript:void(0);" class="action-icon text-danger"> <i class="mdi mdi-delete-outline"></i></a></td>
+                                                        </tr> {% endcomment %}
+
+                                                    </tbody>
+                                               </table>
+ 
+                                                
+                                            </div> <!-- end card-body-->
+                                        </div> <!-- end card -->
+                                    </div> <!-- end collapse-->
+                                </div>
+                        <!-- end review tasks -->
+
+                         <!-- doing tasks -->
+                                <div class="mt-3">
+
+                                    <h5 class="m-0 pb-2">
+                                        <a class="text-green" data-bs-toggle="collapse" href="#doneTasks" role="button" aria-expanded="false" aria-controls="doneTasks">
+                                            <i class='uil uil-angle-down font-18'></i>Done <span class="text-muted">({{doneTaskObj|length}})</span>
+                                        </a>
+                                    </h5>
+
+                                    {% if doneTaskObj|length > 0 %}
+                                    <div class="collapse show" id="doneTasks">
+                                    {% else %}
+                                    <div class="collapse" id="doneTasks">
+                                    {% endif %}
+                                        <div class="card mb-0">
+                                            <div class="card-body">
+                                                     <table class="table task_list fs-13 ">
+                                                    <thead>
+                                                        <tr>
+                                                           <th>Project</th>
+                                                           <th>Task</th>
+                                                           <th>Assigned to</th>
+                                                           <th>Due date</th>
+                                                           <th>Priority</th>
+                                                           <th>Change status</th>
+                                                           <th>Completion date</th>
+                                                        </tr>
+                                                        {% comment %}  {% endcomment %}
+                                                    </thead>
+                                                    <tbody>
+                                                    {% for n in doneTaskObj %}
+                                                        <tr>
+                                                            <td>{{n.projectFK.project_name}}</td>
+                                                            <td>
+                                                                <a  class="bold  text-primary end-bar-toggle" style="cursor:pointer;" onclick='view_task(this)' taskId="{{n.id}}">{{n.task_title}}<i class="mdi mdi-chevron-right  fs-15  "></i></a>
+                                                            </td>
+                                                            <td class="e_name">
+                                                                {% if n.employeeFK.profile_image == '' or n.employeeFK.profile_image == None %}
+                                                                    <img src="https://images.vexels.com/media/users/3/129616/isolated/preview/fb517f8913bd99cd48ef00facb4a67c0-businessman-avatar-silhouette-by-vexels.png" alt="image" class="avatar-xs rounded-circle me-1">
+                                                                {% else %}
+                                                                    <img src="/media/{{n.employeeFK.profile_image}}" alt="image" class="avatar-xs rounded-circle me-1">
+                                                                {% endif %}
+                                                                {{n.employeeFK.employee_name}}
+                                                            </td>
+                                                            {% if n.status  == 'today' %}
+                                                                <td><span class="text-success">
+                                                                    {{n.due_date}}, {{n.due_time}}</span>
+                                                                </td>
+                                                            {% elif n.status  == 'delay' %}
+                                                                <td><span class="text-info">
+                                                                    {{n.due_date}}, 
+                                                                    <small>
+                                                                    {% comment %} {% if n.delayed_by > 0 %}
+                                                                        (Delayed)</small></span>
+                                                                    {% else %}
+                                                                        (Delayed)</small></span>
+                                                                    {% endif %} {% endcomment %}
+                                                                </td>
+                                                            {% elif n.status  == 'tommorow' %}
+                                                                <td><span class="text-warning">
+                                                                    {{n.due_date}}, {{n.due_time}}</span>
+                                                                </td>
+                                                            {% else %}
+                                                                <td><span class="text-info">
+                                                                    {{n.due_date}}, {{n.due_time}}</span>
+                                                                </td>
+                                                            {% endif %}
+                                                            {% comment %} -------------------------------------------------------- {% endcomment %}
+                                                            
+                                                            </td>
+                                                            {% if n.priority == 'Low' %}
+                                                            <td><span class="badge badge-warning-lighten p-1">{{n.priority}}</span></td>
+                                                            {% elif n.priority == 'Medium' %}
+                                                            <td><span class="badge badge-info-lighten p-1">{{n.priority}}</span></td>
+                                                            {% else %}
+                                                            <td><span class="badge badge-danger-lighten p-1">{{n.priority}}</span></td>
+                                                            {% endif %}
+                                                            <td>
+                                                            {% comment %} -------------------------------------------------------- {% endcomment %}
+                                                            
+                                                            {% if request.session.userType == 'masteR' %}
+                                                            <select class="form-control-light" taskID="{{n.id}}" onchange="edit_task_status(this)">
+                                                                <option value='To do'>To do</option>
+                                                                <option value='Doing'>Doing</option>
+                                                                <option value='Review'>Review</option>
+                                                                <option value='Done' selected>Done</option>
+                                                            </select>
+                                                            {% elif request.session.userType == 'teacheR' %}
+                                                                {% if n.created_by == 'Admin' %}
+                                                                    <p class='text-success' style="font-weight:700;">Done</p>
+                                                                {% elif n.created_by == 'Manager' %}
+                                                                    {% comment %} <p class='text-success' style="font-weight:700;">Done</p> {% endcomment %}
+                                                                    <select class="form-control-light" taskID="{{n.id}}" onchange="edit_task_status(this)">
+                                                                        <option value='To do'>To do</option>
+                                                                        <option value='Doing'>Doing</option>
+                                                                        <option value='Review'>Review</option>
+                                                                        <option value='Done' selected>Done</option>
+                                                                    </select>
+                                                                {% else %}
+                                                                    <select class="form-control-light" taskID="{{n.id}}" onchange="edit_task_status(this)">
+                                                                        <option value='To do'>To do</option>
+                                                                        <option value='Doing'>Doing</option>
+                                                                        <option value='Review'>Review</option>
+                                                                        <option value='Done' selected>Done</option>
+                                                                    </select>
+                                                                {% endif %}
+                                                            {% elif request.session.userType == 'studdenT' %}
+                                                            <p class='text-success' style="font-weight:700;">Done</p>
+                                                            {% endif %}
+                                                            
+
+                                                            {% comment %} 
+                                                            <td>
+                                                            {% if request.session.userType == 'masteR' %}
+                                                                <a data-bs-toggle="modal" data-bs-target="#edit-task-modal" href="javascript:;" class="action-icon text-warning" onclick='get_update_task(this)' taskId="{{n.id}}" empId="{{n.empID}}" onclick='get_update_task(this)' taskId="{{n.id}}"> <i class="mdi mdi-square-edit-outline"></i></a>
+                                                                <a href="javascript:void(0);" class="action-icon text-danger" taskID={{n.id}} onclick="delete_task(this)"> <i class="mdi mdi-delete-outline"></i></a>
+                                                            {% elif request.session.userType == 'teacheR' %}
+                                                                {% if n.created_by == 'Admin' %}
+                                                                    <a style='pointer-events:none;' data-bs-toggle="modal" data-bs-target="#edit-task-modal" href="javascript:;" class="action-icon text-secondary"> <i class="mdi mdi-square-edit-outline"></i></a>
+                                                                    <a style='pointer-events:none;' href="javascript:void(0);" class="action-icon text-secondary" taskID={{n.id}} onclick="delete_task(this)"> <i class="mdi mdi-delete-outline"></i></a>
+                                                                {% elif n.created_by == 'Manager' %}
+                                                                    <a data-bs-toggle="modal" data-bs-target="#edit-task-modal" href="javascript:;" class="action-icon text-warning" onclick='get_update_task(this)' taskId="{{n.id}}"> <i class="mdi mdi-square-edit-outline"></i></a>
+                                                                    <a href="javascript:void(0);" class="action-icon text-danger" taskID={{n.id}} onclick="delete_task(this)"> <i class="mdi mdi-delete-outline"></i></a>
+                                                                {% elif n.created_by == 'Employee' %}
+                                                                    <a data-bs-toggle="modal" data-bs-target="#edit-task-modal" href="javascript:;" class="action-icon text-warning" onclick='get_update_task(this)' taskId="{{n.id}}"> <i class="mdi mdi-square-edit-outline"></i></a>
+                                                                    <a href="javascript:void(0);" class="action-icon text-danger" taskID={{n.id}} onclick="delete_task(this)"> <i class="mdi mdi-delete-outline"></i></a>
+                                                                {% endif %}
+                                                            {% elif request.session.userType == 'studdenT' %}
+                                                                {% if n.created_by == 'Admin' %}
+                                                                    <a style='pointer-events:none;' data-bs-toggle="modal" data-bs-target="#edit-task-modal" href="javascript:;" class="action-icon text-secondary"> <i class="mdi mdi-square-edit-outline"></i></a>
+                                                                    <a style='pointer-events:none;' href="javascript:void(0);" class="action-icon text-secondary" taskID={{n.id}} onclick="delete_task(this)"> <i class="mdi mdi-delete-outline"></i></a>
+                                                                {% elif n.created_by == 'Manager' %}
+                                                                    <a style='pointer-events:none;' data-bs-toggle="modal" data-bs-target="#edit-task-modal" href="javascript:;" class="action-icon text-secondary"> <i class="mdi mdi-square-edit-outline"></i></a>
+                                                                    <a style='pointer-events:none;' href="javascript:void(0);" class="action-icon text-secondary" taskID={{n.id}} onclick="delete_task(this)"> <i class="mdi mdi-delete-outline"></i></a>
+                                                                {% elif n.created_by == 'Employee' %}
+                                                                    <a data-bs-toggle="modal" data-bs-target="#edit-task-modal" href="javascript:;" onclick='get_update_task(this)' taskId="{{n.id}}" class="action-icon text-warning"> <i class="mdi mdi-square-edit-outline"></i></a>
+                                                                    <a href="javascript:void(0);" class="action-icon text-danger" taskID={{n.id}} onclick="delete_task(this)"> <i class="mdi mdi-delete-outline"></i></a>
+                                                                {% endif %}
+                                                            {% endif %}
+                                                        {% endcomment %}
+                                                            </td>
+                                                            {% comment %} -------------------------------------------------------- {% endcomment %}
+                                                            
+                                                            {% if n.status  == 'today' %}
+                                                                <td style="font-weight:700;"><span class="text-success">
+                                                                    {{n.completed_at}}</span>
+                                                                </td>
+                                                            {% elif n.status  == 'delay' %}
+                                                                <td style="font-weight:700;"><span class="text-info">
+                                                                    {{n.completed_at}}
+                                                                    {% comment %} ,<small>
+                                                                    {% if n.delayed_by_diff > '0' %}
+                                                                        (Delayed by {{n.delayed_by_diff}} days)</small></span>
+                                                                    {% else %}
+                                                                        (Delayed)</small></span>
+                                                                    {% endif %} {% endcomment %}
+                                                                </td>
+                                                            {% elif n.status  == 'tommorow' %}
+                                                                <td style="font-weight:700;"><span class="text-warning">
+                                                                    {{n.completed_at}}</span>
+                                                                </td>
+                                                            {% else %}
+                                                                <td style="font-weight:700;"><span class="text-info">
+                                                                    {{n.completed_at}}</span>
+                                                                </td>
+                                                            {% endif %}
+
+                                                            <td>
+                                                            {% comment %} -------------------------------------------------------- {% endcomment %}
+                                                        </tr> 
+                                                    {% endfor %}
+                                                         {% comment %} <tr>
+                                                            <td>Rozana</td>
+                                                            <td>
+                                                                <a  class="bold text-green end-bar-toggle" href="javascript:;">Peer partner page developement  <i class="mdi mdi-chevron-right  fs-15  "></i></a>
+                                                            </td>
+                                                            <td class="e_name">
+                                                                <img src="{% static 'assets\images\users\avatar-2.jpg' %}" alt="image" class="avatar-xs rounded-circle me-1"  >
+                                                                Manish
+                                                            </td>
+                                                            <td><span class="text-success">Tommorow, 6:00 pm</span></td>
+                                                            <td><span class="badge badge-danger-lighten p-1">High</span></td>
+                                                            <td><select class="form-control-light"><option>To do</option><option  >Doing</option><option selected="">Done</option ></select></td>
+                                                            <td><a data-bs-toggle="modal" data-bs-target="#edit-task-modal" href="javascript:;" class="action-icon text-warning"> <i class="mdi mdi-square-edit-outline"></i></a>
+                                                            <a href="javascript:void(0);" class="action-icon text-danger"> <i class="mdi mdi-delete-outline"></i></a></td>
+                                                        </tr>
+                                                         <tr >
+                                                            <td>Agrijunction</td>
+                                                            <td>
+                                                                <a  class="bold  text-green end-bar-toggle" href="javascript:;">Home Page new design implementation  <i class="mdi mdi-chevron-right  fs-15  "></i></a>
+                                                            </td>
+                                                            <td class="e_name">
+                                                                <img src="{% static 'assets\images\users\avatar-2.jpg' %}" alt="image" class="avatar-xs rounded-circle me-1"  >
+                                                                Anuj Pathak
+                                                            </td>
+                                                            <td><span class="text-info">oct 18, 12:00 pm</span></td>
+                                                            <td><span class="badge badge-info-lighten p-1">Medium</span></td>
+                                                            <td><select class="form-control-light"><option>To do</option><option >Doing</option><option selected=""> Done</option></select></td>
+                                                            <td><a data-bs-toggle="modal" data-bs-target="#edit-task-modal" href="javascript:;" class="action-icon text-warning"> <i class="mdi mdi-square-edit-outline"></i></a>
+                                                            <a href="javascript:void(0);" class="action-icon text-danger"> <i class="mdi mdi-delete-outline"></i></a></td>
+                                                        </tr> {% endcomment %}
+
+                                                    </tbody>
+                                               </table>
+ 
+                                                
+                                            </div> <!-- end card-body-->
+                                        </div> <!-- end card -->
+                                    </div> <!-- end collapse-->
+                                </div>
+                        <!-- end doing tasks -->
+                            </div>
+                            <div class="tab-pane " id="profile-b2">
+                                <div class="row mt-3" id='task_dash_div'>
+                                    <div class="col-lg-12">
+                                        <h3>Select project to view Analytics</h3>
+                                    </div>
+                                </div>
+                                  {% comment %} <div class="row mt-3">
+                                    <div class="col-12">
+                                        <div class="card widget-inline">
+                                            <div class="card-body p-0">
+                                                <div class="row g-0">
+                                                    <div class="col-sm-6 col-xl-3">
+                                                        <div class="card shadow-none m-0">
+                                                            <div class="card-body text-center">
+                                                                <i class="dripicons-thumbs-up text-success" style="font-size: 24px;"></i>
+                                                                <h3><span>29</span></h3>
+                                                                <p class="text-muted font-15 mb-0">  Tasks Completed</p>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                        
+                                                    <div class="col-sm-6 col-xl-3">
+                                                        <div class="card shadow-none m-0 border-start">
+                                                            <div class="card-body text-center">
+                                                                <i class="dripicons-dots-3 text-orange  " style="font-size: 24px;"></i>
+                                                                <h3><span>30</span></h3>
+                                                                <p class="text-muted font-15 mb-0">Task In-process</p>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                        
+                                                    <div class="col-sm-6 col-xl-3">
+                                                        <div class="card shadow-none m-0 border-start">
+                                                            <div class="card-body text-center">
+                                                                <i class="dripicons-user-group text-primary" style="font-size: 24px;"></i>
+                                                                <h3><span>20</span></h3>
+                                                                <p class="text-muted font-15 mb-0">Task to-do</p>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                        
+                                                    <div class="col-sm-6 col-xl-3">
+                                                        <div class="card shadow-none m-0 border-start">
+                                                            <div class="card-body text-center">
+                                                                <i class=" dripicons-view-list text-muted" style="font-size: 24px;"></i>
+                                                                <h3><span>79</span>  </h3>
+                                                                <p class="text-muted font-15 mb-0">Total Tasks</p>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                        
+                                                </div> <!-- end row -->
+                                            </div>
+                                        </div> <!-- end card-box-->
+                                    </div> <!-- end col-->
+                                </div>
+                                <div class="row">
+                                         <div class="col-lg-6">
+                                            <div class="card">
+                                                <div class="card-body">
+                                                    <div class="dropdown float-end">
+                                                         <select class="form-control-light"><option>Overall</option><option>Last 7 days</option><option>Last 15 days</option><option>Last month</option></select>
+                                                    </div>
+                                                    <h4 class="header-title mb-4">Project Status</h4>
+
+                                                    <div class="my-4 chartjs-chart" style="height: 250px;">
+                                                        <canvas id="project-status-chart" data-colors="#0acf97,#ef890a,#fa5c7c,#727cf5"></canvas>
+                                                    </div>
+
+                                                    <div class="row text-center mt-2 py-2">
+                                                        <div class="col-3">
+                                                            <i class="mdi mdi-trending-up text-success mt-3 h3"></i>
+                                                            <h3 class="fw-normal">
+                                                                <span>59%</span>
+                                                            </h3>
+                                                            <p class="text-muted mb-0">Completed</p>
+                                                        </div>
+                                                        <div class="col-3">
+                                                            <i class="mdi mdi-trending-neutral  text-orange mt-3 h3"></i>
+                                                            <h3 class="fw-normal">
+                                                                <span>26%</span>
+                                                            </h3>
+                                                            <p class="text-muted mb-0"> In-progress</p>
+                                                        </div>
+                                                        <div class="col-3">
+                                                            <i class="mdi mdi-trending-down text-danger mt-3 h3"></i>
+                                                            <h3 class="fw-normal">
+                                                                <span>10%</span>
+                                                            </h3>
+                                                            <p class="text-muted mb-0"> Delayed</p>
+                                                        </div>
+                                                         <div class="col-3">
+                                                            <i class="mdi mdi-trending-up text-primary mt-3 h3"></i>
+                                                            <h3 class="fw-normal">
+                                                                <span>5%</span>
+                                                            </h3>
+                                                            <p class="text-muted mb-0"> To-do</p>
+                                                        </div>
+                                                    </div>
+                                                    <!-- end row-->
+
+                                                </div> <!-- end card body-->
+                                            </div> <!-- end card -->
+                                        </div><!-- end col-->
+
+                                        <div class="col-lg-6">
+                                          <div class="card">
+                                            <div class="card-body">
+                                                <div class="dropdown float-end">
+                                                     <select class="form-control-light"><option>Overall</option><option>Last 7 days</option><option>Last 15 days</option><option>Last month</option></select>
+                                                </div>
+                                                <h4 class="header-title mb-4">Module Wise Progress</h4>
+                                                <div class="mt-4">
+                                                    <!-- Success -->
+                                                    <div class="moduless mb-3">
+                                                        <label class="d-block">Employee Management <span class="float-end">80%</span></label>
+                                                        <div class="progress " style="height: 10px">
+                                                            
+                                                            <div class="progress-bar bg-success" role="progressbar" style="width: 80%" aria-valuenow="80" aria-valuemin="0" aria-valuemax="100"></div>
+                                                        </div>
+                                                    </div>
+
+                                                    <!-- Info -->
+                                                    <div class="moduless mb-3">
+                                                        <label class="d-block">Project Management <span class="float-end">60%</span></label>
+                                                        <div class="progress " style="height: 10px">
+                                                            <div class="progress-bar bg-info" role="progressbar" style="width: 60%" aria-valuenow="50" aria-valuemin="0" aria-valuemax="100"></div>
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="moduless mb-3">
+                                                        <label class="d-block">Task Management <span class="float-end">35%</span></label>
+                                                        <div class="progress " style="height: 10px">
+                                                            <div class="progress-bar bg-warning" role="progressbar" style="width: 35%" aria-valuenow="35" aria-valuemin="0" aria-valuemax="100"></div>
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="moduless mb-3">
+                                                        <label class="d-block">Event Management <span class="float-end">5%</span></label>
+                                                        <div class="progress " style="height: 10px">
+                                                            <div class="progress-bar bg-danger" role="progressbar" style="width: 5%" aria-valuenow="50" aria-valuemin="0" aria-valuemax="100"></div>
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="moduless mb-3">
+                                                        <label class="d-block">Leave Management <span class="float-end">0%</span></label>
+                                                        <div class="progress " style="height: 10px">
+                                                            <div class="progress-bar bg-danger" role="progressbar" style="width: 0%" aria-valuenow="50" aria-valuemin="0" aria-valuemax="100"></div>
+                                                        </div>
+                                                    </div>
+
+                                                     <div class="moduless mb-3">
+                                                        <label class="d-block">HR Management <span class="float-end">0%</span></label>
+                                                        <div class="progress " style="height: 10px">
+                                                            <div class="progress-bar bg-danger" role="progressbar" style="width: 0%" aria-valuenow="50" aria-valuemin="0" aria-valuemax="100"></div>
+                                                        </div>
+                                                    </div>
+
+                                                     
+
+                                                </div>
+                                            </div>
+                                           </div>
+                                        </div>
+                                    </div> {% endcomment %}
+                            </div>
+                            <div class="tab-pane" id="settings-b2">
+                                <div class="row mt-3" id='task_overview_div'>
+                                    <div class="col-lg-12">
+                                        <h3>Select project to view Analytics</h3>
+                                    </div>
+                                </div>
+                               {% comment %} <div class="card d-block mt-3  "> 
+                                        <div class="card-body">
+                                        <div class="dropdown float-end">
+                                             <a href="project-details.html" class="text-primary"><i class=" mdi mdi-eye me-1"></i>View Detail</a>
+                                        </div>
+                                        <!-- project title-->
+                                        <h3 class="mt-0">
+                                            Ada Chikan
+                                        </h3>
+
+                                        <div class="badge bg-warning text-light mb-3">Ongoing</div>
+
+                                           <div class="row">
+                                            <div class="col-md-4">
+                                                <div class="mb-2">
+                                                    <h5>Start Date</h5>
+                                                    <p>17 March 2018  </p>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-4">
+                                                <div class="mb-2">
+                                                    <h5>End Date</h5>
+                                                    <p>22 December 2018 </p>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-4">
+                                                <h5 class="card-title mb-3">Progress <span class="float-end">60%</span></h5>
+                                                
+                                                <div class="progress progress-sm">
+                                                    <div class="progress-bar" role="progressbar" aria-valuenow="100" aria-valuemin="0" aria-valuemax="60" style="width: 60%;">
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            
+                                        </div>
+                                         <div class="row">
+                                            <div class="col-md-4"  >
+                                                <h5>Project Manager:</h5>
+                                                <a href="javascript:void(0);" data-bs-toggle="popover" data-bs-trigger="hover" data-bs-content="Pankaj "  data-bs-placement="top" title=""  class="d-inline-block">
+                                                    <img src="assets/images/users/avatar-6.jpg" class="rounded-circle img-thumbnail avatar-sm" alt="friend">
+                                                </a>
+                                            </div>
+
+                                            <div id="tooltip-container  " class="col-md-8">
+                                                <h5>Team Members:</h5>
+                                                <a href="javascript:void(0);" data-bs-toggle="popover" data-bs-trigger="hover" data-bs-content="Anuj "  data-bs-placement="top" title="" class="d-inline-block">
+                                                    <img src="assets/images/users/avatar-6.jpg" class="rounded-circle img-thumbnail avatar-sm" alt="friend">
+                                                </a>
+        
+                                                <a href="javascript:void(0);" data-bs-toggle="popover" data-bs-trigger="hover" data-bs-content="Pooja "  data-bs-placement="top" title=""  class="d-inline-block">
+                                                    <img src="assets/images/users/avatar-7.jpg" class="rounded-circle img-thumbnail avatar-sm" alt="friend">
+                                                </a>
+        
+                                                <a href="javascript:void(0);" data-bs-toggle="popover" data-bs-trigger="hover" data-bs-content="Virendra "  data-bs-placement="top" title="" class="d-inline-block">
+                                                    <img src="assets/images/users/avatar-8.jpg" class="rounded-circle img-thumbnail avatar-sm" alt="friend">
+                                                </a>
+
+                                                <a href="javascript:void(0);" data-bs-toggle="popover" data-bs-trigger="hover" data-bs-content="Malvika "  data-bs-placement="top" title="" class="d-inline-block">
+                                                    <img src="assets/images/users/avatar-4.jpg" class="rounded-circle img-thumbnail avatar-sm" alt="friend">
+                                                </a>
+        
+                                                <a href="javascript:void(0);" data-bs-toggle="popover" data-bs-trigger="hover" data-bs-content="Preeti "  data-bs-placement="top" title="" class="d-inline-block">
+                                                    <img src="assets/images/users/avatar-5.jpg" class="rounded-circle img-thumbnail avatar-sm" alt="friend">
+                                                </a>
+        
+                                                
+                                            </div>
+                                        </div>
+
+
+                                        <h5 class="mt-3">Project Overview:</h5>
+
+                                        <p class="text-muted mb-2">
+                                            With supporting text below as a natural lead-in to additional contenposuere erat a ante. Voluptates, illo, iste itaque voluptas
+                                            corrupti ratione reprehenderit magni similique? Tempore, quos delectus asperiores libero voluptas quod perferendis! Voluptate,
+                                            quod illo rerum? Lorem ipsum dolor sit amet.
+                                        </p>
+
+                                        
+
+
+                                    </div> 
+                                    
+                                {% endcomment %}
+                                </div> 
+                            {% endif %}
+                            </div>
+                        </div>
+                            
+
+                              
+
+                        
+                    </div> <!-- end col -->
+
+                     
+                </div>
+                <!-- end row-->
+
+            </div> <!-- container -->
+
+        </div> <!-- content -->
+
+                <!-- Footer Start -->
+                <footer class="footer">
+                    <div class="container-fluid">
+                        <div class="row">
+                            <div class="col-md-12">
+                                <script>document.write(new Date().getFullYear())</script> © 18Pixels
+                            </div>
+                        </div>
+                    </div>
+                </footer>
+                <!-- end Footer -->
+
+            </div>
+
+            <!-- ============================================================== -->
+            <!-- End Page content -->
+            <!-- ============================================================== -->
+
+
+        </div>
+        <!-- END wrapper -->
+          <!-- Right Sidebar -->
+        <div class="end-bar">
+
+            <div class="rightbar-title pt-2 pb-2">
+                <a href="javascript:void(0);" class="end-bar-toggle float-end">
+                    <i class="dripicons-cross noti-icon"></i>
+                </a>
+                <h5 class="m-0">Task Detail</h5>
+            </div>
+
+            <div class="rightbar-content h-100" data-simplebar>
+
+                <div class="p-3 pt-1">
+                    <div>
+                       <h4 class="bold" id='task_title_append'>Login and register page development</h4>
+                       <hr>
+                    </div>
+                    <!-- Settings -->
+                    <div class="row">
+                         <div class="col-md-3 mb-3">Task Created</div>
+                        <div class="col-md-3"> <span class="text-primary"  id='task_created_append'>Today, 6:00 pm</span></div>
+                         <div class="col-md-3 mb-3">Last Updated </div>
+                        <div class="col-md-3"> <span class="text-info"  id='task_updated_append'>Oct 15, 6:00 pm</span></div>
+                         <div class="col-md-3 mb-3">Project  </div>
+                        <div class="col-md-9"  id='task_project_append'> Ada Chikan</div>
+                        <div class="col-md-3 mb-3">Module  </div>
+                        <div class="col-md-9"  id='task_module_append'>Customer Management</div>
+                         <div class="col-md-3 mb-3">Sub Module  </div>
+                        <div class="col-md-9"  id='task_subModule_append'>Create Customer page</div>
+
+                        <div class="col-md-3 mb-3">Assigned to</div>
+                        <div class="col-md-9"  id='task_employee_append'> <img src="{% static 'assets\images\users\avatar-2.jpg' %}" alt="image" class="avatar-xs rounded-circle me-1"  >  Pooja Singh</div>
+                        <div class="col-md-3 mb-3">Start Date-Time</div>
+                        <div class="col-md-9"> <span class="text-success"  id='task_start_append'>Today, 6:00 pm</span></div>
+                        <div class="col-md-3 mb-3">Due Date-Time</div>
+                        <div class="col-md-9"> <span class="text-success"  id='task_due_append'>Today, 6:00 pm</span></div>
+                         <div class="col-md-3 mb-3">Priority</div>
+                        <div class="col-md-9">  <span class="badge badge-danger-lighten p-1"  id='task_priority_append'>High</span></div>
+                           <div class="col-md-3 mb-3">Status</div>
+                        <div class="col-md-9"   id='task_status_append'><select class="form-control-light"><option>To do</option><option>Doing</option><option>Done</option></select> </div>
+
+                        {% comment %} <div class="col-md-3 mb-3">Review Date</div>
+                        <div class="col-md-9"> <span class="text-info"  id='task_review_append'>-</span></div>
+                        <div class="col-md-3 mb-3">Completion Date</div>
+                        <div class="col-md-9"><span class="text-info"  id='task_complete_append'>-</span></div> {% endcomment %}
+
+                        <div class="col-md-3 mb-3">Description</div>
+                        <div class="col-md-9">  <p  id='task_description_append'>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
+                        tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
+                        quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
+                        consequat. </p> </div>
+                         <div class="col-md-3 mb-3" id='depDiv'>Dependencies</div>
+                        <div class="col-md-9">  
+                            {% comment %} <p class="text-danger" >Feedback pending from client's end. </p> {% endcomment %}
+                            {% comment %} <input type="text" class="form-control" id="task_dependencies_append" placeholder="NA"> {% endcomment %}
+                            <textarea class="form-control" id="task_dependencies_append" rows="3"></textarea>
+                        </div>
+
+
+                        <div class="col-md-12">
+                            <hr>
+                             {% comment %} <a data-bs-toggle="modal"   data-bs-target="#edit-task-modal" href="javascript:;" class="btn btn-sm btn-info">  Edit</a> {% endcomment %}
+                             {% comment %} <a href="javascript:void(0);" class="btn btn-sm btn-danger ">Delete  </a> {% endcomment %}
+                             <a href="javascript:void(0);" class="btn btn-sm btn-info " id='update_task_btn2' taskId="" onclick="udate_dependencies_info(this)">Update</a>
+                            
+                        </div>
+                    </div>
+                </div> <!-- end padding-->
+
+            </div>
+        </div>
+
+        <div class="rightbar-overlay"></div>
+        <!-- /End-bar -->
+
+
+        <!-- add task modal -->
+        <div class="modal fade task-modal-content show" id="add-new-task-modal" tabindex="-1" role="dialog" aria-labelledby="NewTaskModalLabel" aria-modal="true" >
+            <div class="modal-dialog modal-dialog-centered modal-lg">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h4 class="modal-title" id="NewTaskModalLabel">Create New Task</h4>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+
+                    </div>
+                    <div class="modal-body">
+                        <form class="p-2">
+                            <div class="row">
+                            
+                            <div class="mb-2 col-md-12">
+                                <input class="form-check-input" type="checkbox" value="" id="defaultCheck1" onclick="add_no_module_task(this)">
+                                <label class="form-check-label" for="defaultCheck1">
+                                    +Add No-Project (General) Tasks
+                                </label>
+                            </div>
+
+                            <div class="mb-3 col-md-4" id="task-project-div">
+                                <label class="form-label">Project</label>
+                                 <select class="form-control select2 text-large" data-toggle="select2" id'projectsData' onchange="getProjectModuleList(this)"   data-placeholder="Select Project">
+                                        <option></option>
+                                        {% for i in projectObj %}
+                                                <option value="{{i.id}}">{{i.project_name}}</option>
+                                        {% endfor %}
+                                </select> 
+                            </div>
+                             <div class="mb-3 col-md-4" id="task-module-div">
+                                <label class="form-label">Module</label>
+                                 <select class="form-control select2 text-large" data-toggle="select2" id='modulesData' onchange="get_submodule_data_list(this)"  data-placeholder="Select Module">
+                                            <option></option>
+                                        
+                                </select> 
+                            </div>
+                             <div class="mb-3 col-md-4" id="task-sub-module-div">
+                                <label class="form-label">Sub Module</label>
+                                 <select class="form-control select2 text-large" data-toggle="select2" id='submodulesData'   data-placeholder="Select Sub module">
+                                         <option></option>
+                                        
+                                </select> 
+                            </div>
+                          </div>
+
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <div class="mb-3">
+                                        <label for="task-title" class="form-label">Title</label>
+                                        <input type="text" class="form-control" id="task-title" placeholder="Enter task title">
+                                    </div>
+                                </div>
+
+                                <div class="col-md-3">
+                                    <div class="mb-3">
+                                        <label for="task-priority" class="form-label">Start Date/Time</label>
+                                        <input type="text" class="form-control  " id="startDate" data-toggle="date-picker" data-single-date-picker="true" disabled>
+                                    </div>
+                                </div>
+                                <div class="col-md-3">
+                                    <div class="  mb-3 mt-3 pt-1 position-relative" >
+                                        <input type="time" class="form-control " id="startTime">
+                                        {% comment %} <select class="form-select" id='startTime'>
+                                            <option value="10:00:00">10:00 AM</option>
+                                            <option value="11:00:00">11:00 AM</option>
+                                            <option value="12:00:00">12:00 PM</option>
+                                            <option value="13:00:00">01:00 PM</option>
+                                            <option value="14:00:00">02:00 PM</option>
+                                            <option value="15:00:00">03:00 PM</option>
+                                            <option value="16:00:00">04:00 PM</option>
+                                            <option value="17:00:00">05:00 PM</option>
+                                            <option value="18:00:00">06:00 PM</option>
+                                            <option value="19:00:00">07:00 PM</option>
+                                            <option value="20:00:00">08:00 PM</option>
+
+                                            <option value='To do'>To do</option>
+                                            <option value='Doing'>Doing</option>
+                                            <option value='Review'>Review</option>
+                                            <option value='Done' selected>Done</option>
+                                        </select> {% endcomment %}
+                                    </div>
+                                </div>
+                                <div class="col-md-3">
+                                    <div class="mb-3">
+                                        <label for="task-priority" class="form-label">Due Date/Time</label>
+                                        <input type="text" class="form-control  " id="datepicker" data-toggle="date-picker" data-single-date-picker="true">
+                                    </div>
+                                </div>
+                                <div class="col-md-3">
+                                    <div class="  mb-3 mt-3 pt-1 position-relative" >
+                                        <input type="time" class="form-control " id="dueTime">
+                                        {% comment %} <select class="form-select" id='dueTime'>
+                                            <option value="10:00:00">10:00 AM</option>
+                                            <option value="11:00:00">11:00 AM</option>
+                                            <option value="12:00:00">12:00 PM</option>
+                                            <option value="13:00:00">01:00 PM</option>
+                                            <option value="14:00:00">02:00 PM</option>
+                                            <option value="15:00:00">03:00 PM</option>
+                                            <option value="16:00:00">04:00 PM</option>
+                                            <option value="17:00:00">05:00 PM</option>
+                                            <option value="18:00:00">06:00 PM</option>
+                                            <option value="19:00:00">07:00 PM</option>
+                                            <option value="20:00:00">08:00 PM</option>
+                                        </select> {% endcomment %}
+                                    </div>
+                                </div>
+                                <div class="col-md-3">
+                                    <div class="mb-3">
+                                        <label for="task-priority2" class="form-label">Priority</label>
+                                        <select class="form-select  " id="task-priority2">
+                                            <option value='Low'>Low</option>
+                                            <option value='Medium'>Medium</option>
+                                            <option value='High'>High</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="col-md-3" id="task-status-add-div">
+                                    <div class="mb-3">
+                                        <label for="task-priority2" class="form-label">Task Status</label>
+                                        <select class="form-select  " id="task-status-add">
+                                            <option value='To do' selected>To do</option>
+                                            <option value='Doing'>Doing</option>
+                                            <option value='Done' >Done</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                {% if request.session.userType != 'studdenT' %}
+                                 <div class="mb-6 col-md-6">
+                                <label class="form-label">Employee</label>
+                                 <select class="form-control select2 text-large" data-toggle="select2" id='employeeFK'  data-placeholder="Select Employee">
+                                        <option></option>
+                                         
+                                </select> 
+                            </div>
+                                {% endif %}
+                            </div>
+
+                            <div class="mb-3 mt-2">
+                                <label for="task-description" class="form-label">Description</label>
+                                <textarea class="form-control "  rows="2" id='taskDescription'></textarea>
+                            </div>
+
+                          
+                            
+                            <div class="text-end">
+                                <button  type="button" class="btn btn-light" data-bs-dismiss="modal" >Cancel</button>
+                                <button type="button" class="btn btn-primary" id='createBtn' onclick='createTask()'>Create</button>
+                                <button type="button" class="btn btn-primary" id='createBtn1' style='display:none;' onclick='createGeneralTask()'>Create</button>
+                                <button class="btn btn-primary" type="button" disabled style='display:none;' id='spinnerBtn'>
+                                    <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+                                    Creating New Task...
+                                </button>
+                            </div>
+                        </form>
+                    </div>
+                </div><!-- /.modal-content -->
+            </div><!-- /.modal-dialog -->
+        </div>
+        <!-- /End-modal -->
+         <!-- edit task modal -->
+        <div class="modal fade task-modal-content show" id="edit-task-modal" tabindex="-1" role="dialog" aria-labelledby="NewTaskModalLabel" aria-modal="true" >
+            <div class="modal-dialog modal-dialog-centered modal-lg">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h4 class="modal-title" id="NewTaskModalLabel">Edit Task</h4>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <form class="p-2">
+                            <div class="row">
+                            <div class="mb-3 col-md-4">
+                                <label class="form-label">Project</label>
+                                <input value="Ada Chikan" type="text" class="form-control  " id="task_projectName" placeholder="Enter title" readonly style='cursor:not-allowed;'> 
+                            </div>
+                             <div class="mb-3 col-md-4">
+                                <label class="form-label">Module</label>
+                                <input value="Ada Chikan" type="text" class="form-control  " id="modulesAppend" placeholder="Enter title" readonly style='cursor:not-allowed;'> 
+                                 {% comment %} <select class="form-control select2 text-large" data-toggle="select2"   data-placeholder="Select Module">
+                                            <option></option>
+                                        <option selected="" value="0">Customer management</option>
+                                        <option value="1">Sales management</option>
+                                        
+                                </select>  {% endcomment %}
+                            </div>
+                             <div class="mb-3 col-md-4">
+                                <label class="form-label" id=''>Sub Module</label>
+                                <input value="Ada Chikan" type="text" class="form-control  " id="submodulesAppend" placeholder="Enter title" readonly style='cursor:not-allowed;'> 
+                                 {% comment %} <select class="form-control select2 text-large" data-toggle="select2"   data-placeholder="Select Sub module">
+                                         <option></option>
+                                        <option selected="" value="0">Add new customer</option>
+                                        <option value="1">order list</option>
+                                        
+                                </select>  {% endcomment %}
+                            </div>
+                          </div>
+
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <div class="mb-3">
+                                        <label for="task-title" class="form-label">Title</label>
+                                        <input value="Login and register page development" type="text" class="form-control  " id="task_titleName" placeholder="Enter title">
+                                    </div>
+                                </div>
+                                <div class="col-md-3">
+                                    <div class="mb-3">
+                                        <label for="task-priority" class="form-label">Due Date</label>
+                                        <input type="text" class="form-control  " id="datepicker1" data-toggle="date-picker" data-single-date-picker="true" value="10/16/2021">
+                                    </div>
+                                </div>
+                                <div class="col-md-3">
+                                    <div class="  mb-3" >
+                                        <label for="task-priority" class="form-label">Due Date</label>
+                                        <input type="time" class="form-control " id="due_time_append">
+                                        {% comment %} <select class="form-select" id='due_time_append'>
+                                            <option value="10:00:00">10:00 AM</option>
+                                            <option value="11:00:00">11:00 AM</option>
+                                            <option value="12:00:00">12:00 PM</option>
+                                            <option value="13:00:00">01:00 PM</option>
+                                            <option value="14:00:00">02:00 PM</option>
+                                            <option value="15:00:00">03:00 PM</option>
+                                            <option value="16:00:00">04:00 PM</option>
+                                            <option value="17:00:00">05:00 PM</option>
+                                            <option value="18:00:00">06:00 PM</option>
+                                            <option value="19:00:00">07:00 PM</option>
+                                            <option value="20:00:00">08:00 PM</option>
+                                        </select> {% endcomment %}
+                                    </div>
+                                </div>
+                                <div class="col-md-2">
+                                    <div class="mb-3">
+                                        <label for="task-priority2" class="form-label">Priority</label>
+                                        <select class="form-select  " id="task-priority4">
+                                            <option value='Low'>Low</option>
+                                            <option value='Medium'>Medium</option>
+                                            <option value='High'>High</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                {% if request.session.userType != 'studdenT' %}
+                                 <div class="mb-3 col-md-4"  id='append_emp' >
+                                <label class="form-label">Employee</label>
+                                 <select class="form-control select2 text-large" data-toggle="select2" data-placeholder="Select Employee">
+                                        <option></option>
+                                </select> 
+                            </div>
+                                {% endif %}
+                            </div>
+
+                            <div class="mb-3">
+                                <label for="task-description" class="form-label">Description</label>
+                                <textarea class="form-control "  rows="2" id='task_descName'> Lorem ipsum</textarea>
+                            </div>
+
+                          
+                            
+                            <div class="text-end">
+                                <button  type="button" class="btn btn-light" data-bs-dismiss="modal" >Cancel</button>
+                                <button type="button" class="btn btn-primary" id='update_task' taskId="" onclick="edit_task_info(this)">Update</button>
+                                <button class="btn btn-primary" style='display:none;' type="button" disabled id='edit_spinner_btn'>
+                                    <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+                                    Updating Task Info ...
+                                </button>
+                            </div>
+                        </form>
+                    </div>
+                </div><!-- /.modal-content -->
+            </div><!-- /.modal-dialog -->
+        </div>
+        <!-- /End-modal -->
+
+
+         <!-- edit task modal -->
+         <div class="modal fade task-modal-content show" id="edit--general-task-modal" tabindex="-1" role="dialog" aria-labelledby="NewTaskModalLabel" aria-modal="true" >
+            <div class="modal-dialog modal-dialog-centered modal-lg">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h4 class="modal-title" id="NewTaskModalLabel">Edit Task</h4>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <form class="p-2">
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <div class="mb-3">
+                                        <label for="task-title" class="form-label">Title</label>
+                                        <input value="Login and register page development" type="text" class="form-control  " id="task_general_titleName" placeholder="Enter title">
+                                    </div>
+                                </div>
+                                <div class="col-md-3">
+                                    <div class="mb-3">
+                                        <label for="task-priority" class="form-label">Due Date</label>
+                                        <input type="text" class="form-control  " id="general_datepicker1" data-toggle="date-picker" data-single-date-picker="true" value="">
+                                    </div>
+                                </div>
+                                <div class="col-md-3">
+                                    <div class="  mb-3 " >
+                                        <label for="task-priority" class="form-label">Due Time</label>
+                                        <input type="time" class="form-control " id="due_general_time_append">
+                                        {% comment %} <select class="form-select" id='due_general_time_append'>
+                                            <option value="10:00:00">10:00 AM</option>
+                                            <option value="11:00:00">11:00 AM</option>
+                                            <option value="12:00:00">12:00 PM</option>
+                                            <option value="13:00:00">01:00 PM</option>
+                                            <option value="14:00:00">02:00 PM</option>
+                                            <option value="15:00:00">03:00 PM</option>
+                                            <option value="16:00:00">04:00 PM</option>
+                                            <option value="17:00:00">05:00 PM</option>
+                                            <option value="18:00:00">06:00 PM</option>
+                                            <option value="19:00:00">07:00 PM</option>
+                                            <option value="20:00:00">08:00 PM</option>
+                                        </select> {% endcomment %}
+                                    </div>
+                                </div>
+                                <div class="col-md-2">
+                                    <div class="mb-3">
+                                        <label for="task-priority2" class="form-label">Priority</label>
+                                        <select class="form-select  " id="task-general-priority4">
+                                            <option value='Low'>Low</option>
+                                            <option value='Medium'>Medium</option>
+                                            <option value='High'>High</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                {% comment %} {% if request.session.userType != 'studdenT' %}
+                                <div class="mb-3 col-md-4"  id='append_emp_emp' >
+                                    <label class="form-label">Employee</label>
+                                    <select class="form-control" id="edit-general-task-emp" data-placeholder="Select Employee">
+                                        <option></option>
+                                        {% for i in employeeObj %}
+                                            <option value="{{i.id}}">{{i.employee_name}}</option>
+                                        {% endfor %}
+                                    </select> 
+                                </div>
+                                {% endif %} {% endcomment %}
+                            </div>
+
+                            <div class="mb-3">
+                                <label for="task-description" class="form-label">Description</label>
+                                <textarea class="form-control "  rows="2" id='general_task_descName'></textarea>
+                            </div>
+
+                          
+                            
+                            <div class="text-end">
+                                <button  type="button" class="btn btn-light" data-bs-dismiss="modal" >Cancel</button>
+                                <button type="button" class="btn btn-primary" id='general_update_task' taskId="" onclick="edit_general_task_info(this)">Update</button>
+                                <button class="btn btn-primary" style='display:none;' type="button" disabled id='edit_general_spinner_btn'>
+                                    <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+                                    Updating Task Info ...
+                                </button>
+                            </div>
+                        </form>
+                    </div>
+                </div><!-- /.modal-content -->
+            </div><!-- /.modal-dialog -->
+        </div>
+        <!-- /End-modal -->
+
+        <!-- bundle -->
+        <script src="{% static 'assets/js/vendor.min.js' %}"></script>
+        <script src="{% static 'assets/js/app.min.js' %}"></script>
+
+        <!-- quill js -->
+        <script src="{% static 'assets/js/vendor/quill.min.js' %}"></script>
+        <!-- Init js-->
+        <script src="{% static 'assets/js/pages/demo.tasks.js' %}"></script>
+        <!-- third party js -->
+        <script src="{% static 'assets/js/vendor/Chart.bundle.min.js' %}"></script>
+        <!-- third party js ends -->
+
+        <!-- demo app -->
+        <script src="{% static 'assets/js/pages/demo.dashboard-projects.js' %}"></script>
+        <!-- end demo js-->
+         <script src="{% static 'assets/js/custom.js' %}"></script>
+         <script src="{% static 'assets/js/admin_JS/task_JS/task_filters.js' %}"></script>
+         <script src="{% static 'assets/js/admin_JS/task_JS/add_task.js' %}"></script>
+         <script src="{% static 'assets/js/admin_JS/task_JS/edit_task.js' %}"></script>
+         <script src="{% static 'assets/js/admin_JS/task_JS/view_task.js' %}"></script>
+         <script src="{% static 'assets/js/admin_JS/task_JS/project_analytics_filter.js' %}"></script>
+         <script src="{% static 'assets/js/admin_JS/task_JS/task-report.js' %}"></script>
+
+
+         <script>
+            document.getElementById("startTime").value = Date().slice(16,21);
+            document.getElementById("dueTime").value = Date().slice(16,21);
+
+            // ---------------  AJAX CALL  ----------------------------
+                $.ajax({
+                    type: 'GET',
+                    url: "/task-management/get-emp",
+                    success: function (response) {
+                        var dataStr = '';
+                        for(var i=0;i<response['response'].length;i++){
+                            var data = '<option value="'+response['response'][i]['empId']+'">'+response['response'][i]['empName']+'</option>';
+                            dataStr = dataStr + data;
+                        }
+            
+                        $('#edit-general-task-emp').html('');
+                        $('#edit-general-task-emp').append('<option class="d-none">Select Employee</option>'+dataStr);
+                    }
+                });
+            // --------------------------------------------------------
+         </script>
+
+        <script>
+            function customDate(thisTxt){
+                if($(thisTxt).val().trim() == 'custom'){
+                    $('#custom-date-div').css('display','');
+                }else{
+                    $('#custom-date-div').css('display','none');
+                }
+            }
+        </script>
+
+        <script>
+            $(function() {
+              $('input[name="daterange"]').daterangepicker({
+                opens: 'left'
+              }, function(start, end, label) {
+                console.log();
+              });
+            });
+            </script>
+
+    </body>
+
+</html>

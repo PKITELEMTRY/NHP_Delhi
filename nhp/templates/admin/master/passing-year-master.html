@@ -1,0 +1,215 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+ 
+<head>
+        <meta charset="utf-8" />
+         <title>18Pixels | Management Tool</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta content="" />
+        <meta content="Coderthemes" name="author" />
+        <!-- App favicon -->
+        <link rel="shortcut icon" href="{% static 'assets/images/favicon.ico' %}">
+
+        <!-- third party css -->
+        <link href="{% static 'assets/css/vendor/dataTables.bootstrap5.css' %}" rel="stylesheet" type="text/css" />
+        <link href="{% static 'assets/css/vendor/responsive.bootstrap5.css' %}" rel="stylesheet" type="text/css" />
+        <!-- third party css end -->
+
+        <!-- App css -->
+        <link href="{% static 'assets/css/icons.min.css' %}" rel="stylesheet" type="text/css" />
+        <link href="{% static 'assets/css/app.min.css' %}" rel="stylesheet" type="text/css" id="light-style" />
+        <link href="{% static 'assets/css/app-dark.min.css' %}" rel="stylesheet" type="text/css" id="dark-style" />
+        <link href="{% static 'assets/css/custom.css' %}" rel="stylesheet" type="text/css"  />
+
+    </head>
+
+    <body class="loading" data-layout-config='{"leftSideBarTheme":"dark","layoutBoxed":false, "leftSidebarCondensed":false, "leftSidebarScrollable":false,"darkMode":false, "showRightSidebarOnStart": true}'>
+        <!-- Begin page -->
+        <div class="wrapper">
+            <!-- ========== Left Sidebar Start ========== -->
+            <div class="leftside-menu" id="sidebarMenus">
+                {% include 'base.html' %}
+              </div>
+            <!-- Left Sidebar End -->
+
+            <!-- ============================================================== -->
+            <!-- Start Page Content here -->
+            <!-- ============================================================== -->
+
+            <div class="content-page">
+                <div class="content">
+                    <!-- Topbar Start -->
+                   <div class="navbar-custom" id="load-navigation">
+                        {% include 'hearder.html' %}
+                    </div>
+                    <!-- end Topbar -->
+                    <!-- Start Content-->
+                    <div class="container-fluid">
+                        <!-- start page title -->
+                        <div class="row">
+                            <div class="col-8">
+                                <div class="page-title-box">
+                                    <h4 class="page-title">Passing Year Master</h4>
+                                </div>
+                            </div>
+                             <div class="col-4 text-end pt-3">
+                                  <a href="#" data-bs-toggle="modal" data-bs-target="#add-new-desig" class="btn btn-danger mb-2"><i class="mdi mdi-plus-circle me-2"></i> Add Passing Year</a>
+                             </div>
+                        </div>     
+                        <!-- end page title --> 
+
+                        <div class="row">
+                            <div class="col-12">
+                                <div class="card">
+                                    <div class="card-body">
+                                        <div class="table-responsive">
+                                          <table id="basic-datatable" class="table dt-responsive nowrap w-100">
+                                            <thead>
+                                                <tr>
+                                                    {% comment %} <th width="70">S.No.</th> {% endcomment %}
+                                                    
+                                                    <th>Passing Year</th>
+                                                     
+                                                    <th width="100">Action</th>
+                                                </tr>
+                                            </thead>
+
+
+                                            <tbody>
+                                            {% for i in designationObj %}
+                                                <tr>
+                                                    {% comment %} <td>1</td> {% endcomment %}
+                                                     
+                                                    <td>{{i.passingYear}}</td>
+                                                    <td> 
+                                                        <a href="#" data-bs-toggle="modal" data-bs-target="#edit-desig"  class="action-icon text-warning" designationID="{{i.id}}" onclick="get_designation(this)"> <i class="mdi mdi-square-edit-outline"></i></a>
+                                                        <a href="#" onclick="delete_designation(this)" designationID="{{i.id}}" class="action-icon text-danger"> <i class="mdi mdi-delete-outline"></i></a>
+                                                     </td>
+                                                    
+                                                </tr>
+                                            {% endfor %}
+                                            </tbody>
+                                        </table>
+                                        </div>
+                                    </div> <!-- end card-body-->
+                                </div> <!-- end card-->
+                            </div> <!-- end col -->
+                        </div>
+                        <!-- end row -->
+                        
+                    </div> <!-- container -->
+
+                </div> <!-- content -->
+
+                <!-- Footer Start -->
+                <footer class="footer">
+                    <div class="container-fluid">
+                        <div class="row">
+                            <div class="col-md-6">
+                                <script>document.write(new Date().getFullYear())</script> © 18pixels 
+                            </div>
+                            
+                        </div>
+                    </div>
+                </footer>
+                <!-- end Footer -->
+
+            </div>
+
+            <!-- ============================================================== -->
+            <!-- End Page content -->
+            <!-- ============================================================== -->
+
+
+        </div>
+        <!-- END wrapper -->
+
+
+        
+
+        <!-- add desig modal -->
+        <div class="modal fade task-modal-content show" id="add-new-desig" tabindex="-1" role="dialog" aria-labelledby="NewTaskModalLabel" aria-modal="true" >
+            <div class="modal-dialog modal-dialog-centered modal-md">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h4 class="modal-title" id="NewTaskModalLabel">Add Passing Year</h4>
+                        {% comment %} <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button> {% endcomment %}
+                    </div>
+                    <div class="modal-body">
+                        <form class="p-2">
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <div class="mb-3">
+                                        <label for="task-title" class="form-label">Passing Year<span id='designationCheckText' style="color:red;display:none;"><small>Passing Year Already Exist!</small></span></label>
+                                        <input type="text" class="form-control" onkeypress="return /[0-9]/i.test(event.key)" maxlength='4' onkeyup="checkDesignationName(this)"  id='designationName' placeholder="Enter Passing Year">
+                                    </div>
+                                </div>
+                              </div>
+                        
+                            
+                            <div class="text-end mt-4">
+                                <button  type="button" class="btn btn-light btn-sm" data-bs-dismiss="modal" >Cancel</button>
+                                <button type="button" class="btn btn-primary btn-sm" data-bs-dismiss="modal" onclick="create_designation()">Create</button>
+                            </div>
+                        </form>
+                    </div>
+                </div><!-- /.modal-content -->
+            </div><!-- /.modal-dialog -->
+        </div>
+        <!-- /End-modal -->
+
+         <!-- edit desig modal -->
+        <div class="modal fade task-modal-content show" id="edit-desig" tabindex="-1" role="dialog" aria-labelledby="NewTaskModalLabel" aria-modal="true" >
+            <div class="modal-dialog modal-dialog-centered modal-md">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h4 class="modal-title" id="NewTaskModalLabel">Edit Passing Year</h4>
+                        {% comment %} <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button> {% endcomment %}
+                    </div>
+                    <div class="modal-body">
+                        <form class="p-2">
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <div class="mb-3">
+                                        <label for="task-title" class="form-label">Passing Year</label>
+                                        <input type="text" value="" onkeypress="return /[0-9]/i.test(event.key)" maxlength='4' id='edit_designation_val' class="form-control  "  placeholder="Enter Passing Year" >
+                                    </div>
+                                </div>
+                              </div>
+                        
+                            
+                            <div class="text-end mt-4">
+                                <button  type="button" class="btn btn-light btn-sm" data-bs-dismiss="modal" >Cancel</button>
+                                <button type="button" class="btn btn-primary btn-sm" data-bs-dismiss="modal" designation_masterID='' id='edit_btn' onclick="edit_designation(this)">Update</button>
+                            </div>
+                        </form>
+                    </div>
+                </div><!-- /.modal-content -->
+            </div><!-- /.modal-dialog -->
+        </div>
+        <!-- /End-modal -->
+
+
+        <!-- bundle -->
+        <script src="{% static 'assets/js/vendor.min.js' %}"></script>
+        <script src="{% static 'assets/js/app.min.js' %}"></script>
+
+        <!-- third party js -->
+        <script src="{% static 'assets/js/vendor/jquery.dataTables.min.js' %}"></script>
+        <script src="{% static 'assets/js/vendor/dataTables.bootstrap5.js' %}"></script>
+        <script src="{% static 'assets/js/vendor/dataTables.responsive.min.js' %}"></script>
+        <script src="{% static 'assets/js/vendor/responsive.bootstrap5.min.js' %}"></script>
+        <script src="{% static 'assets/js/vendor/dataTables.checkboxes.min.js' %}"></script>
+        <!-- third party js ends -->
+
+        <!-- demo app -->
+        <script src="{% static 'assets/js/pages/demo.datatable-init.js' %}"></script>
+
+        <script src="{% static 'assets/js/custom.js' %}"></script>
+        <script src="{% static 'assets/js/admin_JS/master_JS/passing_year_master.js' %}"></script>
+        <!-- end demo js-->
+
+    </body>
+ 
+</html>

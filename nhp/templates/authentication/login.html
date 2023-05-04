@@ -1,0 +1,127 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+        <meta charset="utf-8" />
+         <title>BinaryBridge</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta content="A fully featured admin theme which can be used to build CRM, CMS, etc." name="description" />
+        <meta content="Coderthemes" name="author" />
+        <!-- App favicon -->
+        <link rel="shortcut icon" href="{% static 'assets/images/favicon.ico' %}">
+        
+        <!-- App css -->
+        <link href="{% static 'assets/css/icons.min.css' %}" rel="stylesheet" type="text/css" />
+        <link href="{% static 'assets/css/app.min.css' %}" rel="stylesheet" type="text/css" id="light-style" />
+        <link href="{% static 'assets/css/app-dark.min.css' %}" rel="stylesheet" type="text/css" id="dark-style" />
+
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.3.0/css/all.min.css" integrity="sha512-SzlrxWUlpfuzQ+pcUCosxcglQRNAq/DZjVsC0lE40xsADsfeQoEypE+enwcOiGjk/bSuGGKHEyjSoQ1zVisanQ==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+        <style type="text/css">
+          body {overflow: hidden;}
+            .login {}
+            .login img{max-width: 100%;}
+            .right img {max-width: 300px;}
+            body {height: 100vh;background: url('img/login/bg.png') 100% 100% no-repeat;}
+             .right {  padding: 70px 0px;}
+             .right h3{font-weight: 500; color: #333;}
+             .right p{font-size: 18px; margin-top: 5px;}
+             .right label {font-weight: 600; margin-bottom: 0; color: #333;}
+             .right .form-control {border: 0; border-bottom: solid 1px #ccc; padding: 10px 0; width: 100%;}
+             .right .chkbox{font-size: 14px;}
+             .right .chkbox input {float: left; margin-right: 5px; margin-top: 5px;}
+              .right .form-group a {position: absolute; right: 0; top: 35px; color: #444;}
+              .input-group-text {background: none; border: 0; padding: 0; color: #333; position: absolute; right: 0; top: 10px;}
+              .btn-danger {
+                    color: #fff;
+                    background-color: #ed1f48;
+                    border-color: #ed1f48;
+                }
+                .form-check-input {border: 1px solid #8d9195;}
+               @media (min-width: 1600px){
+                 .right {  padding: 170px 0px;}
+               }
+              @media (max-width: 800px){
+                body,html {overflow-x: hidden!important; overflow: auto;}
+                .left {max-height: 160px; overflow: hidden;}
+                .left img{margin-top: -100px;}
+                .right {padding: 25px 35px;}
+                 .right p{font-size: 15px; line-height: 18px;}
+                 .right .form-control {padding-top: 5px;}
+              }
+        </style>
+    </head>
+
+    <body class="loading ">
+        <div class="login">
+              <div class="row">
+                    <!-- <div class="col-md-6 p-0 left">
+                      <img class="bg" src="{% static 'assets/images/bg11.jpeg' %}" height="1080" width="959">
+                    </div>  -->
+                   <div class="col-md-4 offset-md-1 right">
+                        <!-- <img src="https://public-images-docs.s3.ap-south-1.amazonaws.com/nhp.png" height="20px" width="20px">  -->
+                        <h2 class="text-info"><img src="{% static 'assets/images/favicon.ico' %}" class="m-1" alt="" height="60"> 
+                            BinaryBridge</h2>
+                        
+                        <div class="text-left m-auto">
+                            <h3 class="mt-1 mt-md-3 text-dark  ">Sign In</h3>
+                            {% comment %} <p class="mb-4">Enter your nhp state, email address & password to access</p> {% endcomment %}
+                            <p class="mb-4">Enter your email address & password to access</p>
+
+                        </div>
+                                <form method='POST' action="">
+                                    {% csrf_token %}
+                                    {% comment %} <div class="mb-3 mb-3 text-right">
+                                        <label for="emailaddress" >NHP State</label><br>
+                                        <small>
+                                            {% for state in states %}
+                                                <div class="form-check form-check-inline">
+                                                    <input class="form-check-input" type="radio" name="nhp-state" id="inlineRadio{{forloop.counter}}" value="{{state.name}}" required="">
+                                                    <label class="form-check-label" for="inlineRadio{{forloop.counter}}"><strong>NHP {{state.name|title}}</strong></label>
+                                                </div>
+                                            {% endfor %}
+                                            <div class="form-check form-check-inline">
+                                                <input class="form-check-input" type="radio" name="nhp-state" id="inlineRadio" value="admin" required="">
+                                                <label class="form-check-label" for="inlineRadio"><strong>NHP(Admin Login)</strong></label>
+                                            </div>
+                                        </small>
+                                    </div> {% endcomment %}
+                                    <div class="mb-3">
+                                        <label for="emailaddress" >Email address</label>
+                                        <input value="" class="form-control" type="email" id="emailaddress" name='emailaddress' required="" placeholder="Enter your email">
+                                    </div>
+                                    <div class="mb-3">
+                                        <a href="pages-recoverpw.html" class="text-muted float-end"><small>Forgot your password?</small></a>
+                                        <label for="password" >Password</label>
+                                        <div class="input-group input-group-merge position-relative">
+                                            <input value="" type="password" id="password" name='password' class="form-control" placeholder="Enter your password" required>
+                                            <div class="input-group-text" data-password="false">
+                                                <span class="password-eye"></span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    {% if messages %}
+                                        {% for message in messages %}
+                                            {% comment %} <p class="text-center text-danger" >{{message}}</p> {% endcomment %}
+                                            <span style="font-size:15px;font-weight:700;" class="badge badge-danger-lighten mt-1 mb-2">{{message}}</span>
+                                        {% endfor %}
+                                    {% endif %}
+                                    <div class="mb-3 mb-0 mt-4 text-center">
+                                        <button class="btn btn-info w-100" type="submit"> Log In </button>
+                                    </div>
+
+                                </form>
+                        <!-- end row -->
+                    </div> <!-- end col -->
+                </div>
+                <!-- end row -->
+            </div>
+            <!-- end container -->
+        </div>
+        <!-- end page -->
+        <!-- bundle -->
+        <script src="{% static 'assets/js/vendor.min.js' %}"></script>
+        <script src="{% static 'assets/js/app.min.js' %}"></script>
+        
+    </body>
+ 
+</html>

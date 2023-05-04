@@ -1,0 +1,144 @@
+﻿{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+         <title>18Pixels | Management Tool</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta content="A fully featured admin theme which can be used to build CRM, CMS, etc." name="description">
+        <meta content="Coderthemes" name="author">
+        <!-- App favicon -->
+        <link rel="shortcut icon" href="{% static 'assets/images/favicon.ico' %}">
+
+        <!-- App css -->
+        <link href="{% static 'assets/css/icons.min.css' %}" rel="stylesheet" type="text/css">
+        <link href="{% static 'assets/css/app.min.css' %}" rel="stylesheet" type="text/css" id="light-style">
+        <link href="{% static 'assets/css/app-dark.min.css' %}" rel="stylesheet" type="text/css" id="dark-style">
+        <link href="{% static 'assets/css/custom.css' %}" rel="stylesheet" type="text/css"  >
+
+    </head>
+
+    <body class="loading" data-layout-config='{"leftSideBarTheme":"dark","layoutBoxed":false, "leftSidebarCondensed":false, "leftSidebarScrollable":false,"darkMode":false, "showRightSidebarOnStart": true}'>
+        <!-- Begin page -->
+        <div class="wrapper">
+            <!-- ========== Left Sidebar Start ========== -->
+             <div class="leftside-menu" id="sidebarMenus">
+                {% include 'base.html' %}
+              </div>
+            <!-- Left Sidebar End -->
+
+            <!-- ============================================================== -->
+            <!-- Start Page Content here -->
+            <!-- ============================================================== -->
+
+            <div class="content-page">
+                <div class="content">
+                    <!-- Topbar Start -->
+                    <div class="navbar-custom" id="load-navigation"> 
+                        {% include 'hearder.html' %}
+                    </div>
+                    <!-- end Topbar -->
+
+                    <!-- Start Content-->
+                    <div class="container-fluid">
+                        
+                        <!-- start page title -->
+                        <div class="row">
+                            <div class="col-8">
+                                <div class="page-title-box">
+                                    <h4 class="page-title">Allot Leaves  </h4>
+                                </div>
+                            </div>
+                             <div class="col-4 text-end pt-3">
+                                 <a href="{% url 'get_leave_allotment' %}" class=" mb-3 mr-3"> Back to List</a>
+                             </div>
+                        </div>     
+                        <!-- end page title --> 
+
+                        <div class="row">
+                            <div class="col-12">
+                                <div class="card">
+                                    <div class="card-body">
+                                        <div class="row">
+                                            <div class="col-xl-6 mx-auto ">
+                                                <div class="mb-3">
+                                                    <label for="project-budget" class="form-label">Employee*</label>
+                                                    <select class="form-control select2" data-toggle="select2"   data-placeholder="Select Employee" id='getEmployeeID'>
+                                                        <option></option>
+                                                        {% for i in empObj %}
+                                                            <option value="{{i.id}}">{{i.employee_name}}</option>
+                                                        {% endfor %}
+                                                    </select> 
+                                                </div>
+                                                <div class="mb-3  ">
+                                                <label for="task-title" class="form-label">No. of Leaves*</label>
+                                                 <input type="text" class="form-control" name="" onkeypress="return /[0-9]/i.test(event.key)" maxlength="2" id='no_of_days'>
+                                             </div>
+                                              <div class="mb-3  ">
+                                                <label for="task-title" class="form-label">Reason*</label>
+                                                 <textarea class="form-control" id='getLeaveReason'></textarea>
+                                             </div>
+                                             <div class="mb-3 mt-4  text-end">
+                                                <button class="btn btn-primary btn-lg" onclick="allot_leave()">Allot Leave</button>
+                                            </div>
+                                         </div>
+                                             
+
+                                        </div>
+ 
+                                    </div>
+                                    <!-- end row -->
+
+                                </div> <!-- end card-body -->
+                            </div> <!-- end card-->
+                        </div> <!-- end col-->
+                    </div>
+                    <!-- end row-->
+                    
+                </div> <!-- container -->
+
+            </div> <!-- content -->
+
+                <!-- Footer Start -->
+                <footer class="footer">
+                    <div class="container-fluid">
+                        <div class="row">
+                            <div class="col-md-6">
+                                <script>document.write(new Date().getFullYear())</script> © Hyper - Coderthemes.com
+                            </div>
+                            <div class="col-md-6">
+                                <div class="text-md-end footer-links d-none d-md-block">
+                                    <a href="javascript: void(0);">About</a>
+                                    <a href="javascript: void(0);">Support</a>
+                                    <a href="javascript: void(0);">Contact Us</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </footer>
+                <!-- end Footer -->
+
+            </div>
+
+            <!-- ============================================================== -->
+            <!-- End Page content -->
+            <!-- ============================================================== -->
+
+
+        </div>
+        <!-- END wrapper -->
+ 
+
+        <!-- bundle -->
+        <script src="{% static 'assets/js/vendor.min.js' %}"></script>
+        <script src="{% static 'assets/js/app.min.js' %}"></script>
+
+        <!-- plugin js -->
+        <script src="{% static 'assets/js/vendor/dropzone.min.js' %}"></script>
+        <!-- init js -->
+        <script src="{% static 'assets/js/ui/component.fileupload.js' %}"></script>
+        <script src="{% static 'assets/js/custom.js' %}"></script>
+        <script src="{% static 'assets/js/admin_JS/leaves_JS/leave_allotment.js' %}"></script>
+
+    </body>
+</html>

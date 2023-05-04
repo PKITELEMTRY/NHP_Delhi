@@ -1,0 +1,179 @@
+﻿{% load static %}<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+         <title>18Pixels | Management Tool</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta content="A fully featured admin theme which can be used to build CRM, CMS, etc." name="description">
+        <meta content="Coderthemes" name="author">
+        <!-- App favicon -->
+        <link rel="shortcut icon" href="{% static 'assets/images/favicon.ico' %}">
+
+        <!-- third party css -->
+        <link href="{% static 'assets/css/vendor/dataTables.bootstrap5.css' %}" rel="stylesheet" type="text/css" />
+        <link href="{% static 'assets/css/vendor/responsive.bootstrap5.css' %}" rel="stylesheet" type="text/css" />
+        <!-- third party css end -->
+
+        <!-- App css -->
+        <link href="{% static 'assets/css/icons.min.css' %}" rel="stylesheet" type="text/css" />
+        <link href="{% static 'assets/css/app.min.css' %}" rel="stylesheet" type="text/css" id="light-style" />
+        <link href="{% static 'assets/css/app-dark.min.css' %}" rel="stylesheet" type="text/css" id="dark-style" />
+        <link href="{% static 'assets/css/custom.css' %}" rel="stylesheet" type="text/css"  />
+
+        {% comment %} <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.13.1/css/bootstrap-select.css" /> {% endcomment %}
+        {% comment %} <script src="{% static 'assets/editor/editor.js' %}"></script> {% endcomment %}
+        <link href="{% static 'assets/editor/editor.css' %}" type="text/css" rel="stylesheet" />
+
+
+    </head>
+
+    <body class="loading" data-layout-config='{"leftSideBarTheme":"dark","layoutBoxed":false, "leftSidebarCondensed":false, "leftSidebarScrollable":false,"darkMode":false, "showRightSidebarOnStart": true}'>
+        <!-- Begin page -->
+        <div class="wrapper">
+            <!-- ========== Left Sidebar Start ========== -->
+             <div class="leftside-menu" id="sidebarMenus">
+                {% include 'base.html' %}
+
+              </div>
+            <!-- Left Sidebar End -->
+
+            <!-- ============================================================== -->
+            <!-- Start Page Content here -->
+            <!-- ============================================================== -->
+
+            <div class="content-page">
+                <div class="content">
+                    <!-- Topbar Start -->
+                    <div class="navbar-custom" id="load-navigation"> {% include 'hearder.html' %}</div>
+                    <!-- end Topbar -->
+
+                    <!-- Start Content-->
+                    <div class="container-fluid">
+                        
+                        <!-- start page title -->
+                        <div class="row">
+                            <div class="col-8">
+                                <div class="page-title-box">
+                                    <h4 class="page-title">Post New Job  </h4>
+                                </div>
+                            </div>
+                             <div class="col-4 text-end pt-3">
+                                 <a href="/hr-management/job-list" class=" mb-3 mr-3"> Back to List</a>
+                             </div>
+                        </div>     
+                        <!-- end page title --> 
+
+                        <div class="row">
+                            <div class="col-12">
+                                <div class="card">
+                                    <div class="card-body">
+                                        <div class="row">
+                                            <div class="col-xl-8 mx-auto ">
+                                                <div class="mb-3">
+                                                    <label for="project-budget" class="form-label">Job Title*</label>
+                                                    <select class="form-control select2" data-toggle="select2" id='designation'  data-placeholder="Select job title">
+                                                        <option></option>
+                                                        {% for i in designObj %}
+                                                            <option value="{{i.id}}">{{i.designation_name}}</option>
+                                                        {% endfor %}
+                                                        
+                                                    </select> 
+                                                </div>
+                                                <div class="mb-3">
+                                                    <label for="project-budget" class="form-label">Job Location*</label>
+                                                      <select class="select2 form-control select2-multiple" data-toggle="select2" multiple="multiple" data-placeholder="Select ..." id='selectedJobLoc'>
+                                                            <option></option>
+                                                            {% for i in locObj %}
+                                                                <option value="{{i.id}}">{{i.location}}</option>
+                                                            {% endfor %}
+
+                                                    </select> 
+                                                </div>
+                                                
+                                             <div class="mb-3">
+                                                <label for="task-title" class="form-label">Job Description</label>
+                                                {% comment %} <textarea class="form-control" style="height: 200px"></textarea> {% endcomment %}
+                                                <textarea class="form-control" id="txtEditor" style="height: 200px" placeholder="Type here.."></textarea>
+                                                 
+                                             </div>
+                                             {% comment %} <div class="mb-3form-group" id="renderEditor">
+
+                                            </div> {% endcomment %}
+                                             <div class="mb-3 mt-4  text-end">
+                                                <button class="btn btn-primary btn-lg" onclick="add_job()">Add Job</button>
+                                            </div>
+                                         </div>
+                                             
+
+                                        </div>
+ 
+                                    </div>
+                                    <!-- end row -->
+
+                                </div> <!-- end card-body -->
+                            </div> <!-- end card-->
+                        </div> <!-- end col-->
+                    </div>
+                    <!-- end row-->
+                    
+                </div> <!-- container -->
+
+            </div> <!-- content -->
+
+                <!-- Footer Start -->
+                <footer class="footer">
+                    <div class="container-fluid">
+                        <div class="row">
+                            <div class="col-md-6">
+                                <script>document.write(new Date().getFullYear())</script> © Hyper - Coderthemes.com
+                            </div>
+                            <div class="col-md-6">
+                                <div class="text-md-end footer-links d-none d-md-block">
+                                    <a href="javascript: void(0);">About</a>
+                                    <a href="javascript: void(0);">Support</a>
+                                    <a href="javascript: void(0);">Contact Us</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </footer>
+                <!-- end Footer -->
+
+            </div>
+
+            <!-- ============================================================== -->
+            <!-- End Page content -->
+            <!-- ============================================================== -->
+
+
+        </div>
+        <!-- END wrapper -->
+ 
+
+        <!-- bundle -->
+        <script src="{% static 'assets/js/vendor.min.js' %}"></script>
+        <script src="{% static 'assets/js/app.min.js' %}"></script>
+
+        <!-- third party js -->
+        <script src="{% static 'assets/js/vendor/jquery.dataTables.min.js' %}"></script>
+        <script src="{% static 'assets/js/vendor/dataTables.bootstrap5.js' %}"></script>
+        <script src="{% static 'assets/js/vendor/dataTables.responsive.min.js' %}"></script>
+        <script src="{% static 'assets/js/vendor/responsive.bootstrap5.min.js' %}"></script>
+        <script src="{% static 'assets/js/vendor/dataTables.checkboxes.min.js' %}"></script>
+        <!-- third party js ends -->
+
+        <!-- demo app -->
+        <script src="{% static 'assets/js/pages/demo.datatable-init.js' %}"></script>
+
+         <script src="{% static 'assets/js/custom.js' %}"></script>
+         <script src="{% static 'assets/js/admin_JS/hr_JS/add_new_jobs.js' %}"></script>
+         <script src="{% static 'assets/editor/editor.js' %}"></script>
+         
+         <script>
+             $("#txtEditor").Editor();
+         </script>
+
+        <!-- end demo js-->
+
+    </body>
+</html>

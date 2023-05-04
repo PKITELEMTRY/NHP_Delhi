@@ -1,0 +1,395 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+ 
+<head>
+        <meta charset="utf-8" />
+         <title>18Pixels | Management Tool</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta content="" />
+        <meta content="Coderthemes" name="author" />
+        <!-- App favicon -->
+        <link rel="shortcut icon" href="{% static 'assets/images/favicon.ico' %}">
+
+        <!-- third party css -->
+        <link href="{% static 'assets/css/vendor/dataTables.bootstrap5.css' %}" rel="stylesheet" type="text/css" />
+        <link href="{% static 'assets/css/vendor/responsive.bootstrap5.css' %}" rel="stylesheet" type="text/css" />
+        <!-- third party css end -->
+
+        <!-- App css -->
+        <link href="{% static 'assets/css/icons.min.css' %}" rel="stylesheet" type="text/css" />
+        <link href="{% static 'assets/css/app.min.css' %}" rel="stylesheet" type="text/css"  />
+        <link href="{% static 'assets/css/app-dark.min.css' %}" rel="stylesheet" type="text/css" id="dark-style" />
+        <link href="{% static 'assets/css/custom.css' %}" rel="stylesheet" type="text/css"  />
+
+    </head>
+
+    <body class="loading" data-layout-config='{"leftSideBarTheme":"dark","layoutBoxed":false, "leftSidebarCondensed":false, "leftSidebarScrollable":false,"darkMode":false, "showRightSidebarOnStart": true}'>
+        <!-- Begin page -->
+        <div class="wrapper">
+            <!-- ========== Left Sidebar Start ========== -->
+            <div class="leftside-menu" id="sidebarMenus">
+            {% include 'base.html' %}
+              </div>
+            <!-- Left Sidebar End -->
+
+            <!-- ============================================================== -->
+            <!-- Start Page Content here -->
+            <!-- ============================================================== -->
+
+            <div class="content-page">
+                <div class="content">
+                    <!-- Topbar Start -->
+                   <div class="navbar-custom" id="load-navigation"> 
+                   {% include 'hearder.html' %}</div>
+                    <!-- end Topbar -->
+                    <!-- Start Content-->
+                    <div class="container-fluid">
+                        <!-- start page title -->
+                        <div class="row">
+                            <div class="col-10">
+                                <div class="page-title-box">
+                                    <h4 class="page-title">Events List</h4>
+                                </div>
+                            </div>
+                             {% comment %} <div class="col-2 text-end pt-3">
+                                  <div class="input-group float-end">
+                                    <button class="btn btn-danger dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="mdi mdi-plus-circle me-2"></i> Add Events</button>
+                                    <div class="dropdown-menu">
+                                        <a class="dropdown-item add_popup" href="#" data-bs-toggle="modal" data-bs-target="#add-birthday">Birthday</a>
+                                        <a class="dropdown-item add_popup1" href="#" data-bs-toggle="modal" data-bs-target="#add-anniversary">Anniversary</a>
+                                        <a class="dropdown-item add_popup2" href="#" data-bs-toggle="modal" data-bs-target="#add-cultural-event">Cultural Event</a>
+                                    </div>
+                                </div>
+                             </div> {% endcomment %}
+                        </div>     
+                        <!-- end page title --> 
+
+                        <div class="row mt-3 mb-5">
+                            <div class="col-12">
+                                <div class="row">
+                                    <div class="col-md-6 col-lg-4">
+                                        <div class="card">
+                                            <img src="{% static 'assets/images/bday.jpg' %}" class="card-img-top" alt="">
+                                            <div class="card-body">
+                                                <h4 class="card-title">Birthday <span class="badge bg-primary float-end">{{birthdayObj_len}}</span></h4>
+                                                <div class="text-center">
+                                                <a href="/event-management/birthday" class="btn btn-info mt-3   btn-sm mr-2"   ><i class="mdi mdi-eye-outline"></i></a>
+                                                {% comment %} <a href="javascript:;"   data-bs-toggle="modal" data-bs-target="#add-birthday" class="btn add_popup btn-danger mt-3  btn-sm"><i class="mdi mdi-plus-circle-outline"></i></a> {% endcomment %}
+                                              </div>
+                                            </div> <!-- end card-body -->
+                                        </div> <!-- end card -->
+                                    </div> <!-- end col-->
+                                    <div class="col-md-6 col-lg-4">
+                                        <div class="card">
+                                            <img src="{% static 'assets/images/anniversary.jpg' %}" class="card-img-top" alt="">
+                                            <div class="card-body">
+                                                <h4 class="card-title">Work Anniversary <span class="badge bg-orange float-end">{{anniversaryObj_len}}</span></h4>
+                                                <div class="text-center">
+                                                  <a href="/event-management/anniversary" class="btn btn-info mt-3 btn-sm mr-2" ><i class="mdi mdi-eye-outline"></i></a>
+                                                  {% comment %} <a href="javascript:;"  data-bs-toggle="modal" data-bs-target="#add-anniversary" class="btn btn-danger mt-3 add_popup1  btn-sm"><i class="mdi mdi-plus-circle-outline"></i></a> {% endcomment %}
+                                               </div>
+                                            </div> <!-- end card-body -->
+                                        </div> <!-- end card -->
+                                    </div> <!-- end col-->
+                                    <div class="col-md-6 col-lg-4">
+                                       <div class="card">
+                                            <img src="{% static 'assets/images/cultural.jpg' %}" class="card-img-top" alt="">
+                                            <div class="card-body">
+                                                <h4 class="card-title">Cultural Events <span class="badge bg-green float-end">{{culturalEventObjObj}}</span></h4>
+                                                <div class="text-center">
+                                                  <a href="{% url 'cultural_event' %}" class="btn btn-info mt-3 btn-sm mr-2"><i class="mdi mdi-eye-outline"></i></a>
+                                                  {% comment %} <a href="javascript:;" data-bs-toggle="modal" data-bs-target="#add-cultural-event" class="btn btn-danger mt-3 add_popup2   btn-sm"><i class="mdi mdi-plus-circle-outline"></i></a> {% endcomment %}
+                                              </div>
+                                            </div> <!-- end card-body -->
+                                        </div> <!-- end card -->
+                                    </div> <!-- end col-->
+                                    
+                                </div>
+                                
+                            </div> <!-- end col -->
+                        </div>
+                        <!-- end row -->
+                        
+                    </div> <!-- container -->
+
+                </div> <!-- content -->
+
+                <!-- Footer Start -->
+                <footer class="footer">
+                    <div class="container-fluid">
+                        <div class="row">
+                            <div class="col-md-6">
+                                <script>document.write(new Date().getFullYear())</script> © 18pixels 
+                            </div>
+                            
+                        </div>
+                    </div>
+                </footer>
+                <!-- end Footer -->
+
+            </div>
+
+            <!-- ============================================================== -->
+            <!-- End Page content -->
+            <!-- ============================================================== -->
+
+
+        </div>
+        <!-- END wrapper -->
+
+
+        
+            <!-- add birthday -->
+        <div class="modal fade task-modal-content show" id="add-birthday" tabindex="-1" role="dialog" aria-labelledby="NewTaskModalLabel" aria-modal="true" >
+            <div class="modal-dialog modal-dialog-centered modal-md">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h4 class="modal-title">Add Birthday</h4>&nbsp;&nbsp;&nbsp;&nbsp;<small class='text-danger' style="display:none" id='bdaywarningText'>Birthday already created.</small>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <form class="p-2">
+                            <div class="row">
+                            <div class="mb-3 col-md-12">
+                                <label class="form-label">Employee</label>
+                                 <select class="form-control select2 text-large" data-toggle="select2"  onchange="check_existing_birthday()"  id="employee_id" data-placeholder="Select Employee">
+                                        <option></option>
+                                        {% for i in empObj %}
+                                            <option value="{{i.id}}">{{i.employee_name}}</option>
+                                        {% endfor %}
+                                </select> 
+                            </div>
+                            <div class="col-md-12">
+                                <div class="mb-3">
+                                    <label for="task-priority" class="form-label">DOB</label>
+                                    <input type="text" class="form-control  " id="birthdayDate" readonly='' placeholder='employee bday'>                                
+                                </div>
+                            </div>
+                             <div class="mb-3 col-md-12">
+                                <label class="form-label">Highlights</label>
+                                 <select class="select2 form-control select2-multiple" data-toggle="select2" multiple="multiple" id='event_highlights' data-placeholder="Select ...">
+                                        {% for i in highlightObj %}
+                                            <option value="{{i.id}}" selected="">{{i.highlight_name}}</option>
+                                        {% endfor %}
+                                    </select>
+                              </div>
+                           </div>
+                            <div class="text-end">
+                                <button  type="button" class="btn btn-light" data-bs-dismiss="modal" >Cancel</button>
+                                <button type="button" class="btn btn-primary" onclick="add_employee_birthday()">Create</button>
+                            </div>
+                        </form>
+                    </div>
+                </div><!-- /.modal-content -->
+            </div><!-- /.modal-dialog -->
+        </div>
+        <!-- /End-modal -->
+
+           <!-- add anniversary -->
+        <div class="modal fade task-modal-content show" id="add-anniversary" tabindex="-1" role="dialog" aria-labelledby="NewTaskModalLabel" aria-modal="true" >
+            <div class="modal-dialog modal-dialog-centered modal-md">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h4 class="modal-title"  >Add Anniversary</h4>&nbsp;&nbsp;&nbsp;&nbsp;<small class='text-danger' style="display:none;">Anniversary already created.</small>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <form class="p-2">
+                            <div class="row">
+                            <div class="mb-3 col-md-12">
+                                <label class="form-label">Employee</label>
+                                 <select class="form-control select2 text-large" data-toggle="select2" onchange="check_existing_anniversary()" id="employee_id"   data-placeholder="Select Employee">
+                                        <option></option>
+                                        {% for i in empObj %}
+                                            <option value="{{i.id}}">{{i.employee_name}}</option>
+                                        {% endfor %}
+                                </select> 
+                            </div>
+                            <div class="col-md-12">
+                                    <div class="mb-3">
+                                        <label for="task-priority" class="form-label">Anniversary Date</label>
+                                        <input type="text" class="form-control  " id="anniversaryDate"  value="" readonly='' placeholder='employee anniversary'>
+                                    </div>
+                                </div>
+                             <div class="mb-3 col-md-12">
+                                <label class="form-label">Highlights</label>
+                                 <select class="select2 form-control select2-multiple" data-toggle="select2" multiple="multiple" id='event_highlights' data-placeholder="Select ...">
+                                        {% for i in highlightObj %}
+                                            <option value="{{i.id}}" selected="">{{i.highlight_name}}</option>
+                                        {% endfor %}
+                                    </select>
+                            </div>
+                              
+                          </div>
+ 
+                            <div class="text-end">
+                                <button  type="button" class="btn btn-light" data-bs-dismiss="modal" >Cancel</button>
+                                <button type="button" class="btn btn-primary" data-bs-dismiss="modal" onclick="add_employee_anniversary()">Create</button>
+                            </div>
+                        </form>
+                    </div>
+                </div><!-- /.modal-content -->
+            </div><!-- /.modal-dialog -->
+        </div>
+        <!-- /End-modal -->
+
+         <!-- add cultural event -->
+         <div class="modal fade task-modal-content show" id="add-cultural-event" tabindex="-1" role="dialog" aria-labelledby="NewTaskModalLabel" aria-modal="true" >
+            <div class="modal-dialog modal-dialog-centered modal-lg">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h4 class="modal-title">Add Cultural Event</h4> &nbsp;&nbsp;&nbsp;&nbsp;<small class='text-danger' id="culturalEventText" style="display:none;">Cultural event already created.</small>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <form class="p-1">
+                            <div class="row">
+                            <div class="mb-3 col-md-4">
+                                <label class="form-label">Select Event</label>
+                                 <select class="form-select text-large" id="culturalEventID" onchange="check_existing_cultural_event()">
+                                        <option style="display: none;">Select</option>
+                                        <option></option>
+                                        {% for i in cultural_eventObj %}
+                                            <option value="{{i.id}}">{{i.event_name}}</option>
+                                        {% endfor %}
+                                </select> 
+                            </div>
+                            <div class="col-md-8">
+                                <div class="mb-3 exist">
+                                    <label for="task-priority" class="form-label">Title/Theme</label>
+                                    <input type="text" class="form-control" id="culturalEventTitle" onkeypress="return /[A-Za-z ]/i.test(event.key)" maxlength="" placeholder="Enter here..">
+                                </div>
+                            </div>
+                              <div class="col-md-4">
+                                <div class="mb-3 exist">
+                                    <label for="task-priority" class="form-label">Event Date</label>
+                                    <input type="text" class="form-control" id="culturalEventDate" data-toggle="date-picker" data-single-date-picker="true" value="">
+                                </div>
+                            </div>
+                            <div class="mb-3 exist col-md-5">
+                                <label class="form-label">Event Manager</label>
+                                 <select class="select2 form-control select2-multiple" data-toggle="select2" data-placeholder="Select ..." multiple="multiple" id="culturalEventManager">
+                                        <option value="" class="d-none">Select Employee</option>
+                                        {% for i in empObj %}
+                                            <option value="{{i.id}}">{{i.employee_name}}</option>
+                                        {% endfor %}
+                                    </select>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="mb-3 exist">
+                                    <label for="task-priority" class="form-label">Budget</label>
+                                    <input type="text" class="form-control"  placeholder="Enter here.."onkeypress="return /[A-Za-z0-9]/i.test(event.key)" maxlength="7" id="culturalEventBudget">
+                                </div>
+                            </div>
+                             
+                             <div class="mb-3 exist col-md-12">
+                                
+                                <label class="form-label">Highlights</label>
+                                 <select class="select2 form-control select2-multiple" data-toggle="select2" multiple="multiple" id='culturalEventHighlight' data-placeholder="Select ...">
+                                        {% for i in highlightObj %}
+                                            <option value="{{i.id}}" selected="">{{i.highlight_name}}</option>
+                                        {% endfor %}
+                                    </select>
+                            </div>
+
+                           <div class="mb-1 col-md-12 exist">  <label class="form-label">Special Performances (If any)</label> </div>
+                            <div class="mb-3 exist col-md-4">
+                                <label class="form-label">Employee</label>
+                                    <select class="form-control select2 text-large employeeID" data-toggle="select2"   data-placeholder="Select...">
+                                        <option value="" class="d-none">Select Employee</option>
+                                        {% for i in empObj %}
+                                            <option value="{{i.id}}">{{i.employee_name}}</option>
+                                        {% endfor %}
+                                    </select>
+                            </div>
+                              <div class="col-md-7">
+                                <div class="mb-3 exist">
+                                    <label for="task-priority" class="form-label">Performance Title</label>
+                                    <input type="text" class="form-control employee_performance"   placeholder="What to be performed..">
+                                </div>
+                            </div>
+                             <div class="col-md-1 exist">
+                                 <a href="javascript:;" id="add_performance" class="add-ico mt-3"><i class="mdi mdi-plus-circle"></i></a>
+                             </div>
+
+                             <div id="performances"></div>
+
+                              <div class="col-md-6 exist ">
+                                <label>Upload Event Creative (Size 1000*600)</label>
+                                <label class="d-block mt-1">
+                                    <input id="emp_photo" type="file" name="" class="d-none">
+                                    <img id="imgphoto" style=" width: 200px; height: 110px; cursor: pointer;" src="{% static 'assets/images/placeholder.jpg' %}">
+
+                                </label>
+                                
+
+                              </div>
+
+                               <div class="text-end mt-5 col-md-6 exist">
+                                <button  type="button" class="btn btn-light mr-3" data-bs-dismiss="modal" >Cancel</button>
+                                <button type="button" class="btn btn-primary" onclick="add_cultural_event()">Create</button>
+                            </div>
+                          
+                              
+                          </div>
+ 
+                           
+                        </form>
+                    </div>
+                </div><!-- /.modal-content -->
+            </div><!-- /.modal-dialog -->
+        </div>
+        <!-- /End-modal -->
+ 
+
+
+        <!-- bundle -->
+        <script src="{% static 'assets/js/vendor.min.js' %}"></script>
+        <script src="{% static 'assets/js/app.min.js' %}"></script>
+
+    
+
+        <script src="{% static 'assets/js/custom.js' %}"></script>
+        <script src="{% static 'assets/js/admin_JS/events_JS/add_birthdays.js' %}"></script>
+        <script src="{% static 'assets/js/admin_JS/events_JS/cultural_events.js' %}"></script>
+        <script src="{% static 'assets/js/admin_JS/events_JS/add_anniversarys.js' %}"></script>
+        
+        <!-- end demo js-->
+        <script>
+            {% comment %} $('.date').datepicker({  
+                format: 'dd-mm-yyyy'  
+            }); {% endcomment %}
+
+            var performanceLimit = 1;
+            var data4 = eval("{{empID | safe}}");
+            var data5 = eval("{{empName | safe}}");
+
+            var EmployeeData = '<option value="" class="d-none">Select Employee</option>';
+            for (var i = 0; i < data4.length; i++) {
+                var data6 = '<option value=' + data5[i] + '>' + data5[i] + '</option>';
+                EmployeeData = EmployeeData + data6;
+            }
+
+            $('#add_performance').click(function(){
+                performanceLimit = performanceLimit + 1;
+                if (performanceLimit > 5) {
+                    performanceLimit = performanceLimit - 1;
+                    alert('You can add maximium 5 perfomance');
+                    return false;
+                } else {
+                    $('#performances').append(' <div class="row"><div class="mb-3 col-md-4">   <select class="form-control select2 text-large employeeID" data-toggle="select2" data-placeholder="Select..."><option value="" class="d-none">Select Employee</option>' + EmployeeData + ' </select> </div><div class="col-md-7"> <div class="mb-3">  <input type="text" class="form-control employee_performance" placeholder="What to be performed.."> </div></div><div class="col-md-1  "><a   href="javascript:;" class="minus-ico mt-3 ico1 remove_performance position-relative"><i class="mdi mdi-minus-circle"></i></a>  </div></div>');
+                    $(".select2").select2({
+                        dropdownParent: $('#add-cultural-event')
+                    });
+                }
+			});
+			$(document).on('click','.remove_performance', function(){ 
+                performanceLimit = performanceLimit - 1;
+				$(this).parent().parent().remove();
+			});	
+        </script>
+
+    </body>
+ 
+</html>

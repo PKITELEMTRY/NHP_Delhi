@@ -1,0 +1,448 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8" />
+    <title>BinaryBridge</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta content="A fully featured admin theme which can be used to build CRM, CMS, etc." name="description" />
+    <meta content="Coderthemes" name="author" />
+    <!-- App favicon -->
+    <link rel="shortcut icon" href="{% static 'assets/images/favicon.ico' %}">
+
+    <!-- App css -->
+    <link href="{% static 'assets/css/icons.min.css' %}" rel="stylesheet" type="text/css" />
+    <link href="{% static 'assets/css/app.min.css' %}" rel="stylesheet" type="text/css" id="light-style" />
+    <link href="{% static 'assets/css/app-dark.min.css' %}" rel="stylesheet" type="text/css" id="dark-style" />
+    <link href="{% static 'assets/css/custom.css' %}" rel="stylesheet" type="text/css" />
+
+</head>
+
+<body class="loading"
+    data-layout-config='{"leftSideBarTheme":"dark","layoutBoxed":false, "leftSidebarCondensed":false, "leftSidebarScrollable":false,"darkMode":false, "showRightSidebarOnStart": true}'>
+    <!-- Begin page -->
+    <div class="wrapper">
+        <!-- ========== Left Sidebar Start ========== -->
+        <div class="leftside-menu" id="sidebarMenus">
+            {% include 'base.html' %}
+        </div>
+        <!-- Left Sidebar End -->
+
+        <!-- ============================================================== -->
+        <!-- Start Page Content here -->
+        <!-- ============================================================== -->
+
+        <div class="content-page">
+            <div class="content">
+                <!-- Topbar Start -->
+                <div class="navbar-custom" id="load-navigation">{% include 'hearder.html' %} </div>
+                <!-- end Topbar -->
+                <!-- Start Content-->
+                <div class="container-fluid">
+                    <div class="row mt-2">
+                        <div class="col-lg-12">
+                            <div class="card">
+                                <div class="card-body">
+                                    <div class="dropdown float-end">
+                                        <a href="/dashboard" class="btn btn-sm btn-primary">
+                                            <small>
+                                                <strong>
+                                                    <i class="fa-solid fa-house"></i> Home
+                                                </strong>
+                                            </small>
+                                        </a>
+                                        <a href="{% url 'update_site_detail' siteObj.uuid %}" class="btn btn-sm btn-info">
+                                            <small>
+                                                <strong>
+                                                    <i class="fa-solid fa-edit"></i> Edit Site
+                                                </strong>
+                                            </small>
+                                        </a>
+                                    </div>
+                                    <h4 class="header-title mb-3"><i class="fa-solid fa-database"></i> Site Data | <span
+                                            class="text-info">{% if siteObj.prefix %}{{siteObj.prefix|upper}}{% else %}-{% endif %}</span></h4>
+                                    <hr>
+                                    <div class="row m-1">
+                                        <div class="col-lg-3">
+                                            <div class="mb-3">
+                                                <label for="name" class="form-label"><strong>Site ID
+                                                        (Prefix)</strong></label>
+                                                <strong style="cursor: not-allowed;">
+                                                    <p>
+                                                        {% if siteObj.prefix %}{{siteObj.prefix|upper}}{% else %}-{% endif %}
+                                                    </p>
+                                                </strong>
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-3">
+                                            <div class="mb-3">
+                                                <label for="name" class="form-label"><strong>Site Name
+                                                        </strong></label>
+                                                <strong style="cursor: not-allowed;">
+                                                    <p>
+                                                        {% if siteObj.name %}{{siteObj.name|title}}{% else %}-{% endif %}
+                                                    </p>
+                                                </strong>
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-3">
+                                            <div class="mb-3">
+                                                <label for="name" class="form-label"><strong>Related Project
+                                                        </strong></label>
+                                                <strong style="cursor: not-allowed;">
+                                                    <p>
+                                                        {% if siteObj.project.name %}{{siteObj.project.name|upper}}{% else %}-{% endif %}
+                                                    </p>
+                                                </strong>
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-3">
+                                            <div class="mb-3">
+                                                <label for="name" class="form-label"><strong>Site Location
+                                                        </strong></label>
+                                                <strong style="cursor: not-allowed;">
+                                                    <p>
+                                                        {% if siteObj.device_location %}{{siteObj.device_location|title}}{% else %}-{% endif %}
+                                                    </p>
+                                                </strong>
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-3">
+                                            <div class="mb-3">
+                                                <label for="name" class="form-label"><strong>Site Lattitude
+                                                        </strong></label>
+                                                <strong style="cursor: not-allowed;">
+                                                    <p>
+                                                        {% if siteObj.site_lattitude %}{{siteObj.site_lattitude}}{% else %}-{% endif %}
+                                                    </p>
+                                                </strong>
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-3">
+                                            <div class="mb-3">
+                                                <label for="name" class="form-label"><strong>Site Longitude
+                                                        </strong></label>
+                                                <strong style="cursor: not-allowed;">
+                                                    <p>
+                                                        {% if siteObj.sit_longitude %}{{siteObj.sit_longitude}}{% else %}-{% endif %}
+                                                    </p>
+                                                </strong>
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-3">
+                                            <div class="mb-3">
+                                                <label for="name" class="form-label"><strong>Telepro Prefix
+                                                        </strong></label>
+                                                <strong style="cursor: not-allowed;">
+                                                    <p>
+                                                        {% if siteObj.tpro_prefix %}{{siteObj.tpro_prefix}}{% else %}-{% endif %}
+                                                    </p>
+                                                </strong>
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-3">
+                                            <div class="mb-3">
+                                                <label for="name" class="form-label"><strong>Telepro File Name
+                                                        </strong></label>
+                                                <strong style="cursor: not-allowed;">
+                                                    <p>
+                                                        {% if siteObj.tpro_file_name %}{{siteObj.tpro_file_name}}{% else %}-{% endif %}
+                                                    </p>
+                                                </strong>
+                                            </div>
+                                        </div>
+                                        <hr>
+                                        <div class="col-lg-6">
+                                            <div class="mb-3">
+                                                <label for="name" class="form-label"><strong>Site Parameter Configuration
+                                                        </strong></label>
+                                                <strong style="cursor: not-allowed;">
+                                                    <br>
+                                                    {% for param_key, param_val in siteObj.device_config.sensor_position.items %}
+                                                        {% if param_val != "errorparam" and param_val != "count" %}
+                                                            {% if param_val %}
+                                                                <span class="bg-info text-white" style="border:1px solid info;padding-top:3px;padding-bottom:3px;padding-left:6px;padding-right:6px;border-radius:5px;">{{param_val|title}}</span>
+                                                            {% endif %}
+                                                        {% endif %}
+                                                    {% endfor %}
+                                                    
+                                                    {% comment %} <p>
+                                                        {{siteObj.device_config.sensor_position}}
+                                                    </p> {% endcomment %}
+                                                </strong>
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-2">
+                                        </div>
+                                        <div class="col-lg-4">
+                                            <div class="mb-3">
+                                                <label for="name" class="form-label"><strong>Last Updated
+                                                        </strong></label>
+                                                <strong style="cursor: not-allowed;">
+                                                    <p>
+                                                        {{siteObj.last_updated_by}} | {{siteObj.last_updated_at}}
+                                                    </p>
+                                                </strong>
+                                            </div>
+                                        </div>
+                                        {% if readings_obj %}
+                                        <div class="col-lg-12 mt-3">
+                                            <div class="row">
+                                                <div class="col-lg-6">
+                                                    <h4 class="header-title mb-3"><i
+                                                            class="fa-solid fa-layer-group"></i> Site Readings</h4>
+                                                </div>
+                                                <div class="col-lg-6 text-right">
+                                                    <h4 class="header-title mb-3">
+                                                        <a href="{% url 'export_data' siteObj.uuid %}" class="btn btn-sm btn-warning"><i
+                                                                class="fa-solid fa-download"></i>
+                                                            <small><strong>Download</strong></small></a>
+                                                    </h4>
+                                                </div>
+                                                <hr>
+                                            </div>
+                                            <div data-simplebar style="max-height: 450px;">
+                                                <div class="table-responsive ">
+                                                    <table class="table table-centered table-nowrap table-sm mb-0">
+                                                        <thead>
+                                                            <tr class="text-center bg-body text-white">
+                                                                <th width="150">Reading Timestamp</th>
+                                                                {% for col in cols %}
+                                                                <th>
+                                                                    {{col|title}}
+                                                                    {% if col|title == 'Battery' %}
+                                                                        <small>(volts)</small>
+                                                                    {% elif col|title == 'Pulse' %}
+                                                                        <small>(mm)</small>
+                                                                    {% elif col|title == 'Level' %}
+                                                                        <small>(m - from sea level)</small>
+                                                                    {% endif %}
+                                                                </th>
+                                                                {% endfor %}
+                                                            </tr>
+                                                        </thead>
+                                                        <tbody class="">
+                                                            {% for reading in readings_obj %}
+                                                            <tr class="text-center">
+                                                                <td>
+                                                                    <strong>{{reading.timestamp|date:"d-m-Y H:i"}}</strong>
+                                                                </td>
+
+                                                                {% for i, j in reading.items %}
+                                                                {% if i != "timestamp" %}
+                                                                <td>
+                                                                    {{j}}
+                                                                </td>
+                                                                {% endif %}
+                                                                {% endfor %}
+                                                                {% comment %} <td>
+                                                                    {{cols}}
+                                                                </td> {% endcomment %}
+                                                                {% comment %} {% for col in cols %}
+                                                                <td>
+                                                                    {{col}}
+                                                                </td>
+                                                                {% endfor %} {% endcomment %}
+                                                            </tr>
+                                                            {% endfor %}
+                                                            {% comment %} {% if not readings_obj.empty %} {% endcomment %}
+                                                            {% comment %} {% else %}
+                                                            <tr class="text-center">
+                                                                <td></td>
+                                                                <td></td>
+                                                                <td>
+                                                                </td>
+                                                                <td>
+                                                                    <strong>
+                                                                        No Data Received Yet!
+                                                                    </strong>
+                                                                <td></td>
+                                                                <td></td>
+                                                                <td></td>
+                                                            </tr>
+                                                            {% endif %} {% endcomment %}
+                                                        </tbody>
+                                                    </table>
+                                                </div> <!-- end table-responsive-->
+                                            </div>
+
+                                            {% comment %} <div class="mb-3">
+                                                <p for="name" class="form-label"><strong>Device Sensor Position
+                                                        Configuration</strong> &nbsp;&nbsp;</p>
+                                            </div> {% endcomment %}
+                                        </div>
+                                        {% else %}
+                                        <div class="col-lg-12 mt-3 text-center">
+                                            <h4><i class="fa-solid fa-triangle-exclamation text-danger"></i> No Record Available!</h4>
+                                        </div>
+                                        {% endif %}
+                                    </div>
+                                </div> <!-- end card body-->
+                            </div> <!-- end card -->
+                        </div>
+                    </div>
+
+                    {% comment %} <div class="row mt-2 mb-4">
+                        <div class="col-lg-12 text-right">
+
+                        </div>
+                    </div> {% endcomment %}
+                    <!-- end row-->
+                </div> <!-- content -->
+                <!-- Footer Start -->
+                <footer class="footer">
+                    <div class="container-fluid">
+                        <div class="row">
+                            <div class="col-md-6">
+                                <a href="https://i-telemetry.com/" target="_blank">
+                                    <img src="https://i-telemetry.com/wp-content/uploads/2022/10/ittpl....png"
+                                        height="25px" alt="">
+                                </a>
+                            </div>
+                            <div class="col-md-6  text-right">
+                                <script>document.write(new Date().getFullYear())</script> © ITTPL
+                            </div>
+                        </div>
+                    </div>
+                </footer>
+                <!-- end Footer -->
+
+            </div>
+
+            <!-- ============================================================== -->
+            <!-- End Page content -->
+            <!-- ============================================================== -->
+
+
+        </div>
+        <!-- END wrapper -->
+
+
+
+        <!-- /End-bar -->
+
+        <!-- bundle -->
+
+        <script src="{% static 'assets/js/vendor.min.js' %}"></script>
+        <script src="{% static 'assets/js/app.min.js' %}"></script>
+
+        <!-- third party js -->
+        <script src="{% static 'assets/js/vendor/Chart.bundle.min.js' %}"></script>
+        <!-- third party js ends -->
+
+        <!-- demo app -->
+        <script src="{% static 'assets/js/pages/demo.dashboard-projects.js' %}"></script>
+        <!-- end demo js-->
+
+
+        <script src="{% static 'assets/js/custom.js' %}"></script>
+
+
+
+</body>
+<script>
+    $(function () {
+        $('[data-toggle="tooltip"]').tooltip()
+    });
+</script>
+<script>
+    function getCookie(name) {
+        let cookieValue = null;
+        if (document.cookie && document.cookie !== '') {
+            const cookies = document.cookie.split(';');
+            for (let i = 0; i < cookies.length; i++) {
+                const cookie = cookies[i].trim();
+                // Does this cookie string begin with the name we want?
+                if (cookie.substring(0, name.length + 1) === (name + '=')) {
+                    cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                    break;
+                }
+            }
+        }
+        return cookieValue;
+    }
+
+    function update_device_config(thisTxt) {
+        let uuid = $(thisTxt).attr('uuid');
+        let dev_name = $('#dev_name').val().trim();
+        let dev_loc = $('#dev_loc').val().trim();
+        let dev_lat = $('#dev_lat').val().trim();
+        let dev_lon = $('#dev_lon').val().trim();
+        let tpro_prfx = $('#tpro_prfx').val().trim();
+        let tpro_file = $('#tpro_file').val().trim();
+
+        let pos1 = $('#pos1').val().trim();
+        let pos2 = $('#pos2').val().trim();
+        let pos3 = $('#pos3').val().trim();
+        let pos4 = $('#pos4').val().trim();
+        let pos5 = $('#pos5').val().trim();
+        let pos6 = $('#pos6').val().trim();
+        let pos7 = $('#pos7').val().trim();
+        let pos8 = $('#pos8').val().trim();
+        let pos9 = $('#pos9').val().trim();
+        let pos10 = $('#pos10').val().trim();
+
+        console.log('uuid >>>> ', uuid);
+        console.log('dev_name >>> ', dev_name);
+        console.log('dev_loc >>> ', dev_loc);
+        console.log('dev_lat >>> ', dev_lat);
+        console.log('dev_lon >>> ', dev_lon);
+        console.log('tpro_prfx >>> ', tpro_prfx);
+        console.log('tpro_file >>> ', tpro_file);
+        console.log('pos1 >>> ', pos1);
+        console.log('pos2 >>> ', pos2);
+        console.log('pos3 >>> ', pos3);
+        console.log('pos4 >>> ', pos4);
+        console.log('pos5 >>> ', pos5);
+        console.log('pos6 >>> ', pos6);
+        console.log('pos7 >>> ', pos7);
+        console.log('pos8 >>> ', pos8);
+        console.log('pos9 >>> ', pos9);
+        console.log('pos10 >>> ', pos10);
+
+        var formdata = new FormData();
+        formdata.append('dev_name', dev_name);
+        formdata.append('dev_loc', dev_loc);
+        formdata.append('dev_lat', dev_lat);
+        formdata.append('dev_lon', dev_lon);
+        formdata.append('tpro_prfx', tpro_prfx);
+        formdata.append('tpro_file', tpro_file);
+        formdata.append('pos1', pos1);
+        formdata.append('pos2', pos2);
+        formdata.append('pos3', pos3);
+        formdata.append('pos4', pos4);
+        formdata.append('pos5', pos5);
+        formdata.append('pos6', pos6);
+        formdata.append('pos7', pos7);
+        formdata.append('pos8', pos8);
+        formdata.append('pos9', pos9);
+        formdata.append('pos10', pos10);
+
+        // ---------------  AJAX CALL  ----------------------------
+        const csrftoken = getCookie('csrftoken');
+        $.ajax({
+            type: 'POST',
+            url: "/update-site-detail/" + uuid,
+            headers: { 'X-CSRFToken': csrftoken },
+            data: formdata,
+            cache: false,
+            processData: false,
+            contentType: false,
+            encType: 'multipart/form-data',
+            success: function (response) {
+                console.log(response['response']);
+                if (response['response'] == 'Site updated successfully.') {
+                    alert('record updated successfully');
+                    location.reload();
+                } else {
+                    alert('record not updated due to : ' + response['response']);
+                    return false;
+                }
+            }
+        });
+        // --------------------------------------------------------
+    }
+</script>
+
+</html>

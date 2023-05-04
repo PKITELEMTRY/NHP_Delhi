@@ -1,0 +1,215 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+ 
+<head>
+        <meta charset="utf-8" />
+         <title>18Pixels | Management Tool</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta content="A fully featured admin theme which can be used to build CRM, CMS, etc." name="description" />
+        <meta content="Coderthemes" name="author" />
+        <!-- App favicon -->
+        <link rel="shortcut icon" href="{% static '/assets/images/favicon.ico' %}">
+
+        <!-- third party css -->
+        <link href="{% static '/assets/css/vendor/dataTables.bootstrap5.css' %}" rel="stylesheet" type="text/css" />
+        <link href="{% static '/assets/css/vendor/responsive.bootstrap5.css' %}" rel="stylesheet" type="text/css" />
+        <!-- third party css end -->
+
+        <!-- App css -->
+         
+        <link href="{% static '/assets/css/icons.min.css' %}" rel="stylesheet" type="text/css" />
+        <link href="{% static '/assets/css/app.min.css' %}" rel="stylesheet" type="text/css" id="light-style" />
+        <link href="{% static '/assets/css/app-dark.min.css' %}" rel="stylesheet" type="text/css" id="dark-style" />
+        <link href="{% static '/assets/css/custom.css' %}" rel="stylesheet" type="text/css" />
+        <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+    </head>
+
+    <body class="loading" data-layout-config='{"leftSideBarTheme":"dark","layoutBoxed":false, "leftSidebarCondensed":false, "leftSidebarScrollable":false,"darkMode":false, "showRightSidebarOnStart": true}'>
+        <!-- Begin page -->
+        <div class="wrapper">
+            <!-- ========== Left Sidebar Start ========== -->
+            <div class="leftside-menu" id="sidebarMenus">
+            {% include 'base.html' %}
+
+              </div>
+            <!-- Left Sidebar End -->
+
+            <!-- ============================================================== -->
+            <!-- Start Page Content here -->
+            <!-- ============================================================== -->
+
+            <div class="content-page">
+                <div class="content">
+                    <!-- Topbar Start -->
+                   <div class="navbar-custom" id="load-navigation">
+                        {% include 'hearder.html' %}
+                    </div>
+                    <!-- end Topbar -->
+                    <!-- Start Content-->
+                    <div class="container-fluid">
+                        <!-- start page title -->
+                        <div class="row">
+                            <div class="col-8">
+                                <div class="page-title-box">
+                                    <h4 class="page-title">Project Modules List  </h4>
+                                </div>
+                            </div>
+                             <div class="col-4 text-end pt-3">
+                                 <a href="{% url 'create_module' %}" class="btn btn-primary   mb-3 mr-3"><i class="mdi mdi-plus"></i> Add Modules</a>
+                                 <a href="{% url 'create_sub_module' %}" class="btn btn-danger   mb-3"><i class="mdi mdi-plus"></i> Add Sub Modules</a>
+                             </div>
+                        </div>     
+                        <!-- end page title --> 
+                             <div class="row mb-3">
+                            
+                             <div class="col-sm-5">
+                                 <label>Filter by Project</label>
+                                 <select class="form-control select2" data-toggle="select2" id="projects" onchange="getModuleList()" >
+                                        <option></option>
+                                        {% for i in projectObj %}
+                                        <option value="{{i.id}}">{{i.project_name}}</option>
+                                        {% endfor %}
+                                </select>
+                            </div>
+                           
+                           
+                        </div> 
+                        <div class="row">
+                            <div class="col-12">
+                                <div class="card">
+                                    <div class="card-body">
+                                        <div class="table-responsive">
+                                            <table  class="table dt-responsive nowrap w-100 module_table table-bordered ">
+                                                    <thead>
+                                                        <tr>
+                                                            
+                                                            <th>Project</th>
+                                                            <th>Module</th>
+                                                            <th>Action</th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody id='moduleTbodyData'>
+                                                    <tr><td></td><td class='text-center' style="font-weight:700;font-style:italic;">Select Project</td></tr>
+                                                    
+                                                        {% comment %} <tr class="view">
+                                                            <td rowspan="4"><a href="project-details.html">Ada Chikan</a></td>
+                                                        </tr> 
+
+                                                        {% comment %} <tr class="view">
+                                                           
+                                                            <td class="mod_list">
+                                                              
+                                                                <div class="position-relative">  <input  class="form-control mb-1 bold" type="text" value="Customer Management" name=""><a href="javascript:void(0);" class="action-icon text-danger  "> <i class="mdi mdi-delete-outline"></i></a>
+                                                                     <small>Description:</small>
+                                                                <textarea  class="form-control fs-13" rows="3"> Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod  tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam</textarea>
+                                                                </div>
+                                                                
+
+                                                            </td>
+                                                            <td> <a href="javascript:void(0);" class="action-icon text-warning edit_btn"> <i class="mdi mdi-square-edit-outline"></i></a>
+                                                             <a href="javascript:void(0);" class="  btn btn-sm btn-success   update_btn"> Update</a>
+                                                             <a href="javascript:void(0);" class="  btn btn-sm btn-danger   del_btn"> Done</a>
+                                                             <a href="javascript:void(0);" class="action-icon text-danger delete_btn"> <i class="mdi mdi-delete-outline"></i></a></td>
+                                                        </tr> {% endcomment %}
+
+                                                          {% comment %} <tr class="view">
+                                                            
+                                                            <td class="mod_list">
+                                                              
+                                                                
+                                                                 <div class="position-relative"> <input  class="form-control bold mb-1" type="text" value="Employee Management" name=""> <a href="javascript:void(0);" class="action-icon text-danger  "> <i class="mdi mdi-delete-outline"></i></a>
+                                                                     <small>Description:</small>
+                                                                <textarea  class="form-control fs-13" rows="3"> Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod  tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam</textarea>
+                                                                 </div>
+
+                                                            </td>
+                                                            <td> <a href="javascript:void(0);" class="action-icon text-warning edit_btn"> <i class="mdi mdi-square-edit-outline"></i></a>
+                                                             <a href="javascript:void(0);" class="  btn btn-sm btn-success   update_btn"> Update</a>
+                                                             <a href="javascript:void(0);" class="  btn btn-sm btn-danger   del_btn"> Done</a>
+                                                             <a href="javascript:void(0);" class="action-icon text-danger delete_btn"> <i class="mdi mdi-delete-outline"></i></a></td>
+                                                        </tr>
+                                                        <tr class="view">
+                                                            
+                                                            <td class="mod_list">
+                                                              
+                                                                
+                                                                 <div class="position-relative"> <input  class="form-control bold mb-1" type="text" value="Employee Management" name=""> <a href="javascript:void(0);" class="action-icon text-danger  "> <i class="mdi mdi-delete-outline"></i></a>
+                                                                     <small>Description:</small>
+                                                                <textarea  class="form-control fs-13" rows="3"> Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod  tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam</textarea>
+                                                                 </div>
+
+                                                            </td>
+                                                            <td> <a href="javascript:void(0);" class="action-icon text-warning edit_btn"> <i class="mdi mdi-square-edit-outline"></i></a>
+                                                             <a href="javascript:void(0);" class="  btn btn-sm btn-success   update_btn"> Update</a>
+                                                             <a href="javascript:void(0);" class="  btn btn-sm btn-danger   del_btn"> Done</a>
+                                                             <a href="javascript:void(0);" class="action-icon text-danger delete_btn"> <i class="mdi mdi-delete-outline"></i></a></td>
+                                                        </tr> {% endcomment %}
+                                                         
+                                                    </tbody>
+                                                </table>
+
+                                                <div class="text-center" style="display: none;" id='no-record-deiv-mod'>
+                                                    <h4>No record Found!</h4>
+                                                </div>
+                                        </div>
+                                    </div> <!-- end card-body-->
+                                </div> <!-- end card-->
+                            </div> <!-- end col -->
+                        </div>
+                        <!-- end row -->
+                        
+                    </div> <!-- container -->
+
+                </div> <!-- content -->
+
+                <!-- Footer Start -->
+                <footer class="footer">
+                    <div class="container-fluid">
+                        <div class="row">
+                            <div class="col-md-6">
+                                <script>document.write(new Date().getFullYear())</script> © 18pixels 
+                            </div>
+                            
+                        </div>
+                    </div>
+                </footer>
+                <!-- end Footer -->
+
+            </div>
+
+            <!-- ============================================================== -->
+            <!-- End Page content -->
+            <!-- ============================================================== -->
+
+
+        </div>
+        <!-- END wrapper -->
+
+
+     
+
+
+        <!-- bundle -->
+        <script src="{% static '/assets/js/vendor.min.js' %}"></script>
+        <script src="{% static '/assets/js/app.min.js' %}"></script>
+
+        <!-- third party js -->
+        <!-- Datatables js -->
+ 
+
+<!-- Datatable Init js -->
+ 
+        <!-- third party js ends -->
+
+        <!-- demo app -->
+        <script src="{% static '/assets/js/pages/demo.customers.js' %}"></script>
+         <script src="{% static '/assets/js/custom.js' %}"></script>
+         <script src="{% static '/assets/js/admin_JS/project_JS/filter_modules_submodules.js' %}"></script>
+         
+        <!-- end demo js-->
+
+    </body>
+ 
+</html>

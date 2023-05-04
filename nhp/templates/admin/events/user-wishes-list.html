@@ -1,0 +1,569 @@
+﻿{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <title>18Pixels | Management Tool</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta content="A fully featured admin theme which can be used to build CRM, CMS, etc." name="description">
+        <meta content="Coderthemes" name="author">
+        <!-- App favicon -->
+        <link rel="shortcut icon" href="{% static 'assets/images/favicon.ico' %}">
+        <!-- Quill css -->
+         <link href="{% static 'assets/css/vendor/dataTables.bootstrap5.css' %}" rel="stylesheet" type="text/css" />
+          <link href="{% static 'assets/css/vendor/responsive.bootstrap5.css' %}" rel="stylesheet" type="text/css" />
+        <!-- App css -->
+        <link href="{% static 'assets/css/icons.min.css' %}" rel="stylesheet" type="text/css">
+        <link href="{% static 'assets/css/app.min.css' %}" rel="stylesheet" type="text/css" id="light-style">
+        <link href="{% static 'assets/css/app-dark.min.css' %}" rel="stylesheet" type="text/css" id="dark-style">
+        <link href="{% static 'assets/css/custom.css' %}" rel="stylesheet" type="text/css"  >
+    </head>
+
+<body class="loading" data-layout-config='{"leftSideBarTheme":"dark","layoutBoxed":false, "leftSidebarCondensed":false, "leftSidebarScrollable":false,"darkMode":false, "showRightSidebarOnStart": true}'>
+        <!-- Begin page -->
+ <div class="wrapper">
+    <!-- ========== Left Sidebar Start ========== -->
+      <div class="leftside-menu" id="sidebarMenus">
+        {% include 'base.html' %}
+      </div>
+        <!-- Left Sidebar End -->
+
+        <!-- ============================================================== -->
+        <!-- Start Page Content here -->
+        <!-- ============================================================== -->
+
+    <div class="content-page">
+        <div class="content">
+            <!-- Topbar Start -->
+             <div class="navbar-custom" id="load-navigation"> 
+             {% include 'hearder.html' %}</div>
+            <!-- end Topbar -->
+
+            <!-- Start Content-->
+            <div class="container-fluid">
+                <div class="row">
+                    <div class="col-md-12">
+                        <!-- start page title -->
+                        <div class="page-title-box  pt-2" >
+                            <div class="row">
+                                <div class="col-md-3 pro_name mb-2">
+                                    <select class="form-control select2 text-large" data-toggle="select2"   data-placeholder="Select Employee">
+                                            <option selected=""> All</option>
+                                            <option value="0">Pooja</option>
+                                            <option value="1">pankaj</option>
+                                            <option value="2">kajal</option>
+                                     </select> 
+                                </div>
+                                <div class="col-md-3">
+                                     <select class="form-control select2" data-toggle="select2"    data-placeholder="Select Event" >
+                                        <option></option>
+                                        <option value="Birthday">Birthday</option>
+                                        <option value="Anniversary">Anniversary</option>
+                                        <option value="CulturalEvent">Culture Event</option>
+                                    </select>
+                                </div>
+                                
+                                
+                                 <div class="col-md-3">
+                                     <select class="form-control select2" data-toggle="select2"    data-placeholder="Select Year" >
+                                            <option></option>
+                                            <option value="2022">2022</option>
+                                            <option value="2021" selected>2021</option>
+                                    </select>
+                                </div>
+                                
+                                
+                               
+                                <div class="col-md-3 text-end    ">
+                                  <a   class="btn btn-success  ms-3  " data-bs-toggle="modal" data-bs-target="#add-new-task-modal">Search</a>
+                                  <a href=""  style="margin-left: 15px">Clear</a>
+                               </div>
+                                <!--  <div class="col-md-8 text-end    ">
+                                    
+                                 </div> -->
+                            </div>
+                             
+                        </div>
+                        <!-- end page title -->
+                        <!-- tabs -->
+                          <!-- tabs -->
+                        <div class="row">
+                            <div class="col-md-12 mt-4">
+                                
+                                 <ul class="nav task_tabs events_tabs  nav-tabs nav-justified nav-bordered mb-0">
+                                    <li class="nav-item"  >
+                                        <a href="#home-b2" data-bs-toggle="tab" aria-expanded="false" class="nav-link    active">
+                                            <i class="mdi mdi-home-variant d-md-none d-block"></i>
+                                            <span class="d-none d-md-block">Received Wishes</span>
+                                        </a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a href="#profile-b2" data-bs-toggle="tab" aria-expanded="true" class="nav-link ">
+                                            <i class="mdi mdi-account-circle d-md-none d-block"></i>
+                                            <span class="d-none d-md-block">Wishes Sent/Scheduled</span>
+                                        </a>
+                                    </li>
+                                    
+                                </ul>
+                            </div>
+                        </div>
+
+                          <div class="tab-content">
+                            <div class="tab-pane show active" id="home-b2">
+                                  <div class="card mb-0 mt-3">
+                                        <div class="card-body">
+                                          <table class="table task_list fs-13 dt-responsive nowrap w-100"  id="basic-datatable" >
+                                            <thead>
+                                                <tr>
+                                                   <th width="50">S. No.</th>
+                                                    <th width="150">Creative</th>
+                                                   <th>Received From</th>
+                                                   <th>Event</th>
+                                                   <th width="70">Action</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                {% for i in wishObj %}
+                                                    {% if i.senderFK.first_name == '18Pixels' %}
+                                                    <tr>
+                                                        <td>{{forloop.counter}}</td>
+                                                        <td> <a target="_blank" href="/media/{{i.creative}}"><img style="max-width: 75px" src="/media/{{i.creative}}" class="" alt="friend"></a> </td>
+                                                        <td class="e_name">
+                                                            <img src="{% static 'assets/images/logo_sm.png' %}" alt="user-image" class="rounded-circle avatar-xs">
+                                                            {{i.senderFK.first_name}}
+                                                        </td>
+                                                         <td>
+                                                            {% if i.eventFK.event_type == 'CulturalEvent' %}
+                                                                Cultural Event
+                                                            {% else %}
+                                                                {{i.eventFK.event_type}}
+                                                            {% endif %}
+                                                        </td>
+                                                        <td><a data-bs-toggle="modal" data-bs-target="#view-wish" onclick="get_wishes(this)" wishID="{{i.id}}" class="action-icon text-info mr-2"> <i class="mdi mdi-eye-outline"></i></a> </td>
+                                                    </tr>
+                                                    {% else %}
+                                                    <tr>
+                                                        <td>{{forloop.counter}}</td>
+                                                        <td> <a target="_blank" href="/media/{{i.creative}}"><img style="max-width: 75px" src="/media/{{i.creative}}" class="" alt="friend"></a> </td>
+                                                        <td class="e_name">
+                                                            {% comment %} <img src="/media/{{i.senderFK.profile_image}}" alt="image" class="avatar-xs rounded-circle me-1"  > {% endcomment %}
+                                                            {% if i.senderFK.profile_image == '' or i.senderFK.profile_image == None %}
+                                                             <img src="https://images.vexels.com/media/users/3/129616/isolated/preview/fb517f8913bd99cd48ef00facb4a67c0-businessman-avatar-silhouette-by-vexels.png" alt="table-user" class="avatar-xs rounded-circle me-1">
+                                                             {% else %}
+                                                             <img src="/media/{{i.senderFK.profile_image}}" alt="table-user" class="avatar-xs rounded-circle me-1">
+                                                             {% endif %}
+                                                            {{i.senderFK.first_name}}
+                                                        </td>
+                                                        <td>
+                                                            {% if i.eventFK.event_type == 'CulturalEvent' %}
+                                                                Cultural Event
+                                                            {% else %}
+                                                                {{i.eventFK.event_type}}
+                                                            {% endif %}
+                                                        </td>
+                                                        <td><a data-bs-toggle="modal" data-bs-target="#view-wish" onclick="get_wishes(this)" wishID="{{i.id}}" class="action-icon text-info mr-2"> <i class="mdi mdi-eye-outline"></i></a> </td>
+                                                    </tr>
+                                                    {% endif %}
+                                                {% endfor %}
+                                                {% comment %} <tr>
+                                                    <td>1</td>
+                                                    <td> <a target="_blank" href="{% static 'assets/images/bday.jpg' %}"><img style="max-width: 75px" src="{% static 'assets/images/bday.jpg' %}" class="" alt="friend"></a> </td>
+                                                    <td class="e_name">
+                                                        <img src="{% static 'assets/images/users/avatar-2.jpg' %}" alt="image" class="avatar-xs rounded-circle me-1"  >
+                                                        Pooja Singh
+                                                    </td>
+                                                    <td>Birthday</td>
+                                                    <td><a data-bs-toggle="modal" data-bs-target="#view-wish" href="javascript:;" class="action-icon text-info mr-2"> <i class="mdi mdi-eye-outline"></i></a> </td>
+                                                </tr>
+                                                 <tr>
+                                                    <td>2</td>
+                                                     <td> <a target="_blank" href="{% static 'assets/images/anniversary.jpg' %}"><img style="max-width: 75px" src="{% static 'assets/images/anniversary.jpg' %}" class="" alt="friend"></a> </td>
+                                                    <td class="e_name">
+                                                        <img src="{% static 'assets/images/users/avatar-2.jpg' %}" alt="image" class="avatar-xs rounded-circle me-1"  >
+                                                        Manish
+                                                    </td>
+                                                    <td>Work Anniversary</td>
+                                                    
+                                                    <td><a data-bs-toggle="modal" data-bs-target="#view-wish" href="javascript:;" class="action-icon text-info mr-2"> <i class="mdi mdi-eye-outline"></i></a> </td>
+                                                </tr>
+                                                 <tr >
+                                                    <td>3</td>
+                                                    <td> <a target="_blank" href="{% static 'assets/images/happy-diwali-traditional-white-decorative-background_1017-34303.webp' %}"><img style="max-width: 75px" src="{% static 'assets/images/happy-diwali-traditional-white-decorative-background_1017-34303.webp' %}" class="" alt="friend"></a> </td>
+                                                    <td class="e_name">
+                                                        <img src="{% static 'assets/images/logo_sm.png' %}" alt="user-image" class="rounded-circle avatar-xs">
+                                                        18pixels
+                                                    </td>
+                                                     <td>Christmas</td>
+                                                    
+                                                     
+                                                    
+                                                    <td><a data-bs-toggle="modal" data-bs-target="#view-wish" href="javascript:;" class="action-icon text-info mr-2"> <i class="mdi mdi-eye-outline"></i></a> </td>
+                                                </tr> {% endcomment %}
+
+                                               
+
+                                            </tbody>
+                                       </table>
+                                        
+                                        </div> <!-- end card-body-->
+                                  </div>
+                             </div>
+
+                             <div class="tab-pane " id="profile-b2">
+                                <div class="card mb-0 mt-3">
+                                <div class="card-body">
+                                   <table class="table task_list fs-13 dt-responsive nowrap w-100"  id="basic-datatable1" >
+                                        <thead>
+                                            <tr>
+                                               <th>S. No.</th>
+                                               <th width="100">Creative</th>
+                                               <th>Sent to</th>
+                                                <th>Event</th>
+                                               <th>Date</th>
+                                               <th>Status</th>
+                                               <th>Action</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            {% for i in wishEnd_Obj %}
+                                                <td>{{forloop.counter}}</td>
+                                                    <td> <a target="_blank" href="/media/{{i.creative}}"><img style="max-width: 75px" src="/media/{{i.creative}}" class="" alt="friend"></a> </td>
+                                                    <td class="e_name">
+                                                        {% comment %} <img src="{% static 'assets/images/users/avatar-2.jpg' %}" alt="image" class="avatar-xs rounded-circle me-1"  > {% endcomment %}
+                                                        {% if i.receiverFK.profile_image == '' or i.receiverFK.profile_image == None %}
+                                                            <img src="https://images.vexels.com/media/users/3/129616/isolated/preview/fb517f8913bd99cd48ef00facb4a67c0-businessman-avatar-silhouette-by-vexels.png" alt="table-user" class="avatar-xs rounded-circle me-1">
+                                                        {% else %}
+                                                            <img src="/media/{{i.receiverFK.profile_image}}" alt="table-user" class="avatar-xs rounded-circle me-1">
+                                                        {% endif %}
+                                                        {{i.receiverFK.employee_name}}
+                                                    </td>
+                                                    <td>{{i.eventFK.event_type}}</td>
+                                                    <td><span class="text-success">{{i.eventFK.event_date|date:"d M -  y"}}</span></td>
+                                                    <td>{% if i.wish_status == 'sent' %}
+                                                        <span class="badge badge-success-lighten p-1">Sent</span>
+                                                    {% else %}
+                                                        <span class="badge badge-danger-lighten p-1">Scheduled</span>
+                                                    {% endif %}</td>
+                                                
+                                                    <td>
+                                                        {% comment %} <a data-bs-toggle="modal" data-bs-target="#view-wish" href="javascript:;" class="action-icon text-info mr-2"> <i class="mdi mdi-eye-outline"></i></a><a data-bs-toggle="modal" data-bs-target="#edit-wishes" href="javascript:;" class="action-icon text-warning"> <i class="mdi mdi-square-edit-outline"></i></a>
+                                                        <a href="javascript:void(0);" class="action-icon text-danger"> <i class="mdi mdi-delete-outline"></i></a> {% endcomment %}
+                                                        {% if i.wish_status == 'sent' %}
+                                                            <a data-bs-toggle="modal" data-bs-target="#view-wish" onclick="get_wishes(this)" wishID="{{i.id}}" href="javascript:;" class="action-icon text-info mr-2"> <i class="mdi mdi-eye-outline"></i></a>
+                                                            <a data-bs-toggle="modal" data-bs-target="#edit-wishes" href="javascript:;" class="action-icon text-secondary" style="pointer-events:none;"> <i class="mdi mdi-square-edit-outline"></i></a>
+                                                            {% comment %} <a href="javascript:void(0);" class="action-icon text-danger"> <i class="mdi mdi-delete-outline"></i></a> {% endcomment %}
+                                                        {% else %}
+                                                            <a data-bs-toggle="modal" data-bs-target="#view-wish" onclick="get_wishes(this)" wishID="{{i.id}}" href="javascript:;" class="action-icon text-info mr-2"> <i class="mdi mdi-eye-outline"></i></a>
+                                                            <a data-bs-toggle="modal" data-bs-target="#edit-wishes" href="javascript:;" class="action-icon text-warning" wishID="{{i.id}}" onclick="get_scheduled_wish(this)"> <i class="mdi mdi-square-edit-outline"></i></a>
+                                                            {% comment %} <a href="javascript:void(0);" class="action-icon text-danger"> <i class="mdi mdi-delete-outline"></i></a> {% endcomment %}
+                                                        {% endif %}
+                                                    </td>
+                                                </tr>
+                                            {% endfor %}
+                                            {% comment %} <tr>
+                                                <td>1</td>
+                                                <td> <a target="_blank" href="{% static 'assets/images/bday.jpg' %}"><img style="max-width: 75px" src="{% static 'assets/images/bday.jpg' %}" class="" alt="friend"></a> </td>
+                                                <td class="e_name">
+                                                    <img src="{% static 'assets/images/users/avatar-2.jpg' %}" alt="image" class="avatar-xs rounded-circle me-1"  >
+                                                    Pooja Singh
+                                                </td>
+                                                <td>Work Anniversary</td>
+                                                <td><span class="text-success">Tommorow</span></td>
+                                                <td><span class="badge badge-danger-lighten p-1">Scheduled</span></td>
+                                               
+                                                <td><a data-bs-toggle="modal" data-bs-target="#view-wish" href="javascript:;" class="action-icon text-info mr-2"> <i class="mdi mdi-eye-outline"></i></a><a data-bs-toggle="modal" data-bs-target="#edit-wishes" href="javascript:;" class="action-icon text-warning"> <i class="mdi mdi-square-edit-outline"></i></a>
+                                                <a href="javascript:void(0);" class="action-icon text-danger"> <i class="mdi mdi-delete-outline"></i></a></td>
+                                            </tr>
+                                             <tr>
+                                                <td>2</td>
+                                                  <td> <a target="_blank" href="{% static 'assets/images/bday.jpg' %}"><img style="max-width: 75px" src="{% static 'assets/images/bday.jpg' %}" class="" alt="friend"></a> </td>
+                                                <td class="e_name">
+                                                    <img src="{% static 'assets/images/users/avatar-2.jpg' %}" alt="image" class="avatar-xs rounded-circle me-1"  >
+                                                    Manish
+                                                </td>
+                                                <td>Birthday</td>
+                                                <td><span class="text-success">Today</span></td>
+                                                <td><span class="badge badge-success-lighten p-1">Sent</span></td>
+                                                
+                                                <td><a data-bs-toggle="modal" data-bs-target="#view-wish" href="javascript:;" class="action-icon text-info mr-2"> <i class="mdi mdi-eye-outline"></i></a><a data-bs-toggle="modal" data-bs-target="#sent_wishes" href="javascript:;" class="action-icon text-warning"> <i class="mdi mdi-square-edit-outline"></i></a>
+                                                <a href="javascript:void(0);" class="action-icon text-danger"> <i class="mdi mdi-delete-outline"></i></a></td>
+                                            </tr> {% endcomment %}
+                                             
+
+                                           
+
+                                        </tbody>
+                                   </table>
+                                    
+                                </div> <!-- end card-body-->
+                                  </div>
+
+                             </div>
+                         </div>
+
+                        
+                    </div> <!-- end col -->
+
+                </div>
+                <!-- end row-->
+
+            </div> <!-- container -->
+
+        </div> <!-- content -->
+
+                <!-- Footer Start -->
+                <footer class="footer">
+                    <div class="container-fluid">
+                        <div class="row">
+                            <div class="col-md-6">
+                                <script>document.write(new Date().getFullYear())</script> © 18pixels
+                            </div>
+                        </div>
+                    </div>
+                </footer>
+                <!-- end Footer -->
+
+            </div>
+
+            <!-- ============================================================== -->
+            <!-- End Page content -->
+            <!-- ============================================================== -->
+
+
+        </div>
+        <!-- END wrapper -->
+        
+
+        <!-- edit modal -->
+        <div class="modal fade task-modal-content show" id="view-wish" tabindex="-1" role="dialog" aria-labelledby="NewTaskModalLabel" aria-modal="true" >
+            <div class="modal-dialog modal-dialog-centered modal-xl">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h4 class="modal-title" id="wist_event">Birthday</h4>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <form class="p-2">
+                            <div class="row">
+                             <div class="mb-3 col-md-5">
+                                <p>Dear, <strong id="wish_to">Pooja</strong></p>
+                                <h4 class="mt-3 text-center text-danger" id="wish_title">Happy B'day to you</h4>
+                                <p class="mt-3 text-center" id="wish_message">Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
+                                tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
+                                quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
+                                consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse
+                                cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non
+                                proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
+                                <p class="text-end mt-5">
+                                   <span class="float-start text-start">Date: <br><span id="wish_date">Nov 18, 2021</span></span>
+                                    Regards from, <br> <strong id="wish_from">18Pixels</strong>
+                                </p>
+                            </div>
+                             <div class="mb-3 col-md-6 offset-md-1">
+                                <img src="{% static 'assets/images/bday.jpg' %}" id="wish_creative" style="max-width: 100%">
+                            </div>
+                            
+                          </div>
+ 
+                            
+                            
+                        </form>
+                    </div>
+                </div><!-- /.modal-content -->
+            </div><!-- /.modal-dialog -->
+        </div>
+        <!-- /End-modal -->
+        
+      <!-- wishes modal -->
+      <div class="modal fade task-modal-content show" id="edit-wishes" tabindex="-1" role="dialog" aria-labelledby="NewTaskModalLabel" aria-modal="true" >
+        <div class="modal-dialog modal-dialog-centered modal-md">
+            <div class="modal-content">
+                <!-- <div class="modal-header">
+                    <h4 class="modal-title"  >Send Wishes</h4>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div> -->
+                <div class="modal-body pt-0 p-0  ">
+                    <form class=" ">
+                        <div class="bday-modal-head">
+                        <div class="row">
+                            <div class="mb-3 col-md-5 "></div>
+                            <div class="mb-3 col-md-6   text-center" id="recData">
+
+                                 <img src="{% static 'assets/images/users/avatar-7.jpg' %}" class="rounded-circle img-thumbnail avatar-lg" alt="friend">
+                                  <h3>Rohit Kumar</h3>
+                            </div>
+                           </div>
+                       </div>
+                      <div class="row p-3">
+                         <div class="mb-3 col-md-12">
+                           <input type="text"  class="form-control" value="" placeholder="Enter Title" name="" id="wishTitle">
+                              
+                        </div>
+                        {% comment %} <div class="col-md-12">
+                                <div class="mb-3">
+                                    <input type="text" class="form-control  " id="datepicker" data-toggle="date-picker" data-single-date-picker="true">
+                                </div>
+                            </div> {% endcomment %}
+                         <div class="mb-3 col-md-12">
+                            <textarea class="form-control" placeholder="Enter Message" style="height: 100px" id="wish_msg">Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</textarea>
+                              
+                        </div>
+
+                       
+                          <div class="col-md-6  ">
+                            <label>Upload Event Creative</label>
+                            <label class="d-block mt-1">
+                                <input id="emp_photo" type="file" name="" class="d-none">
+                                <img id="imgphoto" style=" width: 200px; height: 110px; cursor: pointer;" src="assets/images/placeholder.jpg">
+
+                            </label>
+                            
+
+                          </div>
+
+                           <div class="text-end mt-5 col-md-6">
+                            <button  type="button" class="btn btn-light mr-3" data-bs-dismiss="modal" >Cancel</button>
+                            <button type="button" class="btn btn-primary" id="sendBTN" receiverID="" onclick="edit_schedule_message(this)">Update</button>
+                        </div>
+                      
+                          
+                      </div>
+
+                       
+                    </form>
+                </div>
+            </div><!-- /.modal-content -->
+        </div><!-- /.modal-dialog -->
+    </div>
+    <!-- /End-modal -->
+
+         <!-- schedule wishes modal -->
+        <div class="modal fade task-modal-content show" id="sent_wishes" tabindex="-1" role="dialog" aria-labelledby="NewTaskModalLabel" aria-modal="true" >
+            <div class="modal-dialog modal-dialog-centered modal-md">
+                <div class="modal-content">
+                    <!-- <div class="modal-header">
+                        <h4 class="modal-title"  >Send Wishes</h4>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div> -->
+                    <div class="modal-body pt-0 p-0  ">
+                        <form class=" ">
+                            <div class="bday-modal-head">
+                            <div class="row">
+                                <div class="mb-3 col-md-5 "></div>
+                                <div class="mb-3 col-md-6   text-center ">
+                                     <img src="{% static 'assets/images/users/avatar-7.jpg' %}" class="rounded-circle img-thumbnail avatar-lg" alt="friend">
+                                      <h3>Rohit Kumar</h3>
+                                </div>
+                               </div>
+                           </div>
+                          <div class="row p-3">
+                               <div class="mb-3 col-md-12">
+                               <input type="text"  class="form-control" value="Happy Birthday" placeholder="Enter Title" name="">
+                                  
+                            </div>
+                             <div class="mb-3 col-md-12">
+                                <textarea class="form-control" placeholder="Enter Message" style="height: 100px">Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident</textarea>
+                                  
+                            </div>
+
+                           
+                              <div class="col-md-6  ">
+                                <label>Upload Event Creative</label>
+                                <label class="d-block mt-1">
+                                    <input id="creative_file" type="file" name="" class="d-none">
+                                    <img id="creative_img" style=" width: 200px; height: 110px; cursor: pointer;" src="{% static 'assets/images/placeholder.jpg' %}">
+
+                                </label>
+                                
+
+                              </div>
+
+                               <div class="text-end mt-5 col-md-6">
+                                <button  type="button" class="btn btn-light mr-3" data-bs-dismiss="modal" >Cancel</button>
+                                <button type="button" class="btn btn-primary" data-bs-dismiss="modal">Update</button>
+                            </div>
+                          
+                              
+                          </div>
+ 
+                           
+                        </form>
+                    </div>
+                </div><!-- /.modal-content -->
+            </div><!-- /.modal-dialog -->
+        </div>
+        <!-- /End-modal -->
+
+           <!-- edit cultural event wishes modal -->
+        <div class="modal fade task-modal-content show" id="ce_wishes" tabindex="-1" role="dialog" aria-labelledby="NewTaskModalLabel" aria-modal="true" >
+            <div class="modal-dialog modal-dialog-centered modal-md">
+                <div class="modal-content">
+                    <!-- <div class="modal-header">
+                        <h4 class="modal-title"  >Send Wishes</h4>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div> -->
+                    <div class="modal-body pt-0 p-0  ">
+                        <form class=" ">
+                            <div class="event-modal-head">
+                            <div class="row">
+                                
+                                <div class="mb-3 col-md-12   text-center ">
+                                      <h3>Christmas</h3>
+                                </div>
+                               </div>
+                           </div>
+                          <div class="row p-3">
+                              <div class="col-md-12">
+                                    <div class="mb-3">
+                                        <input type="text" class="form-control  " id="datepicker" data-toggle="date-picker" value="12/25/2021" data-single-date-picker="true">
+                                    </div>
+                                </div>
+                                 <div class="mb-3 col-md-12">
+                               <input type="text"  class="form-control" value="Merry Christmas" placeholder="Enter Title" name="">
+                                  
+                            </div>
+                               <div class="mb-3 col-md-12">
+                                  <textarea class="form-control" placeholder="Enter Message" style="height:180px">Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident</textarea>
+                                  
+                               </div>
+                               <div class="text-end mt-4 col-md-12">
+                                   <button  type="button" class="btn btn-light mr-3" data-bs-dismiss="modal" >Cancel</button>
+                                   <button type="button" class="btn btn-primary" data-bs-dismiss="modal">Update</button>
+                              </div>
+                             
+                              
+                          </div>
+ 
+                           
+                        </form>
+                    </div>
+                </div><!-- /.modal-content -->
+            </div><!-- /.modal-dialog -->
+        </div>
+        <!-- /End-modal -->
+
+        <!-- bundle -->
+        <script src="{% static 'assets/js/vendor.min.js' %}"></script>
+        <script src="{% static 'assets/js/app.min.js' %}"></script>
+
+ 
+          <!-- third party js -->
+        <script src="{% static 'assets/js/vendor/jquery.dataTables.min.js' %}"></script>
+        <script src="{% static 'assets/js/vendor/dataTables.bootstrap5.js' %}"></script>
+        <script src="{% static 'assets/js/vendor/dataTables.responsive.min.js' %}"></script>
+        <script src="{% static 'assets/js/vendor/responsive.bootstrap5.min.js' %}"></script>
+        <script src="{% static 'assets/js/vendor/dataTables.checkboxes.min.js' %}"></script>
+        <!-- third party js ends -->
+
+        <!-- demo app -->
+        <script src="{% static 'assets/js/pages/demo.datatable-init.js' %}"></script>
+        <!-- third party js ends -->
+ 
+        <!-- end demo js-->
+         <script src="{% static 'assets/js/custom.js' %}"></script>
+        <script src="{% static 'assets/js/admin_JS/events_JS/send_&_schedule_message.js' %}"></script>
+        <script src="{% static 'assets/js/admin_JS/events_JS/edit_scheduled_wishes.js' %}"></script>
+        <script src="{% static 'assets/js/admin_JS/events_JS/send_&_shesule_anniversary.js' %}"></script>
+    </body>
+
+</html>

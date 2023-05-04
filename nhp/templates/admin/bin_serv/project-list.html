@@ -1,0 +1,436 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+ 
+<head>
+        <meta charset="utf-8" />
+         <title>Bin. Server Configuration Portal</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta content="A fully featured admin theme which can be used to build CRM, CMS, etc." name="description" />
+        <meta content="Coderthemes" name="author" />
+        <!-- App favicon -->
+        <link rel="shortcut icon" href="{% static 'assets/images/favicon.ico' %}">
+
+        <!-- App css -->
+        <link href="{% static 'assets/css/icons.min.css' %}" rel="stylesheet" type="text/css" />
+        <link href="{% static 'assets/css/app.min.css' %}" rel="stylesheet" type="text/css" id="light-style" />
+        <link href="{% static 'assets/css/app-dark.min.css' %}" rel="stylesheet" type="text/css" id="dark-style" />
+        <link href="{% static 'assets/css/custom.css' %}" rel="stylesheet" type="text/css"  />
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta2/css/all.min.css" integrity="sha512-YWzhKL2whUzgiheMoBFwW8CKV4qpHQAEuvilg9FAn5VJUDwKZZxkJNuGM4XkWuk94WCrrwslk8yWNGmY1EduTA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+
+    </head>
+
+    <body class="loading" data-layout-config='{"leftSideBarTheme":"dark","layoutBoxed":false, "leftSidebarCondensed":false, "leftSidebarScrollable":false,"darkMode":false, "showRightSidebarOnStart": true}'>
+        <!-- Begin page -->
+        <div class="wrapper">
+            <!-- ========== Left Sidebar Start ========== -->
+             <div class="leftside-menu" id="sidebarMenus">
+            {% include 'base.html' %}
+
+              </div>
+            <!-- Left Sidebar End -->
+
+            <!-- ============================================================== -->
+            <!-- Start Page Content here -->
+            <!-- ============================================================== -->
+
+            <div class="content-page">
+                <div class="content">
+                    <!-- Topbar Start -->
+                    <div class="navbar-custom" id="load-navigation">
+                        {% include 'hearder.html' %}
+                    </div>
+                    <!-- end Topbar -->
+
+                    <!-- Start Content-->
+                    <div class="container-fluid">
+                        
+                        <!-- start page title -->
+                         <div class="row">
+                            <div class="col-8">
+                                <div class="page-title-box">
+                                    <h4 class="page-title">Related Project List</h4>
+                                </div>
+                            </div>
+                            <div class="col-2 pt-3" >
+                                {% comment %} {% if request.session.userType == 'masteR' %} {% endcomment %}
+                                <select class="form-control select2" data-toggle="select2"  id='filter-user'  data-placeholder="Filter by Project" onchange="filterByYear(this)">
+                                    <option class="d-none" value="">select a project</option>
+                                    {% for proj in project_obj %}
+                                        <option value="{{proj.uuid}}">{{proj.name}}</option>
+                                    {% endfor %}
+                                </select>
+                                {% comment %} {% endif %} {% endcomment %}
+                            </div>
+                            <div class="col-2 text-end pt-3">
+                            {% comment %} {% if request.session.userType == 'masteR' %} {% endcomment %}
+                                <a href="" class="btn btn-danger   mb-3"><i class="mdi mdi-plus"></i> Create Project</a>
+                            {% comment %} {% elif request.session.userType == 'masteR' or request.session.userType == 'teacheR' %} {% endcomment %}
+                                 {% comment %} <a href="{% url 'create_module' %}" class="btn btn-primary   mb-3 mr-3"><i class="mdi mdi-plus"></i> Add Modules</a>
+                            {% endif %} {% endcomment %}
+                            </div>
+                            <hr>
+                        </div>     
+                        <!-- end page title --> 
+
+                        <div class="row mb-3">
+                            <div class="col-sm-2">
+                            {% if request.session.userType == 'masteR'%}
+                                <label>Filter by status</label>
+                                 <select class="form-select" id="filterByStatus" >
+                                    <option value='All'>All</option>
+                                    <option value="Just Created">Just Created</option>
+                                     <option value="Ongoing">Ongoing</option>
+                                      {% comment %} <option value="Near Deadline">Near Deadline</option> {% endcomment %}
+                                    <option value="Completed">Finished</option>
+                                </select>
+                            </div>
+                             <div class="col-sm-5">
+                                 <label>Filter by project name</label>
+                                <select class="form-control select2" data-toggle="select2" id="filterByProject"  >
+                                    <option value='All'>All</option>
+                                        {% for i in projectObj %}
+                                        <option value="{{i.id}}">{{i.project_name}}</option>
+                                        {% endfor %}
+                                </select>
+                            </div>
+                            <div class="col-sm-2">
+                                <label>Filter by Progress</label>
+                                 <select class="form-select" id="filterByProgress" >
+                                    <option value='All'>All</option>
+                                    <option value="0-25">0-25%</option>
+                                    <option value="26-50">26-50%</option>
+                                    <option value="51-75">51-75%</option>
+                                    <option value="76-100">76-100%</option>
+                                </select>
+                            </div>
+                            {% endif %}
+                            {% if request.session.userType == 'masteR' %}
+                            <div class="col-sm-3">
+                                <div class="">
+                                      <label>Filter by Employee</label>
+                                        <select class="form-control select2" data-toggle="select2" id="employes"  >
+                                    <option value='All'>All</option>
+                                        {% for i in employeeObj %}
+                                        <option value="{{i.id}}">{{i.employee_name}}</option>
+                                        {% endfor %}
+                                </select>
+                                </div>
+                            </div><!-- end col-->
+                             <div class="col-sm-3">
+                                <div class="mt-2">
+                                      <label>Filter by Sector</label>
+                                        <select data-placeholder="Select Sector" class="form-control select2" data-toggle="select2" id="filterByProjectSector" >
+                                    <option value='All'>All</option>
+                                        {% for i in project_sector_MasterObj %}
+                                        <option value="{{i.id}}">{{i.sector}}</option>
+                                        {% endfor %}
+                                </select>
+                                </div>
+                            </div><!-- end col-->
+                             <div class="col-sm-3">
+                                <div class="mt-2">
+                                      <label>Filter by Type</label>
+                                        <select class="form-control select2" data-toggle="select2" data-placeholder="Select Project Type"  id="filterByProjectType"  >
+                                    <option value='All'>All</option>
+                                         {% for i in project_type_MasterObj %}
+                                        <option value="{{i.id}}">{{i.projectType}}</option>
+                                        {% endfor %}
+                                </select>
+                                </div>
+                            </div><!-- end col-->
+                             <div class="col-sm-3">
+                                <div class="mt-2">
+                                      <label>Filter by Language/Framework</label>
+                                        <select class="form-control select2" data-toggle="select2"   data-placeholder="Select Language/Framework" id="filterByLanguage">
+                                    <option value='All'>All</option>
+                                        {% for i in Project_Technology_MasterObj %}
+                                        <option value="{{i.id}}">{{i.Technology}}</option>
+                                        {% endfor %}
+                                </select>
+                                </div>
+                            </div><!-- end col-->
+                            {% endif %}
+                            {% if request.session.userType == 'masteR' %}
+                             <div class="col-lg-3">
+                                   <a class="btn btn-secondary   mt-3" onclick="filter_project()"><i class="uil uil-search"></i> Search</a>
+                             </div>
+                            {% endif %}
+
+                        </div> 
+                        <!-- end row-->
+
+                        <div class="row">
+                        {% if projectObj|length <= 0 %}
+                        <hr>
+                            <h3>No assigned project found!</h3>
+                        {% endif %}
+                        <div class="row" id="resultsFilterData">
+
+                        {% for i in projectObj %}
+                            {% if request.session.userType == 'masteR' %}
+                            <div class="col-lg-6 col-xxl-3">
+                                <!-- project card -->
+                                <div class="card d-block">
+                                    <div class="card-body">
+                                        <div class="dropdown card-widgets">
+                                            <a href="#" class="dropdown-toggle arrow-none" data-bs-toggle="dropdown" aria-expanded="false">
+                                                <i class="dripicons-dots-3"></i>
+                                            </a>
+                                            <div class="dropdown-menu dropdown-menu-end">
+                                                <!-- item-->
+                                                <a href="{% url 'project_detail' i.id %}" class="dropdown-item"><i class="mdi mdi-eye me-1"></i>View Detail</a>
+                                                {% if request.session.userType == 'masteR' or request.session.userType == 'teacheR' %}
+                                                <a href="{% url 'update_project' i.id %}" class="dropdown-item"><i class="mdi mdi-pencil me-1"></i>Edit</a>
+                                                {% endif %}
+                                                <!-- item-->
+                                                {% if request.session.userType == 'masteR' %}
+                                                <a href="{% url 'deleteProject' i.id %}" onclick="return confirm('Confirm to delete this Project.All the related information such as modules,sub-modules and tasks will also be deleted and cannot be recovered back.')" class="dropdown-item"><i class="mdi mdi-delete me-1"></i>Delete</a>
+                                                {% endif %}
+                                                <!-- item-->
+                                            </div>
+                                        </div>
+                                        <!-- project title-->
+                                        <h4 class="mt-0">
+                                            <a href="{% url 'project_detail' i.id %}" class="text-title">
+                                                {% if i.project_logo == '' or i.project_logo == None %}
+                                                <img src="https://www.launchgrowjoy.com/wp-content/uploads/logo-placeholder-300x210.jpg" class="rounded-circle avatar-sm mr-2" alt="friend">    
+                                                {% else %}
+                                                <img src="/media/{{i.project_logo}}" class="rounded-circle avatar-sm mr-2" alt="friend">
+                                                {% endif %}
+                                                {{i.project_name}} </a>
+                                            </h4>
+                                            <p>Project Manager <span class="text-primary text-medium" style='font-weight:800;'>{{i.projectManagerName}}</span>  
+                                                
+                                                {% if i.project_status_force_update == 'Completed' %}
+                                                {% if i.project_to_maintenance == True %}
+                                                <span class="badge bg-success mb-3 text-end  p_status " data-bs-toggle="popover" data-bs-trigger="hover" data-bs-content="This project is for maintenance work."  data-bs-placement="top" title="" class="d-inline-block">Completed&nbsp;&nbsp;<i class="fas fa-wrench"></i></span>
+                                                {% else %}
+                                                <span class="badge bg-success mb-3 text-end  p_status " data-bs-toggle="popover" data-bs-trigger="hover" data-bs-content="This project is Completed."  data-bs-placement="top" title="" class="d-inline-block">Completed
+                                                    {% endif %}
+                                                    {% else %}
+                                                    {% if i.project_status == 'Just Created' %}
+                                                    <span class="badge bg-warning mb-3 text-end  p_status ">{{i.project_status}}</span>
+                                                    {% elif i.project_status == 'Ongoing' %}
+                                                    <span class="badge bg-primary mb-3 text-end  p_status ">{{i.project_status}}</span>
+                                                    {% elif i.project_status == 'Completed' %}
+                                                    <span class="badge bg-success mb-3 text-end  p_status ">{{i.project_status}}</span>
+                                                    {% elif i.project_status == 'Delayed' %}
+                                                    <span class="badge bg-danger mb-3 text-end  p_status ">{{i.project_status}}</span>
+                                                    {% else %}
+                                                    <span class="badge bg-success mb-3 text-end  p_status ">{{i.project_status}}</span>
+                                                    {% endif %}
+                                                    {% endif %}
+                                                </p>
+                                                
+                                                <p class="text-muted font-13 mb-3">{% if i.project_overview == '' %}....{% else %}{{i.project_overview|slice:":20" }}{% endif %}<a href="{% url 'project_detail' i.id %}" class="fw-bold text-muted">.... view more</a>
+                                                </p>
+                                                
+                                                <!-- project detail-->
+                                                <p class="mb-1">
+                                                    <span class="pe-2 text-nowrap mb-2 d-inline-block">
+                                                        <i class="mdi mdi-format-list-bulleted-type text-muted"></i>
+                                                        <b>{{i.totalTask}}</b> Tasks
+                                                    </span>
+                                                    <span class="text-nowrap mb-2 d-inline-block">
+                                                        <i class="mdi mdi-view-module text-muted"></i>
+                                                        <b>{{i.moduleCount}}</b> Modules
+                                                    </span>
+                                                </p>
+                                        <div id="tooltip-container">
+                                            {% for m in i.teamList %}
+                                            <a href="javascript:void(0);" data-bs-toggle="popover" data-bs-trigger="hover" data-bs-content="{{m.empName}}"  data-bs-placement="top" title="" class="d-inline-block">
+                                                {% if m.empImg == '' or m.empImg == None %}
+                                                <img src="https://images.vexels.com/media/users/3/129616/isolated/preview/fb517f8913bd99cd48ef00facb4a67c0-businessman-avatar-silhouette-by-vexels.png" alt="image" class="avatar-xs rounded-circle me-1">
+                                                {% else %}
+                                                <img src="/media/{{m.empImg}}" alt="image" class="avatar-xs rounded-circle me-1">
+                                                {% endif %}
+                                            </a>
+                                            {% endfor %}
+                                        </div>
+                                    </div> <!-- end card-body-->
+                                    <ul class="list-group list-group-flush">
+                                        <li class="list-group-item p-3 pt-0">
+                                            <!-- project progress-->
+                                            {% if i.project_status_force_update == 'Completed' %}
+                                            <p class="mb-2 fw-bold">Progress <span class="float-end">100%</span><strong><span class='text-success'> 
+                                                {% if i.project_to_maintenance == True %}
+                                                &nbsp;&nbsp;<i class="fas fa-wrench"></i>
+                                                {% endif %} 
+                                            </span></strong></p>
+                                            <div class="progress progress-sm">
+                                                <div class="progress-bar bg-success" role="progressbar" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100" style="width: 100%;">
+                                                </div>
+                                            </div>
+                                            {% else %}
+                                            <p class="mb-2 fw-bold">Progress <span class="float-end">{{i.project_progress}}%</span></p>
+                                            <div class="progress progress-sm">
+                                                {% if i.project_progress <= 25 %}
+                                                <div class="progress-bar bg-danger" role="progressbar" aria-valuenow="{{i.project_progress}}" aria-valuemin="0" aria-valuemax="100" style="width: {{i.project_progress}}%;">
+                                                    {% elif i.project_progress <= 50 %}
+                                                    <div class="progress-bar bg-warning" role="progressbar" aria-valuenow="{{i.project_progress}}" aria-valuemin="0" aria-valuemax="100" style="width: {{i.project_progress}}%;">
+                                                        {% elif i.project_progress <= 75 %}
+                                                        <div class="progress-bar bg-info" role="progressbar" aria-valuenow="{{i.project_progress}}" aria-valuemin="0" aria-valuemax="100" style="width: {{i.project_progress}}%;">
+                                                            {% elif i.project_progress <= 100 %}
+                                                            <div class="progress-bar bg-success" role="progressbar" aria-valuenow="{{i.project_progress}}" aria-valuemin="0" aria-valuemax="100" style="width: {{i.project_progress}}%;">
+                                                                {% endif %}
+                                                            </div>
+                                                        </div>
+                                                        {% endif %}
+                                                    </li>
+                                                </ul>
+                                            </div> <!-- end card-->
+                                        </div> <!-- end col -->
+                                        {% else %}
+                                        <div class="col-lg-6 col-xxl-6">
+                                            <!-- project card -->
+                                            <div class="card d-block">
+                                                <div class="card-body">
+                                                    <div class="dropdown card-widgets">
+                                                        <a href="#" class="dropdown-toggle arrow-none" data-bs-toggle="dropdown" aria-expanded="false">
+                                                            <i class="dripicons-dots-3"></i>
+                                                        </a>
+                                                        <div class="dropdown-menu dropdown-menu-end">
+                                                            <!-- item-->
+                                                            <a href="{% url 'project_detail' i.id %}" class="dropdown-item"><i class="mdi mdi-eye me-1"></i>View Detail</a>
+                                                            {% if request.session.userType == 'masteR' or request.session.userType == 'teacheR' %}
+                                                            <a href="{% url 'update_project' i.id %}" class="dropdown-item"><i class="mdi mdi-pencil me-1"></i>Edit</a>
+                                                            {% endif %}
+                                                            <!-- item-->
+                                                            {% if request.session.userType == 'masteR' %}
+                                                            <a href="{% url 'deleteProject' i.id %}" onclick="return confirm('Confirm to delete this Project.All the related information such as modules,sub-modules and tasks will also be deleted and cannot be recovered back.')" class="dropdown-item"><i class="mdi mdi-delete me-1"></i>Delete</a>
+                                                            {% endif %}
+                                                            <!-- item-->
+                                                        </div>
+                                                    </div>
+                                                    <!-- project title-->
+                                                    <h4 class="mt-0">
+                                                        <a href="{% url 'project_detail' i.id %}" class="text-title">
+                                                            {% if i.project_logo == '' or i.project_logo == None %}
+                                                            <img src="https://www.launchgrowjoy.com/wp-content/uploads/logo-placeholder-300x210.jpg" class="rounded-circle avatar-sm mr-2" alt="friend">    
+                                                            {% else %}
+                                                            <img src="/media/{{i.project_logo}}" class="rounded-circle avatar-sm mr-2" alt="friend">
+                                                            {% endif %}
+                                                            {{i.project_name}} </a>
+                                                        </h4>
+                                                        <p>Project Manager <span class="text-primary text-medium" style='font-weight:800;'>{{i.projectManagerName}}</span>  
+                                                            
+                                                            {% if i.project_status_force_update == 'Completed' %}
+                                                            {% if i.project_to_maintenance == True %}
+                                                            <span class="badge bg-success mb-3 text-end  p_status " data-bs-toggle="popover" data-bs-trigger="hover" data-bs-content="This project is for maintenance work."  data-bs-placement="top" title="" class="d-inline-block">Completed&nbsp;&nbsp;<i class="fas fa-wrench"></i></span>
+                                                            {% else %}
+                                                            <span class="badge bg-success mb-3 text-end  p_status " data-bs-toggle="popover" data-bs-trigger="hover" data-bs-content="This project is Completed."  data-bs-placement="top" title="" class="d-inline-block">Completed
+                                                                {% endif %}
+                                                                {% else %}
+                                                                {% if i.project_status == 'Just Created' %}
+                                                                <span class="badge bg-warning mb-3 text-end  p_status ">{{i.project_status}}</span>
+                                                                {% elif i.project_status == 'Ongoing' %}
+                                                                <span class="badge bg-primary mb-3 text-end  p_status ">{{i.project_status}}</span>
+                                                                {% elif i.project_status == 'Completed' %}
+                                                                <span class="badge bg-success mb-3 text-end  p_status ">{{i.project_status}}</span>
+                                                                {% elif i.project_status == 'Delayed' %}
+                                                                <span class="badge bg-danger mb-3 text-end  p_status ">{{i.project_status}}</span>
+                                                                {% else %}
+                                                                <span class="badge bg-success mb-3 text-end  p_status ">{{i.project_status}}</span>
+                                                                {% endif %}
+                                                                {% endif %}
+                                                            </p>
+                                                            
+                                                            <p class="text-muted font-13 mb-3">{% if i.project_overview == '' %}....{% else %}{{i.project_overview|slice:":20" }}{% endif %}<a href="{% url 'project_detail' i.id %}" class="fw-bold text-muted">.... view more</a>
+                                                            </p>
+                                                            
+                                                            <!-- project detail-->
+                                                            <p class="mb-1">
+                                                                <span class="pe-2 text-nowrap mb-2 d-inline-block">
+                                                                    <i class="mdi mdi-format-list-bulleted-type text-muted"></i>
+                                                                    <b>{{i.totalTask}}</b> Tasks
+                                                                </span>
+                                                                <span class="text-nowrap mb-2 d-inline-block">
+                                                                    <i class="mdi mdi-view-module text-muted"></i>
+                                                                    <b>{{i.moduleCount}}</b> Modules
+                                                                </span>
+                                                            </p>
+                                                    <div id="tooltip-container">
+                                                        {% for m in i.teamList %}
+                                                        <a href="javascript:void(0);" data-bs-toggle="popover" data-bs-trigger="hover" data-bs-content="{{m.empName}}"  data-bs-placement="top" title="" class="d-inline-block">
+                                                            {% if m.empImg == '' or m.empImg == None %}
+                                                            <img src="https://images.vexels.com/media/users/3/129616/isolated/preview/fb517f8913bd99cd48ef00facb4a67c0-businessman-avatar-silhouette-by-vexels.png" alt="image" class="avatar-xs rounded-circle me-1">
+                                                            {% else %}
+                                                            <img src="/media/{{m.empImg}}" alt="image" class="avatar-xs rounded-circle me-1">
+                                                            {% endif %}
+                                                        </a>
+                                                        {% endfor %}
+                                                    </div>
+                                                </div> <!-- end card-body-->
+                                                <ul class="list-group list-group-flush">
+                                                    <li class="list-group-item p-3 pt-0">
+                                                        <!-- project progress-->
+                                                        {% if i.project_status_force_update == 'Completed' %}
+                                                        <p class="mb-2 fw-bold">Progress <span class="float-end">100%</span><strong><span class='text-success'> 
+                                                            {% if i.project_to_maintenance == True %}
+                                                            &nbsp;&nbsp;<i class="fas fa-wrench"></i>
+                                                            {% endif %} 
+                                                        </span></strong></p>
+                                                        <div class="progress progress-sm">
+                                                            <div class="progress-bar bg-success" role="progressbar" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100" style="width: 100%;">
+                                                            </div>
+                                                        </div>
+                                                        {% else %}
+                                                        <p class="mb-2 fw-bold">Progress <span class="float-end">{{i.project_progress}}%</span></p>
+                                                        <div class="progress progress-sm">
+                                                            {% if i.project_progress <= 25 %}
+                                                            <div class="progress-bar bg-danger" role="progressbar" aria-valuenow="{{i.project_progress}}" aria-valuemin="0" aria-valuemax="100" style="width: {{i.project_progress}}%;">
+                                                                {% elif i.project_progress <= 50 %}
+                                                                <div class="progress-bar bg-warning" role="progressbar" aria-valuenow="{{i.project_progress}}" aria-valuemin="0" aria-valuemax="100" style="width: {{i.project_progress}}%;">
+                                                                    {% elif i.project_progress <= 75 %}
+                                                                    <div class="progress-bar bg-info" role="progressbar" aria-valuenow="{{i.project_progress}}" aria-valuemin="0" aria-valuemax="100" style="width: {{i.project_progress}}%;">
+                                                                        {% elif i.project_progress <= 100 %}
+                                                                        <div class="progress-bar bg-success" role="progressbar" aria-valuenow="{{i.project_progress}}" aria-valuemin="0" aria-valuemax="100" style="width: {{i.project_progress}}%;">
+                                                                            {% endif %}
+                                                                        </div>
+                                                                    </div>
+                                                                    {% endif %}
+                                                                </li>
+                                                            </ul>
+                                                        </div> <!-- end card-->
+                                                    </div> <!-- end col -->
+                                        {% endif %}
+                                        {% endfor %}
+                                    </div>
+                                    <!-- end row-->
+                                    
+                                    
+                                    
+                                </div> <!-- container -->
+                                
+                            </div> <!-- content -->
+                            
+                            <!-- Footer Start -->
+                            <footer class="footer">
+                                <div class="container-fluid">
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                <script>document.write(new Date().getFullYear())</script> © 18pixels.
+                            </div>
+                             
+                        </div>
+                    </div>
+                </footer>
+                <!-- end Footer -->
+
+            </div>
+
+
+        </div>
+        <!-- END wrapper -->
+
+
+        <!-- bundle -->
+        <script src="{% static 'assets/js/vendor.min.js' %}"></script>
+        <script src="{% static 'assets/js/app.min.js' %}"></script>
+        <script src="{% static 'assets/js/custom.js' %}"></script>
+        <script src="{% static 'assets/js/admin_JS/project_JS/filter_project.js' %}"></script>
+        
+    </body>
+ 
+</html>

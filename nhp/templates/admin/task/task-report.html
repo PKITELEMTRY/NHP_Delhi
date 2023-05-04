@@ -1,0 +1,256 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <title>18Pixels | Management Tool</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta content="A fully featured admin theme which can be used to build CRM, CMS, etc." name="description">
+    <meta content="Coderthemes" name="author">
+    <!-- App favicon -->
+    <link rel="shortcut icon" href="{% static 'assets/images/favicon.ico' %}">
+
+    <!-- Quill css -->
+    <link href="{% static 'assets/css/vendor/quill.bubble.css' %}" rel="stylesheet" type="text/css">
+    <link href="{% static 'assets/css/vendor/quill.core.css' %}" rel="stylesheet" type="text/css">
+    <link href="{% static 'assets/css/vendor/quill.snow.css' %}" rel="stylesheet" type="text/css">
+
+    <!-- App css -->
+    <link href="{% static 'assets/css/icons.min.css' %}" rel="stylesheet" type="text/css">
+    <link href="{% static 'assets/css/app.min.css' %}" rel="stylesheet" type="text/css" id="light-style">
+    <link href="{% static 'assets/css/app-dark.min.css' %}" rel="stylesheet" type="text/css" id="dark-style">
+    <link href="{% static 'assets/css/custom.css' %}" rel="stylesheet" type="text/css">
+    <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+</head>
+
+<body class="loading"
+    data-layout-config='{"leftSideBarTheme":"dark","layoutBoxed":false, "leftSidebarCondensed":false, "leftSidebarScrollable":false,"darkMode":false, "showRightSidebarOnStart": true}'>
+    <!-- Begin page -->
+    <div class="wrapper">
+        <!-- ========== Left Sidebar Start ========== -->
+        <div class="leftside-menu" id="sidebarMenus">
+            {% include 'base.html' %}
+
+        </div>
+        <!-- Left Sidebar End -->
+
+        <!-- ============================================================== -->
+        <!-- Start Page Content here -->
+        <!-- ============================================================== -->
+
+        <div class="content-page">
+            <div class="content">
+                <!-- Topbar Start -->
+                <div class="navbar-custom" id="load-navigation">
+                    {% include 'hearder.html' %}
+                </div>
+                <!-- end Topbar -->
+
+                <!-- Start Content-->
+                <div class="container-fluid">
+                    <div class="row">
+                        <div class="col-lg-6 mt-2">
+                            <h4>Task Report</h4>
+                        </div>
+                        <div class="col-lg-6 mt-2 text-end">
+                            <a href='/task-management/task-list'
+                                class="btn btn-secondary btn-sm  ms-3 "><i class="fa-solid fa-arrow-left"></i> Back</a>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md-12 mt-2"  style='box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px; border-radius:5px;'>
+                            <!-- start page title -->
+                            <div class="page-title-box mb-2 pt-2">
+                                <div class="row">
+                                {% if  request.session.userType == 'masteR' or request.session.userType == 'teacheR' %}
+                                    <div class="col-md-3">
+                                        <label for="name" class="form-label">Employee </label>
+                                        <select class="form-control select2 text-large" data-toggle="select2"   data-placeholder="Select Employee" id='employeeID'>
+                                                <option value="All" selected>All Employee</option>
+                                                {% for i in employeeObj %}
+                                                    <option value="{{i.id}}">{{i.employee_name}}</option>
+                                                {% endfor %}
+                                        </select> 
+                                    </div>
+                                {% endif %}
+                                    <div class="col-md-3" id='custom-date-div'>
+                                        <label for="name" class="form-label">Date Range</label>
+                                        <input type="text" class="form-control" name="daterange" id='daterange' value=""
+                                            placeholder="Select date" />
+                                    </div>
+
+                                    {% comment %} <div class="col-md-3">
+                                        <label for="name" class="form-label">Project </label>
+                                        <select class="form-control select2 text-large" data-toggle="select2"   data-placeholder="Select Project" id='projectID'>
+                                                <option></option>
+                                        </select> 
+                                    </div> {% endcomment %}
+
+                                    <div class="col-md-2 mt-3">
+                                        {% if request.session.userType == 'masteR' or request.session.userType == 'teacheR' %}
+                                        <a class="btn btn-success ms-3" onclick='get_employee_task_report()'><i
+                                            class="fa-solid fa-magnifying-glass"></i> Filter</a>
+                                        {% else %}
+                                        <a class="btn btn-success ms-3" onclick='get_task_report()'><i
+                                            class="fa-solid fa-magnifying-glass"></i> Filter</a>
+                                        {% endif %}
+                                    </div>
+
+                                </div>
+                                {% comment %} <hr> {% endcomment %}
+
+                            </div>
+                        </div>
+                    </div>
+
+                    
+                    <div id='task-list-div'>
+                        <div class="row mt-2" style='box-shadow: rgba(0, 0, 0, 0.05) 0px 6px 24px 0px, rgba(0, 0, 0, 0.08) 0px 0px 0px 1px;border-radius:5px;'>
+                            {% if request.session.userType == 'masteR' or request.session.userType == 'teacheR' %}
+                                <div class="col-lg-12 mt-2 text-center text-info">
+                                    <p><strong><small><i class="fa-solid fa-triangle-exclamation"></i> Select Employee To Filter Information</small></strong></p>
+                                </div>
+                            {% else %}
+                                <div class="col-lg-12 mt-1 mb-1 p-1">
+                                    <span class="text-white bg-primary" style="border:1px solid primary;border-radius:2px;"><small><strong>&nbsp;&nbsp;{{currentDate}}&nbsp;&nbsp;</strong></small></span>
+                                </div>
+                                {% if taskObj|length == 0 %}
+                                <div class="col-lg-12 text-danger">
+                                    <p><strong><small><i class="fa-solid fa-triangle-exclamation"></i> No Task Available for this date!</small></strong></p>
+                                </div>
+                                {% else %}
+                                <div class="col-lg-12">
+                                    <table class="table table-borderless table-sm">
+                                        <thead>
+                                          <tr>
+                                            <th scope="col" style="width: 750px;">Task</th>
+                                            <th scope="col">Start DateTime</th>
+                                            <th scope="col">End DateTime</th>
+                                            <th scope="col">Status</th>
+                                          </tr>
+                                        </thead>
+                                        <tbody>
+                                            {% for i in taskObj %}
+                                                <tr>
+                                                    <th><small><i class="fa-solid fa-caret-right"></i>&nbsp;{{i.task_title}}</small>
+                                                    </th>
+                                                    <td><small><strong>
+                                                        {% now "Y-m-d" as todays_date %}
+                                                        {% if todays_date > i.start_date|date:"Y-m-d" %}
+                                                            <span class="text-danger">{{i.start_date}}</span>
+                                                        {% else %}
+                                                            {{i.start_date}}
+                                                        {% endif %}
+                                                        
+                                                         -</strong> {{i.start_time}}<small></td>
+                                                    <td><small><strong>{{i.due_date}} -</strong> {{i.due_time}}</small></td>
+                                                    <td>
+                                                        {% if i.task_status == 'Done' %}
+                                                            <small class="text-success"><strong>Done</strong></small>
+                                                        {% elif i.task_status == 'To do' %}
+                                                            <small class="text-info"><strong>To do</strong></small>
+                                                        {% elif i.task_status == 'Doing' %}
+                                                            <small class="text-warning"><strong>Doing</strong></small>
+                                                        {% else %}
+                                                            <small class="text-danger"><strong>Delayed</strong></small>
+                                                        {% endif %}
+                                                    </td>
+                                                </tr>
+                                            {% endfor %}
+                                        </tbody>
+                                      </table>
+                                </div>
+                                {% endif %}
+                            {% endif %}
+                            </div>
+                    </div>
+                    <!-- Task list ends here -->
+                </div>
+            </div>
+            <!-- Footer Start -->
+            <footer class="footer">
+                <div class="container-fluid">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <script>document.write(new Date().getFullYear())</script> © 18Pixels
+                        </div>
+                    </div>
+                </div>
+            </footer>
+            <!-- end Footer -->
+        </div>
+
+                        <!-- END wrapper -->
+                        
+
+
+                        <!-- bundle -->
+                        <script src="{% static 'assets/js/vendor.min.js' %}"></script>
+                        <script src="{% static 'assets/js/app.min.js' %}"></script>
+
+                        <!-- quill js -->
+                        <script src="{% static 'assets/js/vendor/quill.min.js' %}"></script>
+                        <!-- Init js-->
+                        <script src="{% static 'assets/js/pages/demo.tasks.js' %}"></script>
+                        <!-- third party js -->
+                        <script src="{% static 'assets/js/vendor/Chart.bundle.min.js' %}"></script>
+                        <!-- third party js ends -->
+
+                        <!-- demo app -->
+                        <script src="{% static 'assets/js/pages/demo.dashboard-projects.js' %}"></script>
+                        <!-- end demo js-->
+                        <script src="{% static 'assets/js/custom.js' %}"></script>
+                        <script src="{% static 'assets/js/admin_JS/task_JS/task_filters.js' %}"></script>
+                        <script src="{% static 'assets/js/admin_JS/task_JS/add_task.js' %}"></script>
+                        <script src="{% static 'assets/js/admin_JS/task_JS/edit_task.js' %}"></script>
+                        <script src="{% static 'assets/js/admin_JS/task_JS/view_task.js' %}"></script>
+                        <script src="{% static 'assets/js/admin_JS/task_JS/project_analytics_filter.js' %}"></script>
+                        <script src="{% static 'assets/js/admin_JS/task_JS/task-report.js' %}"></script>
+
+                        <script>
+                            document.getElementById("startTime").value = Date().slice(16, 21);
+                            document.getElementById("dueTime").value = Date().slice(16, 21);
+
+                            // ---------------  AJAX CALL  ----------------------------
+                            $.ajax({
+                                type: 'GET',
+                                url: "/task-management/get-emp",
+                                success: function (response) {
+                                    var dataStr = '';
+                                    for (var i = 0; i < response['response'].length; i++) {
+                                        var data = '<option value="' + response['response'][i]['empId'] + '">' + response['response'][i]['empName'] + '</option>';
+                                        dataStr = dataStr + data;
+                                    }
+
+                                    $('#edit-general-task-emp').html('');
+                                    $('#edit-general-task-emp').append('<option class="d-none">Select Employee</option>' + dataStr);
+                                }
+                            });
+            // --------------------------------------------------------
+                        </script>
+
+                        <script>
+                            function customDate(thisTxt) {
+                                if ($(thisTxt).val().trim() == 'custom') {
+                                    $('#custom-date-div').css('display', '');
+                                } else {
+                                    $('#custom-date-div').css('display', 'none');
+                                }
+                            }
+                        </script>
+
+                        <script>
+                            $(function () {
+                                $('input[name="daterange"]').daterangepicker({
+                                    opens: 'left'
+                                }, function (start, end, label) {
+                                    console.log();
+                                });
+                            });
+                        </script>
+
+</body>
+
+</html>

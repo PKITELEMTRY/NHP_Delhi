@@ -1,0 +1,201 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+ 
+<head>
+        <meta charset="utf-8" />
+         <title>18Pixels | Management Tool</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta content="" />
+        <meta content="Coderthemes" name="author" />
+        <!-- App favicon -->
+        <link rel="shortcut icon" href="{% static 'assets/images/favicon.ico' %}">
+
+        <!-- third party css -->
+        <link href="{% static 'assets/css/vendor/dataTables.bootstrap5.css' %}" rel="stylesheet" type="text/css" />
+        <link href="{% static 'assets/css/vendor/responsive.bootstrap5.css' %}" rel="stylesheet" type="text/css" />
+        <!-- third party css end -->
+
+        <!-- App css -->
+        <link href="{% static 'assets/css/icons.min.css' %}" rel="stylesheet" type="text/css" />
+        <link href="{% static 'assets/css/app.min.css' %}" rel="stylesheet" type="text/css" id="light-style" />
+        <link href="{% static 'assets/css/app-dark.min.css' %}" rel="stylesheet" type="text/css" id="dark-style" />
+        <link href="{% static 'assets/css/custom.css' %}" rel="stylesheet" type="text/css"  />
+
+    </head>
+
+    <body class="loading" data-layout-config='{"leftSideBarTheme":"dark","layoutBoxed":false, "leftSidebarCondensed":false, "leftSidebarScrollable":false,"darkMode":false, "showRightSidebarOnStart": true}'>
+        <!-- Begin page -->
+        <div class="wrapper">
+            <!-- ========== Left Sidebar Start ========== -->
+            <div class="leftside-menu" id="sidebarMenus">
+                {% include 'base.html' %}
+            </div>
+            <!-- Left Sidebar End -->
+            <!-- ============================================================== -->
+            <!-- Start Page Content here -->
+            <!-- ============================================================== -->
+            <div class="content-page">
+                <div class="content">
+                    <!-- Topbar Start -->
+                   <div class="navbar-custom" id="load-navigation"> 
+                   {% include 'hearder.html' %}
+                   </div>
+                    <!-- end Topbar -->
+                    <!-- Start Content-->
+                    <div class="container-fluid">
+                        <!-- start page title -->
+                       
+                          <div class="row">
+                                <div class="col-md-3">
+                                    <div class="page-title-box">
+                                        <h4 class="page-title">Users Login/Logout Logs</h4>
+                                    </div>
+                                 </div>
+                             </div>
+
+                        <div class="page-title-box  pt-2 mb-2" >
+                            <div class="row">
+                                <div class="col-md-1 text-end  mb-2 pt-1">
+                                      Filter By
+                                </div>
+                                <div class="col-md-3">
+                                   <select class="form-control select2" data-toggle="select2"    data-placeholder="Select Employee" >
+                                        <option></option>
+                                        <option value="AK">All</option>
+                                        <option value="HI">Pooja</option>
+                                        <option value="Hdsf">Pradeep</option>
+                                  </select>
+                                </div>
+                                <div class="col-md-3">
+                                   <select class="form-control select2" data-toggle="select2"    data-placeholder="Select Duration" >
+                                        <option></option>
+                                        <option value="AK">Today</option>
+                                        <option value="HI">Yesterday</option>
+                                        <option value="Hdsf">Last week</option>
+                                        <option value="Hdsf">Last 15 days</option>
+                                        <option value="Hdsf">Last Month</option>
+                                  </select>
+                                </div>
+                                <div class="col-md-2">
+                                   <select class="form-control select2" data-toggle="select2"    data-placeholder="Select status" >
+                                        <option></option>
+                                        <option value="AK">Logged-in</option>
+                                        <option value="HI">Logged-out</option>
+                                        <option value="Hdsf">Login failed</option>
+                                        
+                                  </select>
+                                </div>
+                                
+                                <div class="col-md-3 text-end  ">
+                                   <a class="btn btn-success ms-3" data-bs-toggle="modal" data-bs-target="#add-new-task-modal">Search</a>
+                                   <a href=""  style="margin-left: 15px">Clear</a>
+                               </div>
+                                <!--  <div class="col-md-8 text-end    ">
+                                    
+                                 </div> -->
+                            </div>
+                             
+                        </div>   
+                        <!-- end page title --> 
+
+                        <div class="row">
+                            <div class="col-12">
+                                <div class="card">
+                                    <div class="card-body">
+                                        <div class="table-responsive">
+                                          <table id="basic-datatable" class="table dt-responsive nowrap w-100">
+                                            <thead>
+                                                <tr>
+                                                    <th width="100">S.No.</th>
+                                                    <th>Employee</th>
+                                                    <th>Time</th>
+                                                    <th>Action</th>
+                                                    <th>Date</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                            {% for i in logObj %}
+                                                <tr>
+                                                    <td>{{ forloop.counter }}</td>
+                                                    <td class="e_name">
+                                                    {% if i.name == None %}
+                                                        {{i.username}}
+                                                    {% else %}
+                                                        {{i.name}}
+                                                    {% endif %}
+                                                    </td>
+                                                     <td>{{i.created_at | date:'h:i a'}}</td>
+                                                     <td>
+                                                        {% if i.action == 'user_logged_in' %}
+                                                            <span class="text-success">Logged in</span>
+                                                        {% elif i.action == 'user_logged_out' %}
+                                                            <span class="text-danger">Logged out</span>
+                                                        {% elif i.action == 'user_login_failed' %}
+                                                            <span class="text-warning">Login Failed</span>
+                                                        {% endif %}
+                                                    </td>
+                                                     <td>{{i.created_at | date:'d M, Y'}}</td>          
+                                                </tr>
+                                            {% endfor %}
+                                            </tbody>
+                                        </table>
+                                        </div>
+                                    </div> <!-- end card-body-->
+                                </div> <!-- end card-->
+                            </div> <!-- end col -->
+                        </div>
+                        <!-- end row -->
+                        
+                    </div> <!-- container -->
+
+                </div> <!-- content -->
+
+                <!-- Footer Start -->
+                <footer class="footer">
+                    <div class="container-fluid">
+                        <div class="row">
+                            <div class="col-md-6">
+                                <script>document.write(new Date().getFullYear())</script> © 18pixels 
+                            </div>
+                            
+                        </div>
+                    </div>
+                </footer>
+                <!-- end Footer -->
+
+            </div>
+
+            <!-- ============================================================== -->
+            <!-- End Page content -->
+            <!-- ============================================================== -->
+
+
+        </div>
+        <!-- END wrapper -->
+       <!-- /End-modal -->
+
+
+        <!-- bundle -->
+        <script src="{% static 'assets/js/vendor.min.js' %}"></script>
+        <script src="{% static 'assets/js/app.min.js' %}"></script>
+
+        <!-- third party js -->
+        <script src="{% static 'assets/js/vendor/jquery.dataTables.min.js' %}"></script>
+        <script src="{% static 'assets/js/vendor/dataTables.bootstrap5.js' %}"></script>
+        <script src="{% static 'assets/js/vendor/dataTables.responsive.min.js' %}"></script>
+        <script src="{% static 'assets/js/vendor/responsive.bootstrap5.min.js' %}"></script>
+        <script src="{% static 'assets/js/vendor/dataTables.checkboxes.min.js' %}"></script>
+        <!-- third party js ends -->
+
+        <!-- demo app -->
+        <script src="{% static 'assets/js/pages/demo.datatable-init.js' %}"></script>
+
+         <script src="{% static 'assets/js/custom.js' %}"></script>
+       
+
+        <!-- end demo js-->
+
+    </body>
+ 
+</html>
